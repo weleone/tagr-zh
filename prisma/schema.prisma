@@ -1,0 +1,256 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Song {
+  id         Int       @id @default(autoincrement())
+  filePath   String    @unique @map("file_path")
+  fileName   String    @map("file_name")
+  folderPath String    @map("folder_path")
+  extension  String
+  fileSize   Int       @map("file_size")
+  createdAt  DateTime? @map("created_at")
+  modifiedAt DateTime? @map("modified_at")
+  scannedAt  DateTime  @default(now()) @map("scanned_at")
+
+  // Metadata principal
+  title               String?
+  artist              String?
+  sortArtist          String?   @map("sort_artist")
+  album               String?
+  sortAlbum           String?   @map("sort_album")
+  trackNumber         Int?      @map("track_number")
+  trackTotal          Int?      @map("track_total")
+  discNumber          Int?      @map("disc_number")
+  discTotal           Int?      @map("disc_total")
+  year                Int?
+  bpm                 Int?
+  genre               String?
+  style               String?
+  albumArtist         String?   @map("album_artist")
+  sortAlbumArtist     String?   @map("sort_album_artist")
+  composer            String?
+  conductor           String?
+  comment             String?
+  grouping            String?
+  publisher           String?
+  catalogNumber       String?   @map("catalog_number")
+  releaseType         String?   @map("release_type")
+  lyricist            String?
+  barcode             String?
+  work                String?
+  originalReleaseDate DateTime? @map("original_release_date")
+  copyright           String?
+  rating              Int?
+  lyrics              String?
+  compilation         Boolean?  @default(false)
+
+  // Playback
+  volume    Float?
+  startTime Float?   @map("start_time")
+  stopTime  Float?   @map("stop_time")
+  gapless   Boolean? @default(false)
+
+  // Stats
+  dateAdded  DateTime? @map("date_added")
+  lastPlayed DateTime? @map("last_played")
+  playCount  Int?      @default(0) @map("play_count")
+
+  // Audio info
+  peaks         String?
+  duration      Float?
+  bitrate       Int?
+  sampleRate    Int?    @map("sample_rate")
+  channels      Int?
+  bitsPerSample Int?    @map("bits_per_sample")
+  codec         String?
+  lossless      Boolean @default(false)
+  encoder       String?
+
+  // Relaciones
+  metadata      SongMetadata[]
+  pictures      SongPicture[]
+  changeHistory SongChangeHistory[]
+  sharedLinks   SharedLink[]
+  listens       Listen[]
+
+  @@index([folderPath])
+  @@map("songs")
+}
+
+model SongChangeHistory {
+  id        Int      @id @default(autoincrement())
+  songId    Int      @map("song_id")
+  field     String
+  oldValue  String?  @map("old_value")
+  newValue  String?  @map("new_value")
+  changedBy String?  @map("changed_by")
+  changedAt DateTime @default(now()) @map("changed_at")
+
+  song Song @relation(fields: [songId], references: [id], onDelete: Cascade)
+
+  @@index([songId, changedAt])
+  @@map("song_change_history")
+}
+
+model SongMetadata {
+  id     Int     @id @default(autoincrement())
+  songId Int     @map("song_id")
+  key    String
+  value  String?
+
+  song Song @relation(fields: [songId], references: [id], onDelete: Cascade)
+
+  @@index([songId, key])
+  @@map("song_metadata")
+}
+
+model SongPicture {
+  id          Int     @id @default(autoincrement())
+  songId      Int     @map("song_id")
+  type        String?
+  format      String?
+  description String?
+  data        Bytes?
+
+  song Song @relation(fields: [songId], references: [id], onDelete: Cascade)
+
+  @@index([songId])
+  @@map("song_pictures")
+}
+
+model SharedLink {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  songId    Int      @map("song_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([expiresAt])
+  @@map("shared_links")
+}
+
+model UserConfig {
+  userId String @map("user_id")
+  key    String
+  value  String
+
+  @@id([userId, key])
+  @@map("user_config")
+}
+
+model SavedFilter {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  name      String
+  filters   String   // JSON-serialized SongColumnFilters
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@map("saved_filters")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      String   @default("listener")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model SmartPlaylist {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  name      String
+  rules     String
+  isPublic  Boolean  @default(false) @map("is_public")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([isPublic])
+  @@map("smart_playlists")
+}
+
+/// One play recorded by the player once the listen threshold was reached.
+model Listen {
+  id     Int  @id @default(autoincrement())
+  userId String @map("user_id")
+  /// Nulled instead of deleted when the song disappears from the library, so history survives a rescan.
+  songId Int? @map("song_id")
+
+  listenedAt DateTime @map("listened_at")
+
+  // Snapshot of the tags at listen time
+  trackName   String  @map("track_name")
+  artistName  String? @map("artist_name")
+  releaseName String? @map("release_name")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  song Song? @relation(fields: [songId], references: [id], onDelete: SetNull)
+
+  @@index([userId, listenedAt])
+  @@index([songId])
+  @@map("listens")
+}
+
+/// A user's account on an external scrobbling service.
+model ScrobbleAccount {
+  id       Int     @id @default(autoincrement())
+  userId   String  @map("user_id")
+  provider String // ScrobbleProviderId
+  enabled  Boolean @default(true)
+  /// Overrides the provider default when the user self-hosts the service.
+  apiRoot  String? @map("api_root")
+  /// AES-256-GCM, never leaves the server. See src/lib/crypto.ts
+  encryptedToken String  @map("encrypted_token")
+  username       String?
+  lastError      String? @map("last_error")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  queue ScrobbleQueueItem[]
+
+  @@unique([userId, provider])
+  @@map("scrobble_accounts")
+}
+
+/// Listens waiting to be delivered to a provider, retried with backoff.
+model ScrobbleQueueItem {
+  id            Int      @id @default(autoincrement())
+  accountId     Int      @map("account_id")
+  payload       String // JSON-serialized ListenPayload
+  attempts      Int      @default(0)
+  lastError     String?  @map("last_error")
+  nextAttemptAt DateTime @map("next_attempt_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  account ScrobbleAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId, nextAttemptAt])
+  @@map("scrobble_queue")
+}
+
+/// Instance-wide key/value settings, not tied to a user (e.g. the anonymous insights ID).
+model AppProperty {
+  key   String @id
+  value String
+
+  @@map("app_properties")
+}

@@ -1,0 +1,205 @@
+export const MUSICBRAINZ_API = 'https://musicbrainz.org/ws/2'
+export const COVERART_API = 'https://coverartarchive.org'
+export const USER_AGENT = `Tagr/${process.env.APP_VERSION} (https://github.com/suitux/tagr)`
+
+export interface MusicBrainzRelease {
+  id: string
+  title: string
+  score: number
+}
+
+export interface MusicBrainzSearchResponse {
+  releases: MusicBrainzRelease[]
+}
+
+export interface MusicBrainzCoverArtImage {
+  front: boolean
+  image: string
+  thumbnails: {
+    small?: string
+    large?: string
+    250?: string
+    500?: string
+    1200?: string
+  }
+}
+
+export interface MusicBrainzCoverArtResponse {
+  images: MusicBrainzCoverArtImage[]
+}
+
+export interface MusicBrainzCoverArtResult {
+  buffer: Buffer
+  contentType: string
+}
+
+export interface MusicBrainzArtistCredit {
+  name: string
+  joinphrase?: string
+}
+
+export interface MusicBrainzRecordingRelease {
+  id: string
+  title: string
+  date?: string
+  country?: string
+  'artist-credit'?: MusicBrainzArtistCredit[]
+  'release-group'?: {
+    'primary-type'?: string
+    'first-release-date'?: string
+  }
+}
+
+export interface MusicBrainzRecording {
+  id: string
+  title: string
+  score: number
+  'artist-credit'?: MusicBrainzArtistCredit[]
+  releases?: MusicBrainzRecordingRelease[]
+  tags?: Array<{ name: string; count: number }>
+}
+
+export interface MusicBrainzRecordingSearchResponse {
+  recordings: MusicBrainzRecording[]
+  count: number
+  offset: number
+}
+
+export type MusicBrainzMatchMode = 'all' | 'any'
+
+export const MUSICBRAINZ_MATCH_MODES: MusicBrainzMatchMode[] = ['any', 'all']
+
+export const DEFAULT_MUSICBRAINZ_MATCH_MODE: MusicBrainzMatchMode = 'any'
+
+/** The inputs the search form can show, in the order they are laid out. */
+export const MUSICBRAINZ_SEARCH_FIELDS = ['title', 'artist', 'album', 'year', 'mbid'] as const
+
+export type MusicBrainzSearchField = (typeof MUSICBRAINZ_SEARCH_FIELDS)[number]
+
+/** Free-text search inputs shared by the search form, the API route and the service. */
+export interface MusicBrainzSearchParams {
+  title?: string
+  artist?: string
+  album?: string
+  year?: number
+  mbid?: string
+  matchMode?: MusicBrainzMatchMode
+}
+
+export const MUSICBRAINZ_SEARCH_PAGE_SIZE = 25
+export const MUSICBRAINZ_SEARCH_MAX_LIMIT = 100
+
+export interface MusicBrainzReleaseTrackDetail {
+  id?: string
+  position: number
+  number?: string
+  title: string
+  /** Milliseconds; null when MusicBrainz does not know it. */
+  length?: number | null
+  'artist-credit'?: MusicBrainzArtistCredit[]
+  recording: { id: string; title?: string; length?: number | null; 'artist-credit'?: MusicBrainzArtistCredit[] }
+}
+
+export interface MusicBrainzReleaseMedia {
+  position: number
+  format?: string
+  'track-count': number
+  tracks?: MusicBrainzReleaseTrackDetail[]
+}
+
+export interface MusicBrainzReleaseDetail {
+  id: string
+  title: string
+  date?: string
+  country?: string
+  barcode?: string
+  'artist-credit'?: MusicBrainzArtistCredit[]
+  'label-info'?: Array<{
+    'catalog-number'?: string
+    label?: { name: string }
+  }>
+  media?: MusicBrainzReleaseMedia[]
+  'release-group'?: {
+    'primary-type'?: string
+    'secondary-types'?: string[]
+    'first-release-date'?: string
+  }
+}
+
+export interface MusicBrainzMappedMetadata {
+  title?: string
+  artist?: string
+  album?: string
+  albumArtist?: string
+  year?: number
+  trackNumber?: number
+  trackTotal?: number
+  discNumber?: number
+  discTotal?: number
+  publisher?: string
+  catalogNumber?: string
+  releaseType?: string
+  barcode?: string
+  originalReleaseDate?: string
+  genre?: string
+}
+
+/** A release as the release search returns it - enough to tell editions apart. */
+export interface MusicBrainzReleaseSearchResult {
+  id: string
+  title: string
+  score: number
+  date?: string
+  country?: string
+  barcode?: string
+  'track-count'?: number
+  'artist-credit'?: MusicBrainzArtistCredit[]
+  'label-info'?: Array<{ 'catalog-number'?: string; label?: { name: string } }>
+  media?: Array<{ format?: string; 'track-count'?: number }>
+  'release-group'?: { 'primary-type'?: string; 'secondary-types'?: string[] }
+}
+
+export interface MusicBrainzReleaseSearchResponse {
+  releases: MusicBrainzReleaseSearchResult[]
+  count: number
+  offset: number
+}
+
+/** Album-level release search used by the bulk lookup. */
+export interface MusicBrainzReleaseSearchParams {
+  album?: string
+  artist?: string
+}
+
+/** One track of a release together with the tags it would write. */
+export interface MusicBrainzReleaseTrack {
+  id: string
+  recordingId: string
+  disc: number
+  position: number
+  title: string
+  /** Milliseconds; null when MusicBrainz does not know it. */
+  length: number | null
+  mapped: MusicBrainzMappedMetadata
+}
+
+/** The most songs one bulk lookup works on - it matches against a single release. */
+export const BULK_MUSICBRAINZ_LIMIT = 500
+
+export const MUSIC_BRAINZ_FIELDS: (keyof MusicBrainzMappedMetadata)[] = [
+  'title',
+  'artist',
+  'album',
+  'albumArtist',
+  'year',
+  'trackNumber',
+  'trackTotal',
+  'discNumber',
+  'discTotal',
+  'publisher',
+  'catalogNumber',
+  'releaseType',
+  'barcode',
+  'originalReleaseDate',
+  'genre'
+]

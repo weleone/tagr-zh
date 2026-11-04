@@ -1,0 +1,623 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "settings": "Paramètres"
+  },
+  "navigation": {
+    "folders": "Dossiers",
+    "library": "Bibliothèque",
+    "songs": "Morceaux",
+    "details": "Détails"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s’est produite",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "duplicate": "Dupliquer",
+    "search": "Rechercher",
+    "logout": "Se déconnecter",
+    "unknown": "Inconnu",
+    "more": "Plus",
+    "less": "Moins"
+  },
+  "folders": {
+    "title": "Tagr",
+    "subtitle": "Gestion de bibliothèque musicale",
+    "empty": "Aucun dossier configuré",
+    "notFound": "Aucun dossier trouvé",
+    "searchPlaceholder": "Rechercher des dossiers...",
+    "totalFolders": "{count} dossiers",
+    "totalFiles": "{count, plural, =0 {Aucun fichier} one {# fichier} other {# fichiers}}",
+    "totalSubfolders": "{count, plural, =0 {Aucun sous-dossier} one {# sous-dossier} other {# sous-dossiers}}",
+    "allFolders": "Tous les dossiers",
+    "selectFolder": "Sélectionnez un dossier ou une playlist",
+    "selectFolderDescription": "Choisissez un dossier ou une playlist intelligente dans la barre latérale pour afficher ses fichiers musicaux",
+    "browseFolders": "Parcourir la bibliothèque",
+    "loadingFolders": "Chargement des dossiers...",
+    "errorLoading": "Erreur de chargement",
+    "errorLoadingDescription": "Impossible de charger les dossiers",
+    "file": "{count, plural, one {fichier} other {fichiers}}",
+    "files": "{count} fichiers",
+    "subfolder": "{count, plural, one {sous-dossier} other {sous-dossiers}}",
+    "subfolders": "{count} sous-dossiers",
+    "quickScan": "Analyse rapide",
+    "quickScanDescription": "N’analyse que les fichiers nouveaux ou modifiés",
+    "quickScanConfirmTitle": "Analyse rapide ?",
+    "quickScanConfirmDescription": "Ne traite que les nouveaux fichiers et ceux dont la date de modification a changé. Idéal après avoir ajouté de la musique ou remplacé des fichiers. Les fichiers modifiés par une autre application sans changement de date de modification ne seront pas détectés.",
+    "fullScan": "Analyse complète",
+    "fullScanDescription": "Réanalyse tous les fichiers et met à jour les métadonnées",
+    "fullScanConfirmTitle": "Analyse complète ?",
+    "fullScanConfirmDescription": "Relit les métadonnées de chaque fichier de votre bibliothèque et met à jour la base de données. À utiliser si vous avez modifié des tags avec une application externe (p. ex. MusicBrainz Picard, Mp3tag), si vous pensez que la base de données n’est plus synchronisée, ou après une mise à jour de Tagr. Cela peut prendre un moment pour les grandes bibliothèques.",
+    "skipped": "ignorés",
+    "rescan": "Réanalyser la bibliothèque",
+    "history": "Voir l’historique des modifications",
+    "feedback": "Envoyer un commentaire",
+    "installApp": "Installer l’app",
+    "appInstalled": "App installée",
+    "manageUsers": "Gérer les utilisateurs",
+    "scanning": "Analyse de la bibliothèque...",
+    "scanningProgress": "Analyse de la bibliothèque... ({current}/{total})",
+    "scanCompleted": "Analyse terminée",
+    "scanFailed": "L’analyse a échoué",
+    "filesScanned": "fichiers analysés",
+    "added": "ajoutés",
+    "updated": "mis à jour",
+    "deleted": "supprimés",
+    "errors": "erreurs",
+    "viewDetails": "Détails",
+    "unknownError": "Une erreur inconnue s’est produite"
+  },
+  "scanSummary": {
+    "title": "Résumé de l’analyse",
+    "totalFiles": "{count, plural, one {# fichier traité} other {# fichiers traités}}"
+  },
+  "summary": {
+    "added": "Ajoutés",
+    "updated": "Mis à jour",
+    "cover": "Mis à jour",
+    "deleted": "Supprimés",
+    "skipped": "Ignorés",
+    "errors": "Erreurs",
+    "andMore": "…et {count, plural, one {# de plus} other {# de plus}}"
+  },
+  "files": {
+    "title": "Fichiers",
+    "empty": "Aucun fichier musical trouvé",
+    "emptyDescription": "Ce dossier ou cette playlist intelligente ne contient aucun fichier musical. Essayez d’analyser votre bibliothèque ou de sélectionner une autre source.",
+    "syncNow": "Analyser maintenant",
+    "details": "Détails du fichier",
+    "selectFile": "Sélectionnez un fichier pour afficher ses détails",
+    "fileInfo": "Informations sur le fichier",
+    "searchPlaceholder": "Rechercher des morceaux par titre, artiste, album, label, commentaire ou nom de fichier...",
+    "filterPlaceholder": "Filtrer...",
+    "filterPlaceholderPressEnter": "Appuyez sur Entrée pour ajouter un filtre...",
+    "dateFilterPlaceholder": "Sélectionnez une date...",
+    "noFilterResults": "Aucun morceau ne correspond aux filtres actuels",
+    "clearFilters": "Effacer les filtres",
+    "clearDateFilter": "Effacer",
+    "applyDateFilter": "Appliquer",
+    "booleanFilterAll": "Tous",
+    "booleanFilterYes": "Oui",
+    "booleanFilterNo": "Non",
+    "selectFilterAll": "Tous",
+    "selectFilterSelected": "{count} sélectionnés"
+  },
+  "musicInfo": {
+    "title": "Infos du morceau"
+  },
+  "trackInfo": {
+    "title": "Infos de piste",
+    "of": "sur"
+  },
+  "audioProperties": {
+    "title": "Propriétés audio"
+  },
+  "notes": {
+    "title": "Notes"
+  },
+  "textareaEdit": {
+    "importFromFile": "Importer depuis un fichier",
+    "importError": "Impossible de lire ce fichier",
+    "saveHint": "⌘/Ctrl + Entrée pour enregistrer"
+  },
+  "customTags": {
+    "title": "Tags personnalisés",
+    "addTag": "Ajouter un tag",
+    "allHidden": "Tous les tags personnalisés de ce morceau sont masqués",
+    "key": "Clé",
+    "value": "Valeur",
+    "empty": "Aucun tag personnalisé",
+    "keyPlaceholder": "Nom du tag (p. ex. MOOD)",
+    "valuePlaceholder": "Valeur du tag",
+    "deleteConfirm": "Supprimer ce tag ?"
+  },
+  "playback": {
+    "volume": "Volume",
+    "startTime": "Début",
+    "stopTime": "Fin",
+    "gapless": "Sans blanc"
+  },
+  "fields": {
+    "title": "Titre",
+    "artist": "Artiste",
+    "sortArtist": "Artiste (tri)",
+    "album": "Album",
+    "sortAlbum": "Album (tri)",
+    "albumArtist": "Artiste de l’album",
+    "sortAlbumArtist": "Artiste de l’album (tri)",
+    "year": "Année",
+    "genre": "Genre",
+    "style": "Style",
+    "composer": "Compositeur",
+    "conductor": "Chef d’orchestre",
+    "bpm": "BPM",
+    "grouping": "Regroupement",
+    "publisher": "Label",
+    "catalogNumber": "Numéro de catalogue",
+    "releaseType": "Type de sortie",
+    "lyricist": "Parolier",
+    "barcode": "Code-barres",
+    "work": "Œuvre",
+    "originalReleaseDate": "Date de sortie originale",
+    "copyright": "Copyright",
+    "rating": "Note",
+    "compilation": "Compilation",
+    "trackNumber": "Piste",
+    "trackTotal": "Nombre de pistes",
+    "discNumber": "Disque",
+    "discTotal": "Nombre de disques",
+    "duration": "Durée",
+    "comment": "Commentaire",
+    "lyrics": "Paroles",
+    "codec": "Codec",
+    "bitrate": "Débit",
+    "sampleRate": "Fréquence d’échantillonnage",
+    "channels": "Canaux",
+    "bitsPerSample": "Profondeur de bits",
+    "encoder": "Encodeur",
+    "bitDepthValue": "{value} bits",
+    "extension": "Format",
+    "fileSize": "Taille",
+    "modifiedAt": "Modifié",
+    "createdAt": "Créé",
+    "picture": "Pochette",
+    "fileName": "Nom du fichier",
+    "filePath": "Chemin du fichier",
+    "folderPath": "Chemin du dossier",
+    "dateAdded": "Date d’ajout",
+    "lastPlayed": "Dernière écoute",
+    "listenedAt": "Écouté le",
+    "playCount": "Nombre d’écoutes",
+    "lossless": "Sans perte"
+  },
+  "history": {
+    "title": "Historique des modifications",
+    "titleForSong": "Historique — {songTitle}",
+    "empty": "Aucune modification enregistrée pour l’instant",
+    "unknownSong": "Inconnu",
+    "revert": "Annuler",
+    "searchPlaceholder": "Filtrer par titre ou artiste...",
+    "viewHistory": "Voir l’historique des modifications",
+    "rescanSong": "Réanalyser le fichier",
+    "revertSelected": "Annuler {count, plural, one {# modification} other {# modifications}}",
+    "clearSelection": "Tout désélectionner",
+    "emptyValue": "—"
+  },
+  "columns": {
+    "toggleColumns": "Colonnes",
+    "genericTags": "Tags génériques",
+    "customTags": "Tags personnalisés"
+  },
+  "previewCard": {
+    "play": "Lire",
+    "pause": "Pause",
+    "editCover": "Modifier la pochette",
+    "downloadCover": "Télécharger la pochette",
+    "lossless": "Sans perte"
+  },
+  "musicbrainzLookup": {
+    "title": "MusicBrainz — {songTitle}",
+    "tooltip": "Rechercher les métadonnées sur MusicBrainz",
+    "search": "Rechercher",
+    "back": "Retour",
+    "score": "Score : {score} %",
+    "noResults": "Aucun enregistrement trouvé",
+    "noSearchFields": "Ajoutez un champ pour rechercher",
+    "loadMore": "Charger plus",
+    "resultsCount": "{shown} résultats affichés sur {total}",
+    "field": "Champ",
+    "currentValue": "Actuel",
+    "mbValue": "MusicBrainz",
+    "applySelected": "Appliquer la sélection",
+    "noFields": "Aucun champ de métadonnées disponible pour cette sortie",
+    "coverArt": "Pochette",
+    "currentCover": "Actuelle",
+    "mbCover": "MusicBrainz",
+    "noCover": "Aucune pochette",
+    "replaceCover": "Remplacer la pochette",
+    "mbid": "MBID",
+    "mbidPlaceholder": "MBID d’enregistrement, de sortie ou d’artiste",
+    "matchMode": "Correspondance",
+    "matchModeOption": {
+      "all": "Tous les champs",
+      "any": "N’importe quel champ"
+    },
+    "searchFields": "Champs"
+  },
+  "musicbrainz": {
+    "fetchSuccess": "Pochette mise à jour depuis MusicBrainz",
+    "fetchError": "Impossible de récupérer la pochette",
+    "unknownError": "Une erreur inconnue s’est produite",
+    "fetchMusicBrainz": "Récupérer la pochette sur MusicBrainz",
+    "fetchMusicBrainzConfirmTitle": "Récupérer la pochette sur MusicBrainz ?",
+    "fetchMusicBrainzConfirmDescription": "La pochette de l’album sera recherchée sur MusicBrainz et, si elle est trouvée, remplacera l’image actuelle. Cette action peut être annulée depuis l’historique.",
+    "fetchMusicBrainzConfirmAction": "Récupérer la pochette"
+  },
+  "stats": {
+    "title": "Statistiques"
+  },
+  "formats": {
+    "mp3": "MPEG Audio Layer 3",
+    "flac": "Free Lossless Audio Codec",
+    "wav": "Waveform Audio",
+    "m4a": "MPEG-4 Audio",
+    "m4b": "Livre audio MPEG-4",
+    "ogg": "Ogg Vorbis",
+    "aac": "Advanced Audio Coding",
+    "unknown": "Fichier audio"
+  },
+  "login": {
+    "title": "Connexion",
+    "description": "Saisissez vos identifiants pour accéder à votre compte",
+    "username": "Nom d’utilisateur",
+    "usernamePlaceholder": "Saisissez votre nom d’utilisateur",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Saisissez votre mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion...",
+    "invalidCredentials": "Nom d’utilisateur ou mot de passe incorrect",
+    "genericError": "Une erreur s’est produite. Veuillez réessayer."
+  },
+  "welcome": {
+    "title": "Bienvenue dans Tagr",
+    "description": "Tagr doit analyser vos dossiers musicaux pour créer une base de données locale. La navigation et la recherche dans votre bibliothèque sont ainsi rapides et fluides. Votre musique et ses tags ne quittent jamais votre machine.",
+    "timing": "Cette opération peut prendre quelques minutes selon la taille de votre bibliothèque.",
+    "scanButton": "Analyser la bibliothèque",
+    "scanning": "Analyse de votre bibliothèque...",
+    "insightsNotice": "Tagr peut envoyer des statistiques d’utilisation anonymes (Insights) une fois par jour : uniquement des comptages, jamais de noms de fichiers, de chemins ni de noms d’utilisateur. Rien n’est envoyé sans votre accord, et vous pouvez le désactiver dans les Paramètres."
+  },
+  "version": {
+    "updateAvailable": "La version {version} est disponible",
+    "viewRelease": "Voir la version",
+    "dismiss": "Ignorer"
+  },
+  "savedFilters": {
+    "title": "Filtres",
+    "save": "Enregistrer",
+    "saveCurrentFilters": "Enregistrer les filtres actuels",
+    "filterName": "Nom du filtre",
+    "noSavedFilters": "Aucun filtre enregistré",
+    "deleteFilter": "Supprimer le filtre",
+    "loadFilter": "Charger le filtre"
+  },
+  "share": {
+    "tooltip": "Partager le morceau",
+    "title": "Partager le morceau",
+    "description": "Générez un lien temporaire en écoute seule. Les destinataires peuvent écouter le morceau, mais ne peuvent ni modifier ni supprimer aucune donnée.",
+    "expiration": "Le lien expire dans",
+    "generate": "Générer le lien",
+    "generating": "Génération...",
+    "copyLink": "Copier le lien",
+    "copied": "Copié !",
+    "linkReady": "Lien de partage prêt",
+    "expiresAt": "Expire le {date}",
+    "pageTitle": "Morceau partagé — {title}",
+    "expired": "Ce lien de partage a expiré",
+    "notFound": "Lien de partage introuvable",
+    "errorDescription": "Ce lien a peut-être expiré ou été supprimé.",
+    "sharedVia": "Partagé via",
+    "of": "sur",
+    "metadata": {
+      "fallbackTitle": "Tagr — Morceau partagé",
+      "untitled": "Sans titre",
+      "unknownArtist": "Artiste inconnu",
+      "title": "{title} — {artist} | Tagr",
+      "description": "Écoutez {title} par {artist}",
+      "descriptionWithAlbum": "Écoutez {title} par {artist}, extrait de {album}",
+      "ogTitle": "{title} — {artist}"
+    }
+  },
+  "time": {
+    "fiveMinutes": "5 minutes",
+    "fifteenMinutes": "15 minutes",
+    "oneHour": "1 heure",
+    "sixHours": "6 heures",
+    "twentyFourHours": "24 heures",
+    "sevenDays": "7 jours",
+    "thirtyDays": "30 jours"
+  },
+  "starPrompt": {
+    "title": "Vous aimez Tagr ?",
+    "description": "Si Tagr vous a été utile, pensez à lui donner une étoile sur GitHub. Cela aide d’autres personnes à découvrir le projet ! Pas d’inquiétude, nous ne vous le redemanderons pas.",
+    "starOnGithub": "Mettre une étoile sur GitHub",
+    "maybeLater": "Non merci"
+  },
+  "api": {
+    "folders": {
+      "noFoldersConfigured": "Aucun dossier musical configuré. Définissez la variable d’environnement MUSIC_FOLDERS.",
+      "pathNotDirectory": "Le chemin n’est pas un répertoire",
+      "unknownError": "Erreur inconnue lors de la lecture du dossier"
+    }
+  },
+  "users": {
+    "title": "Gérer les utilisateurs",
+    "description": "Créez, modifiez et supprimez les utilisateurs qui peuvent accéder à Tagr.",
+    "createUser": "Créer un utilisateur",
+    "editUser": "Modifier l’utilisateur",
+    "deleteUser": "Supprimer l’utilisateur",
+    "deleteConfirm": "Voulez-vous vraiment supprimer l’utilisateur « {username} » ?",
+    "username": "Nom d’utilisateur",
+    "password": "Mot de passe",
+    "passwordHint": "Laissez vide pour conserver l’actuel",
+    "role": "Rôle",
+    "roles": {
+      "admin": "Administrateur",
+      "tagger": "Tagueur",
+      "listener": "Auditeur"
+    },
+    "roleDescriptions": {
+      "tagger": "Peut parcourir, écouter, modifier les tags de métadonnées et réanalyser la bibliothèque",
+      "listener": "Peut seulement parcourir et écouter de la musique"
+    },
+    "noUsers": "Aucun utilisateur pour l’instant",
+    "noUsersDescription": "Créez votre premier utilisateur pour commencer",
+    "userCreated": "Utilisateur créé",
+    "userUpdated": "Utilisateur mis à jour",
+    "userDeleted": "Utilisateur supprimé",
+    "cancel": "Annuler",
+    "save": "Enregistrer"
+  },
+  "smartPlaylists": {
+    "title": "Playlists intelligentes",
+    "newPlaylist": "Nouvelle playlist intelligente",
+    "publicHeader": "Playlists intelligentes publiques",
+    "publicBadge": "Publique",
+    "empty": "Aucune playlist intelligente pour l’instant",
+    "confirmDelete": "Supprimer la playlist intelligente « {name} » ?",
+    "copy": "copie",
+    "viewing": {
+      "label": "Playlist intelligente"
+    },
+    "create": {
+      "title": "Créer une playlist intelligente",
+      "description": "Définissez des règles pour inclure automatiquement les morceaux correspondant à n’importe quel champ.",
+      "name": "Nom",
+      "namePlaceholder": "Ma playlist intelligente",
+      "isPublic": "Rendre cette playlist visible pour les autres utilisateurs",
+      "matchLabel": "Correspondance",
+      "matchAll": "Toutes les règles (ET)",
+      "matchAny": "Au moins une règle (OU)",
+      "rulesLabel": "Règles",
+      "addRule": "Ajouter une règle",
+      "standardFields": "Champs du morceau",
+      "customFields": "Métadonnées personnalisées",
+      "valuePlaceholder": "Valeur"
+    },
+    "edit": {
+      "title": "Modifier la playlist intelligente"
+    },
+    "operators": {
+      "equals": "est égal à",
+      "notEquals": "n’est pas égal à",
+      "contains": "contient",
+      "notContains": "ne contient pas",
+      "startsWith": "commence par",
+      "endsWith": "se termine par",
+      "isEmpty": "est vide",
+      "isNotEmpty": "n’est pas vide",
+      "gt": "supérieur à",
+      "gte": "supérieur ou égal à",
+      "lt": "inférieur à",
+      "lte": "inférieur ou égal à",
+      "before": "avant",
+      "after": "après",
+      "on": "le",
+      "isTrue": "est vrai",
+      "isFalse": "est faux"
+    }
+  },
+  "bulkEdit": {
+    "selectAllButton": "Sélectionner tous les morceaux",
+    "contextMenu": {
+      "selectSong": "Sélectionner le morceau",
+      "selectAllFolder": "Sélectionner tout le dossier",
+      "selectAllPlaylist": "Sélectionner toute la playlist intelligente",
+      "selectAllRecent": "Sélectionner tout ce qui a été écouté récemment",
+      "clearSelection": "Effacer la sélection",
+      "setCover": "Définir la pochette de la sélection"
+    },
+    "actionBar": {
+      "selectedCount": "{count, plural, one {# morceau sélectionné} other {# morceaux sélectionnés}}",
+      "wholeFolder": "(dossier entier)",
+      "wholePlaylist": "(playlist entière)",
+      "edit": "Modifier",
+      "setCover": "Définir la pochette",
+      "fetchCovers": "Récupérer les pochettes sur MusicBrainz",
+      "musicbrainz": "Rechercher sur MusicBrainz",
+      "cancel": "Annuler la sélection"
+    },
+    "edit": {
+      "title": "Modification groupée",
+      "description": "Les champs modifiés seront appliqués à tous les morceaux sélectionnés. Les autres champs restent inchangés.",
+      "variousPlaceholder": "(divers)",
+      "partialSampleNote": "Valeurs communes de {loaded} morceaux chargés sur {total}. Les champs non modifiés resteront inchangés sur tous les morceaux sélectionnés.",
+      "noFieldsTouched": "Modifiez au moins un champ avant de continuer.",
+      "next": "Continuer",
+      "sections": {
+        "music": "Musique",
+        "track": "Piste",
+        "misc": "Divers",
+        "custom": "Tags personnalisés"
+      },
+      "fieldsMenu": "Champs",
+      "addCustomKey": "Ajouter un tag personnalisé",
+      "customKeyPlaceholder": "Nom du nouveau tag (p. ex. SOURCEMEDIA)"
+    },
+    "cover": {
+      "title": "Récupérer les pochettes sur MusicBrainz",
+      "description": "Chaque morceau sélectionné recherche sa propre sortie sur MusicBrainz et écrit la pochette. L’opération est limitée à une requête par seconde.",
+      "estimate": "Durée estimée : ~{duration} pour {count, plural, one {# morceau} other {# morceaux}}.",
+      "warning": "Les pochettes existantes seront écrasées, mais peuvent être restaurées depuis l’historique si nécessaire."
+    },
+    "setCover": {
+      "title": "Définir la pochette",
+      "description": "Choisissez une image : elle sera écrite comme pochette {count, plural, one {du morceau sélectionné} other {des # morceaux sélectionnés}}.",
+      "dropHint": "Glissez une image ici ou utilisez le bouton ci-dessous.",
+      "upload": "Importer une image",
+      "replaceFile": "Remplacer l’image",
+      "removeFile": "Retirer l’image",
+      "selectedAnnounce": "Image sélectionnée : {name}",
+      "errorNotImage": "Ce fichier n’est pas une image.",
+      "errorTooLarge": "Cette image est trop volumineuse. La taille maximale est de {size}.",
+      "applyNote": "Cette image remplacera la pochette de {count, plural, one {# morceau} other {# morceaux}}."
+    },
+    "progress": {
+      "label": "Traitement {completed} / {total}"
+    },
+    "confirm": {
+      "affecting": "{count, plural, one {# morceau concerné} other {# morceaux concernés}}",
+      "applyToCount": "Appliquer à {count, plural, one {# morceau} other {# morceaux}}",
+      "context": {
+        "explicit": "{count, plural, one {# morceau sélectionné} other {# morceaux sélectionnés}}",
+        "folder": "Dossier {name}",
+        "playlist": "Playlist intelligente {name}"
+      }
+    },
+    "result": {
+      "success": "{count, plural, one {# morceau mis à jour} other {# morceaux mis à jour}}",
+      "partial": "{ok} mis à jour, {failed} en échec",
+      "allFailed": "Les {count} morceaux ont échoué",
+      "viewDetails": "Détails"
+    }
+  },
+  "bulkSummary": {
+    "titleEdit": "Résumé de la modification groupée",
+    "titleCover": "Résumé de la récupération des pochettes",
+    "totalFiles": "{count, plural, one {# morceau traité} other {# morceaux traités}}",
+    "titleSetCover": "Résumé de la mise à jour des pochettes",
+    "titleMusicbrainz": "Résumé de la recherche MusicBrainz"
+  },
+  "bulkMusicbrainz": {
+    "title": "Recherche MusicBrainz",
+    "description": "Rechercher un album sur MusicBrainz et écrire dans chaque morceau sélectionné les tags de sa piste",
+    "searchHint": "{count, plural, one {# morceau sélectionné.} other {# morceaux sélectionnés.}} Recherchez la parution à laquelle ils appartiennent ; l’étape suivante les associe à ses pistes.",
+    "search": "Rechercher",
+    "searchFailed": "La recherche sur MusicBrainz a échoué. Réessayez dans un instant.",
+    "noReleases": "Aucune parution trouvée",
+    "resultsCount": "{shown} parutions affichées sur {total}",
+    "trackCount": "{count, plural, one {# piste} other {# pistes}}",
+    "score": "Score : {score} %",
+    "loadMore": "Charger plus",
+    "noTracks": "Impossible de charger les pistes de cette parution.",
+    "back": "Retour",
+    "matchSummary": "{matched} morceaux sur {total} associés à une piste de « {release} ». Vérifiez les associations et choisissez une piste si nécessaire.",
+    "fieldsToWrite": "Champs à écrire",
+    "replaceCover": "Remplacer aussi la pochette par la pochette avant de cette parution",
+    "noCover": "Cette parution n’a pas de pochette",
+    "song": "Morceau",
+    "track": "Piste de la parution",
+    "changes": "Modifications",
+    "noTrack": "Aucune piste",
+    "noChanges": "Déjà à jour",
+    "continue": "{count, plural, one {Continuer avec # morceau} other {Continuer avec # morceaux}}",
+    "matchReason": {
+      "number": "Disque/piste",
+      "title": "Titre",
+      "duration": "Durée",
+      "manual": "Manuel",
+      "unmatched": "Non associé"
+    },
+    "tooManySongs": "Sélectionnez au plus {limit} morceaux : la recherche les associe à une seule parution.",
+    "summary": {
+      "description": "Chaque morceau reçoit les tags de la piste associée. Seuls les champs qui changent sont écrits.",
+      "release": "Parution",
+      "fields": "Champs",
+      "cover": "Pochette",
+      "yes": "Remplacer",
+      "no": "Conserver"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "sections": {
+      "users": "Utilisateurs",
+      "integrations": "Intégrations tierces",
+      "detailPanel": "Panneau du morceau",
+      "insights": "Insights",
+      "language": "Langue"
+    }
+  },
+  "detailPanelSettings": {
+    "title": "Champs du panneau du morceau",
+    "description": "Choisissez les champs affichés dans le panneau du morceau. Les champs masqués conservent leurs valeurs, ils ne sont simplement pas affichés.",
+    "showAll": "Tout afficher",
+    "noCustomTags": "Aucun tag personnalisé dans votre bibliothèque pour l’instant",
+    "tooltip": "Choisir les champs visibles"
+  },
+  "languageSettings": {
+    "title": "Langue",
+    "description": "Choisissez la langue d’affichage de Tagr. Automatique suit la langue de votre navigateur.",
+    "label": "Langue de l’interface",
+    "automatic": "Automatique"
+  },
+  "scrobbling": {
+    "listenbrainz": "ListenBrainz",
+    "description": "Envoyez les morceaux que vous écoutez dans Tagr vers votre profil ListenBrainz.",
+    "enable": "Scrobbler ce que j’écoute",
+    "token": "Jeton utilisateur",
+    "tokenPlaceholder": "Collez votre jeton ListenBrainz",
+    "tokenStored": "Un jeton est déjà enregistré : saisissez-en un nouveau pour le remplacer",
+    "tokenHelp": "Copiez-le depuis vos <link>paramètres ListenBrainz</link>.",
+    "apiRoot": "Racine de l’API (facultatif)",
+    "save": "Vérifier et enregistrer",
+    "saved": "Paramètres de scrobbling enregistrés",
+    "connectedAs": "Connecté en tant que {username}",
+    "disconnect": "Déconnecter",
+    "disconnected": "ListenBrainz déconnecté",
+    "pending": "{count} écoutes en attente d’envoi"
+  },
+  "listens": {
+    "title": "Écoutés récemment",
+    "empty": "Rien n’a encore été écouté"
+  },
+  "insights": {
+    "title": "Insights",
+    "description": "Insights sont les statistiques d’utilisation anonymes de Tagr. Une fois par jour, Tagr envoie un petit rapport (version, taille de la bibliothèque, fonctionnalités utilisées) pour que nous sachions combien de personnes l’utilisent et quoi améliorer. Il n’inclut jamais de noms de fichiers, de chemins, de tags ni de noms d’utilisateur.",
+    "enable": "Envoyer les Insights (statistiques d’utilisation anonymes)",
+    "forcedByEnv": "Désactivé par la variable d’environnement TAGR_INSIGHTS.",
+    "lastSent": "Dernier rapport envoyé le {date}.",
+    "neverSent": "Aucun rapport envoyé pour l’instant.",
+    "dashboard": "Les résultats agrégés sont publics : <link>voir le tableau de bord</link>.",
+    "preview": "Afficher exactement ce qui est envoyé",
+    "previewHelp": "Ce JSON est envoyé à {endpoint} :",
+    "enabledToast": "Insights activés",
+    "disabledToast": "Insights désactivés",
+    "noticeTitle": "Aidez à améliorer Tagr avec Insights",
+    "noticeBody": "Insights sont des statistiques d’utilisation anonymes : une fois par jour, Tagr peut envoyer un petit rapport pour que nous sachions combien de personnes l’utilisent et sur quelles fonctionnalités il vaut la peine de travailler. Rien n’a encore été envoyé, et rien ne le sera si vous ne le laissez pas activé.",
+    "noticeDetails": "Afficher le rapport exact",
+    "noticeKeep": "Laisser activé",
+    "noticeDisable": "Désactiver",
+    "pendingNotice": "Rien n’a encore été envoyé : l’envoi commencera dès qu’un administrateur aura confirmé.",
+    "noticeSentTitle": "Ce qui est envoyé",
+    "noticeSent": "Version de Tagr, système d’exploitation et architecture, nombre de morceaux et d’utilisateurs, formats de fichiers, et fréquence d’utilisation de fonctionnalités comme la modification des tags, les playlists intelligentes ou le scrobbling.",
+    "noticeNeverTitle": "Ce qui n’est jamais envoyé",
+    "noticeNever": "Noms de fichiers, chemins, tags, noms d’utilisateur, jetons ou votre adresse IP.",
+    "noticeLater": "Vous pouvez modifier ce choix à tout moment dans Paramètres → Insights.",
+    "sendNow": "Envoyer maintenant",
+    "sentToast": "Rapport envoyé",
+    "sendFailedToast": "Impossible d’envoyer le rapport : {error}"
+  }
+}

@@ -1,0 +1,77 @@
+import { NextResponse } from 'next/server'
+import { ColumnField, Song, SongColumnFilters, SongSortDirection } from '@/features/songs/domain'
+import { getSongFiltersFromSearchParams } from '@/features/songs/filters-helpers'
+import { getSongsByFolder, countSongsByFolder, PAGE_SIZE } from '@/features/songs/song-query.repository'
+import { getSearchParam } from '@/lib/api/search-params'
+
+interface RouteParams {
+  params: Promise<{
+    path?: string[]
+  }>
+}
+
+interface FilesSuccessResponse {
+  success: true
+  folderPath: string
+  totalFiles: number
+  files: Song[]
+}
+
+interface FilesErrorResponse {
+  success: false
+  error: string
+}
+
+type FilesResponse = FilesSuccessResponse | FilesErrorResponse
+
+export async function GET(request: Request, { params }: RouteParams): Promise<NextResponse<FilesResponse>> {
+  const { path } = await params
+  const { searchParams } = new URL(request.url)
+
+  // The folder comes as a query parameter. As path segments, a single-segment folder such as /music
+  // (MUSIC_FOLDERS=/music,/audiobooks) is routed to /api/songs/[id] instead of this route.
+  const folderParam = getSearchParam(searchParams, 'folderPath', 'string', '')
+  const folderPath = folderParam || (!!path?.length ? '/' + path.join('/') : null)
+  const search = getSearchParam(searchParams, 'search', 'string', '') || undefined
+  const sortFieldParam = getSearchParam(searchParams, 'sortField', 'string', 'title') as ColumnField
+  const sortParam = getSearchParam(searchParams, 'sort', 'string', 'asc') as SongSortDirection
+  const limit = getSearchParam(searchParams, 'limit', 'number', PAGE_SIZE)
+  const offset = getSearchParam(searchParams, 'offset', 'number', 0)
+
+  const metadataKeysParam = getSearchParam(searchParams, 'metadataKeys', 'string', '') || undefined
+  const metadataKeys = metadataKeysParam ? metadataKeysParam.split(',').filter(Boolean) : undefined
+
+  const { filters, hasFilters } = getSongFiltersFromSearchParams(searchParams)
+
+  try {
+    const [songs, totalFiles] = await Promise.all([
+      getSongsByFolder(
+        folderPath,
+        search,
+        sortFieldParam,
+        sortParam,
+        offset,
+        limit,
+        hasFilters ? filters : undefined,
+        metadataKeys
+      ),
+      countSongsByFolder(folderPath, search, hasFilters ? filters : undefined)
+    ])
+
+    return NextResponse.json({
+      success: true,
+      folderPath: folderPath ?? 'all',
+      totalFiles,
+      files: songs
+    })
+  } catch (error) {
+    console.error('Error fetching songs:', error)
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error fetching songs'
+      },
+      { status: 500 }
+    )
+  }
+}

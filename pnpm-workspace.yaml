@@ -1,0 +1,23 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@prisma/engines': true
+  '@swc/core': true
+  esbuild: true
+  msw: true
+  prisma: true
+  sharp: true
+  unrs-resolver: true
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
+  - msw
+  - sharp
+  - unrs-resolver
+# audiotagr is ours: we publish it and bump it here in the same session, so
+# the release-age quarantine for third-party packages does not apply.
+minimumReleaseAgeExclude:
+  - audiotagr
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - better-sqlite3
+  - prisma

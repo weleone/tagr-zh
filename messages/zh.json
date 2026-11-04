@@ -1,0 +1,623 @@
+{
+  "nav": {
+    "home": "首页",
+    "settings": "设置"
+  },
+  "navigation": {
+    "folders": "文件夹",
+    "library": "曲库",
+    "songs": "歌曲",
+    "details": "详情"
+  },
+  "common": {
+    "loading": "正在加载...",
+    "error": "发生错误",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "duplicate": "复制",
+    "search": "搜索",
+    "logout": "退出登录",
+    "unknown": "未知",
+    "more": "更多",
+    "less": "收起"
+  },
+  "folders": {
+    "title": "Tagr",
+    "subtitle": "音乐库管理",
+    "empty": "未配置文件夹",
+    "notFound": "未找到文件夹",
+    "searchPlaceholder": "搜索文件夹...",
+    "totalFolders": "{count} 个文件夹",
+    "totalFiles": "{count, plural, =0 {没有文件} one {# 个文件} other {# 个文件}}",
+    "totalSubfolders": "{count, plural, =0 {没有子文件夹} one {# 个子文件夹} other {# 个子文件夹}}",
+    "allFolders": "全部文件夹",
+    "selectFolder": "选择文件夹或播放列表",
+    "selectFolderDescription": "从侧边栏选择一个文件夹或智能播放列表，查看其中的音乐文件",
+    "browseFolders": "浏览曲库",
+    "loadingFolders": "正在加载文件夹...",
+    "errorLoading": "加载失败",
+    "errorLoadingDescription": "无法加载文件夹",
+    "file": "{count, plural, one {个文件} other {个文件}}",
+    "files": "{count} 个文件",
+    "subfolder": "{count, plural, one {个子文件夹} other {个子文件夹}}",
+    "subfolders": "{count} 个子文件夹",
+    "quickScan": "快速扫描",
+    "quickScanDescription": "仅扫描新增或修改过的文件",
+    "quickScanConfirmTitle": "快速扫描？",
+    "quickScanConfirmDescription": "仅处理新增文件和修改日期有变化的文件。适合新增音乐或替换文件后使用。未改动修改日期、但在外部编辑过的文件将无法被检测到。",
+    "fullScan": "完整扫描",
+    "fullScanDescription": "重新扫描全部文件并更新元数据",
+    "fullScanConfirmTitle": "完整扫描？",
+    "fullScanConfirmDescription": "重新读取曲库中每个文件的元数据并更新数据库。如果用外部程序（如 MusicBrainz Picard、Mp3tag）改过标签、怀疑数据库与文件不同步，或者刚更新 Tagr，都适合用完整扫描。曲库较大时可能需要较长时间。",
+    "skipped": "已跳过",
+    "rescan": "重新扫描曲库",
+    "history": "查看修改历史",
+    "feedback": "发送反馈",
+    "installApp": "安装应用",
+    "appInstalled": "应用已安装",
+    "manageUsers": "管理用户",
+    "scanning": "正在扫描曲库...",
+    "scanningProgress": "正在扫描曲库...（{current}/{total}）",
+    "scanCompleted": "扫描完成",
+    "scanFailed": "扫描失败",
+    "filesScanned": "个文件已扫描",
+    "added": "已添加",
+    "updated": "已更新",
+    "deleted": "已删除",
+    "errors": "个错误",
+    "viewDetails": "详情",
+    "unknownError": "发生未知错误"
+  },
+  "scanSummary": {
+    "title": "扫描摘要",
+    "totalFiles": "{count, plural, one {已处理 # 个文件} other {已处理 # 个文件}}"
+  },
+  "summary": {
+    "added": "已添加",
+    "updated": "已更新",
+    "cover": "已更新",
+    "deleted": "已删除",
+    "skipped": "已跳过",
+    "errors": "错误",
+    "andMore": "…还有 {count, plural, one {# 个} other {# 个}}"
+  },
+  "files": {
+    "title": "文件",
+    "empty": "未找到音乐文件",
+    "emptyDescription": "该文件夹或智能播放列表中没有音乐文件。请尝试扫描曲库或选择其他来源。",
+    "syncNow": "立即扫描",
+    "details": "文件详情",
+    "selectFile": "选择一个文件查看详情",
+    "fileInfo": "文件信息",
+    "searchPlaceholder": "按标题、艺术家、专辑、发行商、备注或文件名搜索歌曲...",
+    "filterPlaceholder": "筛选...",
+    "filterPlaceholderPressEnter": "按回车添加筛选条件...",
+    "dateFilterPlaceholder": "选择日期...",
+    "noFilterResults": "没有歌曲符合当前筛选条件",
+    "clearFilters": "清除筛选",
+    "clearDateFilter": "清除",
+    "applyDateFilter": "应用",
+    "booleanFilterAll": "全部",
+    "booleanFilterYes": "是",
+    "booleanFilterNo": "否",
+    "selectFilterAll": "全部",
+    "selectFilterSelected": "已选 {count} 项"
+  },
+  "musicInfo": {
+    "title": "歌曲信息"
+  },
+  "trackInfo": {
+    "title": "音轨信息",
+    "of": "/"
+  },
+  "audioProperties": {
+    "title": "音频属性"
+  },
+  "notes": {
+    "title": "备注"
+  },
+  "textareaEdit": {
+    "importFromFile": "从文件导入",
+    "importError": "无法读取该文件",
+    "saveHint": "⌘/Ctrl + 回车保存"
+  },
+  "customTags": {
+    "title": "自定义标签",
+    "addTag": "添加标签",
+    "allHidden": "该歌曲的全部自定义标签均已隐藏",
+    "key": "键",
+    "value": "值",
+    "empty": "没有自定义标签",
+    "keyPlaceholder": "标签名（例如 MOOD）",
+    "valuePlaceholder": "标签值",
+    "deleteConfirm": "删除这个标签吗？"
+  },
+  "playback": {
+    "volume": "音量",
+    "startTime": "开始时间",
+    "stopTime": "结束时间",
+    "gapless": "无缝播放"
+  },
+  "fields": {
+    "title": "标题",
+    "artist": "艺术家",
+    "sortArtist": "艺术家排序",
+    "album": "专辑",
+    "sortAlbum": "专辑排序",
+    "albumArtist": "专辑艺术家",
+    "sortAlbumArtist": "专辑艺术家排序",
+    "year": "年份",
+    "genre": "流派",
+    "style": "风格",
+    "composer": "作曲",
+    "conductor": "指挥",
+    "bpm": "BPM",
+    "grouping": "分组",
+    "publisher": "发行商",
+    "catalogNumber": "目录编号",
+    "releaseType": "发行类型",
+    "lyricist": "作词",
+    "barcode": "条形码",
+    "work": "作品",
+    "originalReleaseDate": "原始发行日期",
+    "copyright": "版权",
+    "rating": "评分",
+    "compilation": "合辑",
+    "trackNumber": "音轨",
+    "trackTotal": "音轨总数",
+    "discNumber": "碟片",
+    "discTotal": "碟片总数",
+    "duration": "时长",
+    "comment": "备注",
+    "lyrics": "歌词",
+    "codec": "编码",
+    "bitrate": "码率",
+    "sampleRate": "采样率",
+    "channels": "声道",
+    "bitsPerSample": "位深",
+    "encoder": "编码器",
+    "bitDepthValue": "{value} 位",
+    "extension": "格式",
+    "fileSize": "大小",
+    "modifiedAt": "修改时间",
+    "createdAt": "创建时间",
+    "picture": "封面",
+    "fileName": "文件名",
+    "filePath": "文件路径",
+    "folderPath": "文件夹路径",
+    "dateAdded": "添加日期",
+    "lastPlayed": "上次播放",
+    "listenedAt": "收听时间",
+    "playCount": "播放次数",
+    "lossless": "无损"
+  },
+  "history": {
+    "title": "修改历史",
+    "titleForSong": "历史 — {songTitle}",
+    "empty": "暂无修改记录",
+    "unknownSong": "未知",
+    "revert": "撤销",
+    "searchPlaceholder": "按歌曲标题或艺术家筛选...",
+    "viewHistory": "查看修改历史",
+    "rescanSong": "重新扫描歌曲文件",
+    "revertSelected": "撤销 {count, plural, one {# 条修改} other {# 条修改}}",
+    "clearSelection": "取消全选",
+    "emptyValue": "—"
+  },
+  "columns": {
+    "toggleColumns": "列",
+    "genericTags": "通用标签",
+    "customTags": "自定义标签"
+  },
+  "previewCard": {
+    "play": "播放",
+    "pause": "暂停",
+    "editCover": "编辑封面",
+    "downloadCover": "下载封面",
+    "lossless": "无损"
+  },
+  "musicbrainzLookup": {
+    "title": "MusicBrainz — {songTitle}",
+    "tooltip": "在 MusicBrainz 上查找元数据",
+    "search": "搜索",
+    "back": "返回",
+    "score": "匹配度：{score}%",
+    "noResults": "未找到录音",
+    "noSearchFields": "请添加一个搜索字段",
+    "loadMore": "加载更多",
+    "resultsCount": "正在显示 {total} 条结果中的 {shown} 条",
+    "field": "字段",
+    "currentValue": "当前值",
+    "mbValue": "MusicBrainz 值",
+    "applySelected": "应用所选",
+    "noFields": "该发行版本没有可用的元数据字段",
+    "coverArt": "封面",
+    "currentCover": "当前封面",
+    "mbCover": "MusicBrainz 封面",
+    "noCover": "没有封面",
+    "replaceCover": "替换封面",
+    "mbid": "MBID",
+    "mbidPlaceholder": "录音、发行版本或艺术家的 MBID",
+    "matchMode": "匹配方式",
+    "matchModeOption": {
+      "all": "全部字段",
+      "any": "任意字段"
+    },
+    "searchFields": "字段"
+  },
+  "musicbrainz": {
+    "fetchSuccess": "已从 MusicBrainz 更新封面",
+    "fetchError": "获取封面失败",
+    "unknownError": "发生未知错误",
+    "fetchMusicBrainz": "从 MusicBrainz 获取封面",
+    "fetchMusicBrainzConfirmTitle": "从 MusicBrainz 获取封面？",
+    "fetchMusicBrainzConfirmDescription": "这将搜索 MusicBrainz 上的专辑封面，找到后替换当前封面。此操作可在历史记录中撤销。",
+    "fetchMusicBrainzConfirmAction": "获取封面"
+  },
+  "stats": {
+    "title": "统计"
+  },
+  "formats": {
+    "mp3": "MPEG 音频层 3",
+    "flac": "免费无损音频编解码",
+    "wav": "波形音频",
+    "m4a": "MPEG-4 音频",
+    "m4b": "MPEG-4 有声书",
+    "ogg": "Ogg Vorbis",
+    "aac": "高级音频编码",
+    "unknown": "音频文件"
+  },
+  "login": {
+    "title": "登录",
+    "description": "输入账号密码以访问你的账户",
+    "username": "用户名",
+    "usernamePlaceholder": "输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "输入密码",
+    "submit": "登录",
+    "submitting": "正在登录...",
+    "invalidCredentials": "用户名或密码不正确",
+    "genericError": "发生错误，请重试。"
+  },
+  "welcome": {
+    "title": "欢迎使用 Tagr",
+    "description": "Tagr 需要扫描你的音乐文件夹以建立本地数据库，这样浏览和搜索曲库才会快速流畅。你的音乐及其标签不会离开本机。",
+    "timing": "根据曲库大小，这个过程可能需要几分钟。",
+    "scanButton": "扫描曲库",
+    "scanning": "正在扫描你的曲库...",
+    "insightsNotice": "Tagr 每天可发送一次匿名的使用统计（Insights）：仅统计数量，绝不包含文件名、路径或用户名。未经你同意不会发送，你也可以随时在设置中关闭。"
+  },
+  "version": {
+    "updateAvailable": "有新版本 {version} 可用",
+    "viewRelease": "查看发行说明",
+    "dismiss": "忽略"
+  },
+  "savedFilters": {
+    "title": "筛选器",
+    "save": "保存",
+    "saveCurrentFilters": "保存当前筛选条件",
+    "filterName": "筛选器名称",
+    "noSavedFilters": "没有已保存的筛选器",
+    "deleteFilter": "删除筛选器",
+    "loadFilter": "加载筛选器"
+  },
+  "share": {
+    "tooltip": "分享歌曲",
+    "title": "分享歌曲",
+    "description": "生成一个临时仅收听链接。收到链接的人可以播放歌曲，但不能修改或删除任何数据。",
+    "expiration": "链接有效期",
+    "generate": "生成链接",
+    "generating": "正在生成...",
+    "copyLink": "复制链接",
+    "copied": "已复制！",
+    "linkReady": "分享链接已就绪",
+    "expiresAt": "过期时间：{date}",
+    "pageTitle": "分享的歌曲 — {title}",
+    "expired": "该分享链接已过期",
+    "notFound": "未找到分享链接",
+    "errorDescription": "该链接可能已过期或已被删除。",
+    "sharedVia": "分享自",
+    "of": "/",
+    "metadata": {
+      "fallbackTitle": "Tagr — 分享的歌曲",
+      "untitled": "未命名",
+      "unknownArtist": "未知艺术家",
+      "title": "{title} — {artist} | Tagr",
+      "description": "收听 {artist} 的 {title}",
+      "descriptionWithAlbum": "收听 {artist} 专辑《{album}》中的 {title}",
+      "ogTitle": "{title} — {artist}"
+    }
+  },
+  "time": {
+    "fiveMinutes": "5 分钟",
+    "fifteenMinutes": "15 分钟",
+    "oneHour": "1 小时",
+    "sixHours": "6 小时",
+    "twentyFourHours": "24 小时",
+    "sevenDays": "7 天",
+    "thirtyDays": "30 天"
+  },
+  "starPrompt": {
+    "title": "喜欢 Tagr 吗？",
+    "description": "如果 Tagr 对你有帮助，可以考虑在 GitHub 上给它点个星，这能帮助更多人发现这个项目。别担心，我们不会再问第二次。",
+    "starOnGithub": "在 GitHub 上点星",
+    "maybeLater": "不用了"
+  },
+  "api": {
+    "folders": {
+      "noFoldersConfigured": "未配置音乐文件夹。请设置 MUSIC_FOLDERS 环境变量。",
+      "pathNotDirectory": "该路径不是文件夹",
+      "unknownError": "读取文件夹时发生未知错误"
+    }
+  },
+  "users": {
+    "title": "管理用户",
+    "description": "创建、编辑和删除可以访问 Tagr 的用户。",
+    "createUser": "创建用户",
+    "editUser": "编辑用户",
+    "deleteUser": "删除用户",
+    "deleteConfirm": "确定要删除用户“{username}”吗？",
+    "username": "用户名",
+    "password": "密码",
+    "passwordHint": "留空则保持当前密码不变",
+    "role": "角色",
+    "roles": {
+      "admin": "管理员",
+      "tagger": "标签编辑者",
+      "listener": "收听者"
+    },
+    "roleDescriptions": {
+      "tagger": "可以浏览、播放、编辑元数据标签，并重新扫描曲库",
+      "listener": "只能浏览和播放音乐"
+    },
+    "noUsers": "暂无用户",
+    "noUsersDescription": "创建第一个用户开始使用",
+    "userCreated": "用户已创建",
+    "userUpdated": "用户已更新",
+    "userDeleted": "用户已删除",
+    "cancel": "取消",
+    "save": "保存"
+  },
+  "smartPlaylists": {
+    "title": "智能播放列表",
+    "newPlaylist": "新建智能播放列表",
+    "publicHeader": "公开智能播放列表",
+    "publicBadge": "公开",
+    "empty": "暂无智能播放列表",
+    "confirmDelete": "删除智能播放列表“{name}”吗？",
+    "copy": "副本",
+    "viewing": {
+      "label": "智能播放列表"
+    },
+    "create": {
+      "title": "创建智能播放列表",
+      "description": "定义规则，自动收录符合任意字段条件的歌曲。",
+      "name": "名称",
+      "namePlaceholder": "我的智能播放列表",
+      "isPublic": "让其他用户也能看到这个播放列表",
+      "matchLabel": "匹配",
+      "matchAll": "匹配全部规则（与）",
+      "matchAny": "匹配任意规则（或）",
+      "rulesLabel": "规则",
+      "addRule": "添加规则",
+      "standardFields": "歌曲字段",
+      "customFields": "自定义元数据",
+      "valuePlaceholder": "值"
+    },
+    "edit": {
+      "title": "编辑智能播放列表"
+    },
+    "operators": {
+      "equals": "等于",
+      "notEquals": "不等于",
+      "contains": "包含",
+      "notContains": "不包含",
+      "startsWith": "开头是",
+      "endsWith": "结尾是",
+      "isEmpty": "为空",
+      "isNotEmpty": "不为空",
+      "gt": "大于",
+      "gte": "大于或等于",
+      "lt": "小于",
+      "lte": "小于或等于",
+      "before": "早于",
+      "after": "晚于",
+      "on": "等于该日期",
+      "isTrue": "为真",
+      "isFalse": "为假"
+    }
+  },
+  "bulkEdit": {
+    "selectAllButton": "全选歌曲",
+    "contextMenu": {
+      "selectSong": "选择歌曲",
+      "selectAllFolder": "选择整个文件夹",
+      "selectAllPlaylist": "选择整个智能播放列表",
+      "selectAllRecent": "选择全部最近播放",
+      "clearSelection": "清除选择",
+      "setCover": "为所选歌曲设置封面"
+    },
+    "actionBar": {
+      "selectedCount": "{count, plural, one {已选 # 首歌曲} other {已选 # 首歌曲}}",
+      "wholeFolder": "（整个文件夹）",
+      "wholePlaylist": "（整个播放列表）",
+      "edit": "编辑",
+      "setCover": "设置封面",
+      "fetchCovers": "从 MusicBrainz 获取封面",
+      "musicbrainz": "在 MusicBrainz 上查找",
+      "cancel": "取消选择"
+    },
+    "edit": {
+      "title": "批量编辑",
+      "description": "改动过的字段将应用到全部所选歌曲，未改动的字段保持不变。",
+      "variousPlaceholder": "（各不相同）",
+      "partialSampleNote": "正在显示 {total} 首所选歌曲中已加载的 {loaded} 首的共同值。未改动的字段将对全部所选歌曲保持不变。",
+      "noFieldsTouched": "请先编辑至少一个字段再继续。",
+      "next": "继续",
+      "sections": {
+        "music": "音乐",
+        "track": "音轨",
+        "misc": "其他",
+        "custom": "自定义标签"
+      },
+      "fieldsMenu": "字段",
+      "addCustomKey": "添加自定义标签",
+      "customKeyPlaceholder": "新标签名（例如 SOURCEMEDIA）"
+    },
+    "cover": {
+      "title": "从 MusicBrainz 获取封面",
+      "description": "每首所选歌曲都会查找各自的 MusicBrainz 发行版本并写入封面。操作限速为每秒 1 次请求。",
+      "estimate": "预计用时：{count, plural, one {# 首歌曲} other {# 首歌曲}}约 {duration}。",
+      "warning": "现有封面将被覆盖，但需要时可以从历史记录中恢复。"
+    },
+    "setCover": {
+      "title": "设置封面",
+      "description": "选择一张图片，它将作为 {count, plural, one {所选歌曲} other {全部 # 首所选歌曲}} 的封面写入。",
+      "dropHint": "把图片拖到这里，或使用下面的按钮。",
+      "upload": "上传图片",
+      "replaceFile": "替换图片",
+      "removeFile": "删除图片",
+      "selectedAnnounce": "已选图片：{name}",
+      "errorNotImage": "该文件不是图片。",
+      "errorTooLarge": "该图片太大了，最大为 {size}。",
+      "applyNote": "该图片将替换 {count, plural, one {# 首歌曲} other {# 首歌曲}} 的封面。"
+    },
+    "progress": {
+      "label": "正在处理 {completed} / {total}"
+    },
+    "confirm": {
+      "affecting": "{count, plural, one {将影响 # 首歌曲} other {将影响 # 首歌曲}}",
+      "applyToCount": "应用到 {count, plural, one {# 首歌曲} other {# 首歌曲}}",
+      "context": {
+        "explicit": "{count, plural, one {已选 # 首歌曲} other {已选 # 首歌曲}}",
+        "folder": "文件夹 {name}",
+        "playlist": "智能播放列表 {name}"
+      }
+    },
+    "result": {
+      "success": "{count, plural, one {已更新 # 首歌曲} other {已更新 # 首歌曲}}",
+      "partial": "已更新 {ok} 首，失败 {failed} 首",
+      "allFailed": "全部 {count} 首歌曲均失败",
+      "viewDetails": "详情"
+    }
+  },
+  "bulkSummary": {
+    "titleEdit": "批量编辑摘要",
+    "titleCover": "封面获取摘要",
+    "totalFiles": "{count, plural, one {已处理 # 首歌曲} other {已处理 # 首歌曲}}",
+    "titleSetCover": "封面更新摘要",
+    "titleMusicbrainz": "MusicBrainz 查找摘要"
+  },
+  "bulkMusicbrainz": {
+    "title": "MusicBrainz 查找",
+    "description": "在 MusicBrainz 上查找一张专辑，并把每首所选歌曲写入其对应音轨的标签",
+    "searchHint": "{count, plural, one {已选 # 首歌曲。} other {已选 # 首歌曲。}} 搜索它们所属的发行版本，下一步会把它们匹配到该版本的音轨。",
+    "search": "搜索",
+    "searchFailed": "MusicBrainz 搜索失败，请稍后再试。",
+    "noReleases": "未找到发行版本",
+    "resultsCount": "正在显示 {total} 个发行版本中的 {shown} 个",
+    "trackCount": "{count, plural, one {# 首音轨} other {# 首音轨}}",
+    "score": "匹配度：{score}%",
+    "loadMore": "加载更多",
+    "noTracks": "无法加载该发行版本的音轨。",
+    "back": "返回",
+    "matchSummary": "{total} 首歌曲中有 {matched} 首匹配到了“{release}”的音轨。请检查匹配结果，必要时手动选择音轨。",
+    "fieldsToWrite": "要写入的字段",
+    "replaceCover": "同时用该发行版本封面替换封面",
+    "noCover": "该发行版本没有封面",
+    "song": "歌曲",
+    "track": "发行版本中的音轨",
+    "changes": "改动",
+    "noTrack": "没有音轨",
+    "noChanges": "已是最新",
+    "continue": "{count, plural, one {继续处理 # 首歌曲} other {继续处理 # 首歌曲}}",
+    "matchReason": {
+      "number": "碟片/音轨号",
+      "title": "标题",
+      "duration": "时长",
+      "manual": "手动",
+      "unmatched": "未匹配"
+    },
+    "tooManySongs": "最多选择 {limit} 首歌曲——查找会把它们与同一个发行版本匹配。",
+    "summary": {
+      "description": "每首歌曲都会获得其匹配音轨的标签，只有发生变化的字段才会被写入。",
+      "release": "发行版本",
+      "fields": "字段",
+      "cover": "封面",
+      "yes": "替换",
+      "no": "保留"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "sections": {
+      "users": "用户",
+      "integrations": "第三方集成",
+      "detailPanel": "歌曲面板",
+      "insights": "Insights",
+      "language": "语言"
+    }
+  },
+  "detailPanelSettings": {
+    "title": "歌曲面板字段",
+    "description": "选择歌曲面板显示哪些字段。隐藏的字段仍保留原值，只是不再列出。",
+    "showAll": "显示全部",
+    "noCustomTags": "你的曲库中暂无自定义标签",
+    "tooltip": "选择可见字段"
+  },
+  "languageSettings": {
+    "title": "语言",
+    "description": "选择 Tagr 的显示语言。自动表示跟随浏览器语言。",
+    "label": "界面语言",
+    "automatic": "自动"
+  },
+  "scrobbling": {
+    "listenbrainz": "ListenBrainz",
+    "description": "把你在 Tagr 中播放的歌曲发送到你的 ListenBrainz 个人主页。",
+    "enable": "记录我播放的内容",
+    "token": "用户令牌",
+    "tokenPlaceholder": "粘贴你的 ListenBrainz 令牌",
+    "tokenStored": "已保存一个令牌——输入新的令牌可替换它",
+    "tokenHelp": "从你的 <link>ListenBrainz 设置</link>中复制。",
+    "apiRoot": "API 根地址（可选）",
+    "save": "验证并保存",
+    "saved": "收听记录设置已保存",
+    "connectedAs": "已连接为 {username}",
+    "disconnect": "断开连接",
+    "disconnected": "ListenBrainz 已断开",
+    "pending": "有 {count} 条收听记录等待发送"
+  },
+  "listens": {
+    "title": "最近播放",
+    "empty": "还没有播放过"
+  },
+  "insights": {
+    "title": "Insights",
+    "description": "Insights 是 Tagr 的匿名使用统计。Tagr 每天发送一次小型报告（版本、曲库规模、哪些功能被使用），以便了解有多少人在用、该改进什么。报告绝不包含文件名、路径、标签或用户名。",
+    "enable": "发送 Insights（匿名使用统计）",
+    "forcedByEnv": "已被 TAGR_INSIGHTS 环境变量禁用。",
+    "lastSent": "上次报告发送于 {date}。",
+    "neverSent": "还没有发送过报告。",
+    "dashboard": "汇总结果是公开的：<link>查看仪表盘</link>。",
+    "preview": "显示实际发送的内容",
+    "previewHelp": "以下 JSON 将发送到 {endpoint}：",
+    "enabledToast": "Insights 已开启",
+    "disabledToast": "Insights 已关闭",
+    "noticeTitle": "用 Insights 帮助改进 Tagr",
+    "noticeBody": "Insights 是匿名使用统计：Tagr 每天可以发送一次小型报告，以便了解有多少人在用、哪些功能值得继续做。在你保持开启之前，不会发送任何内容。",
+    "noticeDetails": "显示确切的报告内容",
+    "noticeKeep": "保持开启",
+    "noticeDisable": "关闭",
+    "pendingNotice": "还没有发送过任何内容：需管理员确认后才开始。",
+    "noticeSentTitle": "会发送的内容",
+    "noticeSent": "Tagr 版本、操作系统和架构、歌曲和用户数量、文件格式，以及标签编辑、智能播放列表、收听记录等功能的使用频率。",
+    "noticeNeverTitle": "绝不会发送的内容",
+    "noticeNever": "文件名、路径、标签、用户名、令牌或你的 IP 地址。",
+    "noticeLater": "你可以随时在“设置 → Insights”中更改。",
+    "sendNow": "立即发送",
+    "sentToast": "报告已发送",
+    "sendFailedToast": "无法发送报告：{error}"
+  }
+}

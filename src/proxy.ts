@@ -1,0 +1,30 @@
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { auth } from '@/auth'
+
+export async function proxy(request: NextRequest) {
+  const session = await auth()
+  const isLoggedIn = !!session
+  const isOnLoginPage = request.nextUrl.pathname === '/login'
+  const isAuthRoute = request.nextUrl.pathname.startsWith('/api/auth')
+  const isShareRoute = request.nextUrl.pathname.startsWith('/share/')
+    || request.nextUrl.pathname.startsWith('/api/share/')
+
+  if (isAuthRoute || isShareRoute) {
+    return NextResponse.next()
+  }
+
+  if (isOnLoginPage && isLoggedIn) {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
+  if (!isOnLoginPage && !isLoggedIn) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|sw\\.js|manifest\\.webmanifest|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)']
+}

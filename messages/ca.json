@@ -1,0 +1,623 @@
+{
+  "nav": {
+    "home": "Inici",
+    "settings": "Configuració"
+  },
+  "navigation": {
+    "folders": "Carpetes",
+    "library": "Biblioteca",
+    "songs": "Cançons",
+    "details": "Detalls"
+  },
+  "common": {
+    "loading": "Carregant...",
+    "error": "S’ha produït un error",
+    "save": "Desa",
+    "cancel": "Cancel·la",
+    "delete": "Elimina",
+    "edit": "Edita",
+    "duplicate": "Duplica",
+    "search": "Cerca",
+    "logout": "Tanca la sessió",
+    "unknown": "Desconegut",
+    "more": "Més",
+    "less": "Menys"
+  },
+  "folders": {
+    "title": "Tagr",
+    "subtitle": "Gestió de biblioteca musical",
+    "empty": "No hi ha carpetes configurades",
+    "notFound": "No s’ha trobat cap carpeta",
+    "searchPlaceholder": "Cerca carpetes...",
+    "totalFolders": "{count} carpetes",
+    "totalFiles": "{count, plural, =0 {Cap fitxer} one {# fitxer} other {# fitxers}}",
+    "totalSubfolders": "{count, plural, =0 {Cap subcarpeta} one {# subcarpeta} other {# subcarpetes}}",
+    "allFolders": "Totes les carpetes",
+    "selectFolder": "Selecciona una carpeta o llista",
+    "selectFolderDescription": "Tria una carpeta o una llista intel·ligent a la barra lateral per veure’n els fitxers de música",
+    "browseFolders": "Explora la biblioteca",
+    "loadingFolders": "Carregant carpetes...",
+    "errorLoading": "Error en carregar",
+    "errorLoadingDescription": "No s’han pogut carregar les carpetes",
+    "file": "{count, plural, one {fitxer} other {fitxers}}",
+    "files": "{count} fitxers",
+    "subfolder": "{count, plural, one {subcarpeta} other {subcarpetes}}",
+    "subfolders": "{count} subcarpetes",
+    "quickScan": "Escaneig ràpid",
+    "quickScanDescription": "Només escaneja fitxers nous o modificats",
+    "quickScanConfirmTitle": "Escaneig ràpid?",
+    "quickScanConfirmDescription": "Només processa els fitxers nous i els que tenen una data de modificació diferent. Ideal quan has afegit música nova o has substituït fitxers. Els fitxers editats externament sense canviar la data de modificació no es detectaran.",
+    "fullScan": "Escaneig complet",
+    "fullScanDescription": "Torna a escanejar tots els fitxers i actualitza les metadades",
+    "fullScanConfirmTitle": "Escaneig complet?",
+    "fullScanConfirmDescription": "Torna a llegir les metadades de tots els fitxers de la teva biblioteca i actualitza la base de dades. Fes-lo servir si has editat etiquetes amb una aplicació externa (p. ex. MusicBrainz Picard, Mp3tag), si sospites que la base de dades no està sincronitzada o després d’actualitzar Tagr. Pot trigar una estona en biblioteques grans.",
+    "skipped": "omesos",
+    "rescan": "Torna a escanejar la biblioteca",
+    "history": "Mostra l’historial de canvis",
+    "feedback": "Envia comentaris",
+    "installApp": "Instal·la l’app",
+    "appInstalled": "App instal·lada",
+    "manageUsers": "Gestiona els usuaris",
+    "scanning": "Escanejant la biblioteca...",
+    "scanningProgress": "Escanejant la biblioteca... ({current}/{total})",
+    "scanCompleted": "Escaneig completat",
+    "scanFailed": "L’escaneig ha fallat",
+    "filesScanned": "fitxers escanejats",
+    "added": "afegits",
+    "updated": "actualitzats",
+    "deleted": "eliminats",
+    "errors": "errors",
+    "viewDetails": "Detalls",
+    "unknownError": "S’ha produït un error desconegut"
+  },
+  "scanSummary": {
+    "title": "Resum de l’escaneig",
+    "totalFiles": "{count, plural, one {# fitxer processat} other {# fitxers processats}}"
+  },
+  "summary": {
+    "added": "Afegits",
+    "updated": "Actualitzats",
+    "cover": "Actualitzats",
+    "deleted": "Eliminats",
+    "skipped": "Omesos",
+    "errors": "Errors",
+    "andMore": "…i {count, plural, one {# més} other {# més}}"
+  },
+  "files": {
+    "title": "Fitxers",
+    "empty": "No s’ha trobat cap fitxer de música",
+    "emptyDescription": "Aquesta carpeta o llista intel·ligent no conté fitxers de música. Prova d’escanejar la biblioteca o de seleccionar un altre origen.",
+    "syncNow": "Escaneja ara",
+    "details": "Detalls del fitxer",
+    "selectFile": "Selecciona un fitxer per veure’n els detalls",
+    "fileInfo": "Informació del fitxer",
+    "searchPlaceholder": "Cerca cançons per títol, artista, àlbum, segell, comentari o nom de fitxer...",
+    "filterPlaceholder": "Filtra...",
+    "filterPlaceholderPressEnter": "Prem Retorn per afegir un filtre...",
+    "dateFilterPlaceholder": "Selecciona una data...",
+    "noFilterResults": "Cap cançó coincideix amb els filtres actuals",
+    "clearFilters": "Esborra els filtres",
+    "clearDateFilter": "Esborra",
+    "applyDateFilter": "Aplica",
+    "booleanFilterAll": "Tots",
+    "booleanFilterYes": "Sí",
+    "booleanFilterNo": "No",
+    "selectFilterAll": "Tots",
+    "selectFilterSelected": "{count} seleccionats"
+  },
+  "musicInfo": {
+    "title": "Informació de la cançó"
+  },
+  "trackInfo": {
+    "title": "Informació de la pista",
+    "of": "de"
+  },
+  "audioProperties": {
+    "title": "Propietats d’àudio"
+  },
+  "notes": {
+    "title": "Notes"
+  },
+  "textareaEdit": {
+    "importFromFile": "Importa des d’un fitxer",
+    "importError": "No s’ha pogut llegir aquest fitxer",
+    "saveHint": "⌘/Ctrl + Retorn per desar"
+  },
+  "customTags": {
+    "title": "Etiquetes personalitzades",
+    "addTag": "Afegeix etiqueta",
+    "allHidden": "Totes les etiquetes personalitzades d’aquesta cançó estan amagades",
+    "key": "Clau",
+    "value": "Valor",
+    "empty": "Cap etiqueta personalitzada",
+    "keyPlaceholder": "Nom de l’etiqueta (p. ex. MOOD)",
+    "valuePlaceholder": "Valor de l’etiqueta",
+    "deleteConfirm": "Vols eliminar aquesta etiqueta?"
+  },
+  "playback": {
+    "volume": "Volum",
+    "startTime": "Temps d’inici",
+    "stopTime": "Temps de final",
+    "gapless": "Sense pauses"
+  },
+  "fields": {
+    "title": "Títol",
+    "artist": "Artista",
+    "sortArtist": "Artista (ordenació)",
+    "album": "Àlbum",
+    "sortAlbum": "Àlbum (ordenació)",
+    "albumArtist": "Artista de l’àlbum",
+    "sortAlbumArtist": "Artista de l’àlbum (ordenació)",
+    "year": "Any",
+    "genre": "Gènere",
+    "style": "Estil",
+    "composer": "Compositor",
+    "conductor": "Director",
+    "bpm": "BPM",
+    "grouping": "Agrupació",
+    "publisher": "Segell",
+    "catalogNumber": "Número de catàleg",
+    "releaseType": "Tipus de llançament",
+    "lyricist": "Lletrista",
+    "barcode": "Codi de barres",
+    "work": "Obra",
+    "originalReleaseDate": "Data de llançament original",
+    "copyright": "Copyright",
+    "rating": "Valoració",
+    "compilation": "Recopilatori",
+    "trackNumber": "Pista",
+    "trackTotal": "Total de pistes",
+    "discNumber": "Disc",
+    "discTotal": "Total de discs",
+    "duration": "Durada",
+    "comment": "Comentari",
+    "lyrics": "Lletra",
+    "codec": "Còdec",
+    "bitrate": "Taxa de bits",
+    "sampleRate": "Freqüència de mostratge",
+    "channels": "Canals",
+    "bitsPerSample": "Profunditat de bits",
+    "encoder": "Codificador",
+    "bitDepthValue": "{value} bits",
+    "extension": "Format",
+    "fileSize": "Mida",
+    "modifiedAt": "Modificat",
+    "createdAt": "Creat",
+    "picture": "Portada",
+    "fileName": "Nom del fitxer",
+    "filePath": "Ruta del fitxer",
+    "folderPath": "Ruta de la carpeta",
+    "dateAdded": "Data d’incorporació",
+    "lastPlayed": "Última reproducció",
+    "listenedAt": "Escoltada el",
+    "playCount": "Reproduccions",
+    "lossless": "Sense pèrdua"
+  },
+  "history": {
+    "title": "Historial de canvis",
+    "titleForSong": "Historial — {songTitle}",
+    "empty": "Encara no hi ha canvis registrats",
+    "unknownSong": "Desconeguda",
+    "revert": "Reverteix",
+    "searchPlaceholder": "Filtra per títol o artista...",
+    "viewHistory": "Mostra l’historial de canvis",
+    "rescanSong": "Torna a escanejar el fitxer",
+    "revertSelected": "Reverteix {count, plural, one {# canvi} other {# canvis}}",
+    "clearSelection": "Desselecciona-ho tot",
+    "emptyValue": "—"
+  },
+  "columns": {
+    "toggleColumns": "Columnes",
+    "genericTags": "Etiquetes genèriques",
+    "customTags": "Etiquetes personalitzades"
+  },
+  "previewCard": {
+    "play": "Reprodueix",
+    "pause": "Pausa",
+    "editCover": "Edita la portada",
+    "downloadCover": "Baixa la portada",
+    "lossless": "Sense pèrdua"
+  },
+  "musicbrainzLookup": {
+    "title": "MusicBrainz — {songTitle}",
+    "tooltip": "Cerca metadades a MusicBrainz",
+    "search": "Cerca",
+    "back": "Enrere",
+    "score": "Puntuació: {score}%",
+    "noResults": "No s’ha trobat cap enregistrament",
+    "noSearchFields": "Afegeix un camp per cercar",
+    "loadMore": "Carrega’n més",
+    "resultsCount": "Es mostren {shown} de {total} resultats",
+    "field": "Camp",
+    "currentValue": "Actual",
+    "mbValue": "MusicBrainz",
+    "applySelected": "Aplica la selecció",
+    "noFields": "Aquest llançament no té camps de metadades disponibles",
+    "coverArt": "Portada",
+    "currentCover": "Actual",
+    "mbCover": "MusicBrainz",
+    "noCover": "Sense portada",
+    "replaceCover": "Substitueix la portada",
+    "mbid": "MBID",
+    "mbidPlaceholder": "MBID d’enregistrament, llançament o artista",
+    "matchMode": "Coincidència",
+    "matchModeOption": {
+      "all": "Tots els camps",
+      "any": "Qualsevol camp"
+    },
+    "searchFields": "Camps"
+  },
+  "musicbrainz": {
+    "fetchSuccess": "Portada actualitzada des de MusicBrainz",
+    "fetchError": "No s’ha pogut obtenir la portada",
+    "unknownError": "S’ha produït un error desconegut",
+    "fetchMusicBrainz": "Obtén la portada de MusicBrainz",
+    "fetchMusicBrainzConfirmTitle": "Vols obtenir la portada de MusicBrainz?",
+    "fetchMusicBrainzConfirmDescription": "Es cercarà la portada de l’àlbum a MusicBrainz i, si es troba, substituirà la imatge actual. Aquesta acció es pot desfer des de l’historial.",
+    "fetchMusicBrainzConfirmAction": "Obtén la portada"
+  },
+  "stats": {
+    "title": "Estadístiques"
+  },
+  "formats": {
+    "mp3": "MPEG Audio Layer 3",
+    "flac": "Free Lossless Audio Codec",
+    "wav": "Waveform Audio",
+    "m4a": "MPEG-4 Audio",
+    "m4b": "Audiollibre MPEG-4",
+    "ogg": "Ogg Vorbis",
+    "aac": "Advanced Audio Coding",
+    "unknown": "Fitxer d’àudio"
+  },
+  "login": {
+    "title": "Inicia la sessió",
+    "description": "Introdueix les teves credencials per accedir al teu compte",
+    "username": "Usuari",
+    "usernamePlaceholder": "Introdueix el teu usuari",
+    "password": "Contrasenya",
+    "passwordPlaceholder": "Introdueix la teva contrasenya",
+    "submit": "Inicia la sessió",
+    "submitting": "Iniciant la sessió...",
+    "invalidCredentials": "Usuari o contrasenya incorrectes",
+    "genericError": "S’ha produït un error. Torna-ho a provar."
+  },
+  "welcome": {
+    "title": "Et donem la benvinguda a Tagr",
+    "description": "Tagr ha d’escanejar les teves carpetes de música per crear una base de dades local. Així explorar i cercar a la biblioteca és ràpid i fluid. La teva música i les seves etiquetes no surten mai de la teva màquina.",
+    "timing": "Aquest procés pot trigar uns minuts segons la mida de la teva biblioteca.",
+    "scanButton": "Escaneja la biblioteca",
+    "scanning": "Escanejant la teva biblioteca...",
+    "insightsNotice": "Tagr pot enviar estadístiques d’ús anònimes (Insights) un cop al dia: només recomptes, mai noms de fitxer, rutes ni noms d’usuari. No s’envia res fins que no ho acceptis, i ho pots desactivar a Configuració."
+  },
+  "version": {
+    "updateAvailable": "Hi ha disponible la versió {version}",
+    "viewRelease": "Mostra la versió",
+    "dismiss": "Descarta"
+  },
+  "savedFilters": {
+    "title": "Filtres",
+    "save": "Desa",
+    "saveCurrentFilters": "Desa els filtres actuals",
+    "filterName": "Nom del filtre",
+    "noSavedFilters": "No hi ha filtres desats",
+    "deleteFilter": "Elimina el filtre",
+    "loadFilter": "Carrega el filtre"
+  },
+  "share": {
+    "tooltip": "Comparteix la cançó",
+    "title": "Comparteix la cançó",
+    "description": "Genera un enllaç temporal només per escoltar. Qui el rebi pot reproduir la cançó, però no pot modificar ni eliminar cap dada.",
+    "expiration": "L’enllaç caduca d’aquí a",
+    "generate": "Genera l’enllaç",
+    "generating": "Generant...",
+    "copyLink": "Copia l’enllaç",
+    "copied": "Copiat!",
+    "linkReady": "Enllaç a punt per compartir",
+    "expiresAt": "Caduca el {date}",
+    "pageTitle": "Cançó compartida — {title}",
+    "expired": "Aquest enllaç ha caducat",
+    "notFound": "No s’ha trobat l’enllaç",
+    "errorDescription": "Pot ser que aquest enllaç hagi caducat o s’hagi eliminat.",
+    "sharedVia": "Compartit amb",
+    "of": "de",
+    "metadata": {
+      "fallbackTitle": "Tagr — Cançó compartida",
+      "untitled": "Sense títol",
+      "unknownArtist": "Artista desconegut",
+      "title": "{title} — {artist} | Tagr",
+      "description": "Escolta {title} de {artist}",
+      "descriptionWithAlbum": "Escolta {title} de {artist}, de l’àlbum {album}",
+      "ogTitle": "{title} — {artist}"
+    }
+  },
+  "time": {
+    "fiveMinutes": "5 minuts",
+    "fifteenMinutes": "15 minuts",
+    "oneHour": "1 hora",
+    "sixHours": "6 hores",
+    "twentyFourHours": "24 hores",
+    "sevenDays": "7 dies",
+    "thirtyDays": "30 dies"
+  },
+  "starPrompt": {
+    "title": "T’agrada Tagr?",
+    "description": "Si Tagr t’ha estat útil, pensa a donar-li una estrella a GitHub. Ajuda altres persones a descobrir el projecte! Tranquil, no t’ho tornarem a preguntar.",
+    "starOnGithub": "Dona una estrella a GitHub",
+    "maybeLater": "No, gràcies"
+  },
+  "api": {
+    "folders": {
+      "noFoldersConfigured": "No hi ha carpetes de música configurades. Defineix la variable d’entorn MUSIC_FOLDERS.",
+      "pathNotDirectory": "La ruta no és un directori",
+      "unknownError": "Error desconegut en llegir la carpeta"
+    }
+  },
+  "users": {
+    "title": "Gestiona els usuaris",
+    "description": "Crea, edita i elimina els usuaris que poden accedir a Tagr.",
+    "createUser": "Crea un usuari",
+    "editUser": "Edita l’usuari",
+    "deleteUser": "Elimina l’usuari",
+    "deleteConfirm": "Segur que vols eliminar l’usuari \"{username}\"?",
+    "username": "Usuari",
+    "password": "Contrasenya",
+    "passwordHint": "Deixa-ho en blanc per mantenir l’actual",
+    "role": "Rol",
+    "roles": {
+      "admin": "Administrador",
+      "tagger": "Etiquetador",
+      "listener": "Oient"
+    },
+    "roleDescriptions": {
+      "tagger": "Pot explorar, reproduir, editar etiquetes de metadades i tornar a escanejar la biblioteca",
+      "listener": "Només pot explorar i reproduir música"
+    },
+    "noUsers": "Encara no hi ha usuaris",
+    "noUsersDescription": "Crea el teu primer usuari per començar",
+    "userCreated": "Usuari creat",
+    "userUpdated": "Usuari actualitzat",
+    "userDeleted": "Usuari eliminat",
+    "cancel": "Cancel·la",
+    "save": "Desa"
+  },
+  "smartPlaylists": {
+    "title": "Llistes intel·ligents",
+    "newPlaylist": "Nova llista intel·ligent",
+    "publicHeader": "Llistes intel·ligents públiques",
+    "publicBadge": "Pública",
+    "empty": "Encara no hi ha llistes intel·ligents",
+    "confirmDelete": "Vols eliminar la llista intel·ligent \"{name}\"?",
+    "copy": "còpia",
+    "viewing": {
+      "label": "Llista intel·ligent"
+    },
+    "create": {
+      "title": "Crea una llista intel·ligent",
+      "description": "Defineix regles per incloure automàticament les cançons que coincideixin en qualsevol camp.",
+      "name": "Nom",
+      "namePlaceholder": "La meva llista intel·ligent",
+      "isPublic": "Fes visible aquesta llista per a altres usuaris",
+      "matchLabel": "Coincidència",
+      "matchAll": "Compleix totes les regles (I)",
+      "matchAny": "Compleix alguna regla (O)",
+      "rulesLabel": "Regles",
+      "addRule": "Afegeix una regla",
+      "standardFields": "Camps de la cançó",
+      "customFields": "Metadades personalitzades",
+      "valuePlaceholder": "Valor"
+    },
+    "edit": {
+      "title": "Edita la llista intel·ligent"
+    },
+    "operators": {
+      "equals": "és igual a",
+      "notEquals": "no és igual a",
+      "contains": "conté",
+      "notContains": "no conté",
+      "startsWith": "comença per",
+      "endsWith": "acaba en",
+      "isEmpty": "és buit",
+      "isNotEmpty": "no és buit",
+      "gt": "més gran que",
+      "gte": "més gran o igual que",
+      "lt": "més petit que",
+      "lte": "més petit o igual que",
+      "before": "abans de",
+      "after": "després de",
+      "on": "el",
+      "isTrue": "és cert",
+      "isFalse": "és fals"
+    }
+  },
+  "bulkEdit": {
+    "selectAllButton": "Selecciona totes les cançons",
+    "contextMenu": {
+      "selectSong": "Selecciona la cançó",
+      "selectAllFolder": "Selecciona tota la carpeta",
+      "selectAllPlaylist": "Selecciona tota la llista intel·ligent",
+      "selectAllRecent": "Selecciona tot el que s’ha reproduït recentment",
+      "clearSelection": "Esborra la selecció",
+      "setCover": "Estableix la portada per a la selecció"
+    },
+    "actionBar": {
+      "selectedCount": "{count, plural, one {# cançó seleccionada} other {# cançons seleccionades}}",
+      "wholeFolder": "(carpeta sencera)",
+      "wholePlaylist": "(llista sencera)",
+      "edit": "Edita",
+      "setCover": "Estableix la portada",
+      "fetchCovers": "Obtén portades de MusicBrainz",
+      "musicbrainz": "Cerca a MusicBrainz",
+      "cancel": "Cancel·la la selecció"
+    },
+    "edit": {
+      "title": "Edició múltiple",
+      "description": "Els camps que modifiquis s’aplicaran a totes les cançons seleccionades. La resta no canviaran.",
+      "variousPlaceholder": "(diversos)",
+      "partialSampleNote": "Es mostren els valors comuns de {loaded} cançons carregades de {total}. Els camps que no modifiquis no canviaran en cap cançó seleccionada.",
+      "noFieldsTouched": "Edita almenys un camp abans de continuar.",
+      "next": "Continua",
+      "sections": {
+        "music": "Música",
+        "track": "Pista",
+        "misc": "Altres",
+        "custom": "Etiquetes personalitzades"
+      },
+      "fieldsMenu": "Camps",
+      "addCustomKey": "Afegeix una etiqueta personalitzada",
+      "customKeyPlaceholder": "Nom de la nova etiqueta (p. ex. SOURCEMEDIA)"
+    },
+    "cover": {
+      "title": "Obtén portades de MusicBrainz",
+      "description": "Cada cançó seleccionada cerca el seu propi llançament a MusicBrainz i n’escriu la portada. L’operació està limitada a una petició per segon.",
+      "estimate": "Temps estimat: ~{duration} per a {count, plural, one {# cançó} other {# cançons}}.",
+      "warning": "Les portades existents se sobreescriuran, però es poden restaurar des de l’historial si cal."
+    },
+    "setCover": {
+      "title": "Estableix la portada",
+      "description": "Tria una imatge i s’escriurà com a portada de {count, plural, one {la cançó seleccionada} other {les # cançons seleccionades}}.",
+      "dropHint": "Arrossega una imatge aquí o fes servir el botó de sota.",
+      "upload": "Puja una imatge",
+      "replaceFile": "Substitueix la imatge",
+      "removeFile": "Treu la imatge",
+      "selectedAnnounce": "Imatge seleccionada: {name}",
+      "errorNotImage": "Aquest fitxer no és una imatge.",
+      "errorTooLarge": "La imatge és massa gran. La mida màxima és {size}.",
+      "applyNote": "Aquesta imatge substituirà la portada de {count, plural, one {# cançó} other {# cançons}}."
+    },
+    "progress": {
+      "label": "Processant {completed} / {total}"
+    },
+    "confirm": {
+      "affecting": "{count, plural, one {# cançó afectada} other {# cançons afectades}}",
+      "applyToCount": "Aplica a {count, plural, one {# cançó} other {# cançons}}",
+      "context": {
+        "explicit": "{count, plural, one {# cançó seleccionada} other {# cançons seleccionades}}",
+        "folder": "Carpeta {name}",
+        "playlist": "Llista intel·ligent {name}"
+      }
+    },
+    "result": {
+      "success": "{count, plural, one {# cançó actualitzada} other {# cançons actualitzades}}",
+      "partial": "{ok} actualitzades, {failed} amb error",
+      "allFailed": "Han fallat les {count} cançons",
+      "viewDetails": "Detalls"
+    }
+  },
+  "bulkSummary": {
+    "titleEdit": "Resum de l’edició múltiple",
+    "titleCover": "Resum de l’obtenció de portades",
+    "totalFiles": "{count, plural, one {# cançó processada} other {# cançons processades}}",
+    "titleSetCover": "Resum de l’actualització de portades",
+    "titleMusicbrainz": "Resum de la cerca a MusicBrainz"
+  },
+  "bulkMusicbrainz": {
+    "title": "Cerca a MusicBrainz",
+    "description": "Cerca un àlbum a MusicBrainz i escriu a cada cançó seleccionada les etiquetes de la seva pista",
+    "searchHint": "{count, plural, one {# cançó seleccionada.} other {# cançons seleccionades.}} Cerca el llançament al qual pertanyen; al pas següent s’assignen a les seves pistes.",
+    "search": "Cerca",
+    "searchFailed": "La cerca a MusicBrainz ha fallat. Torna-ho a provar d’aquí a un moment.",
+    "noReleases": "No s’ha trobat cap llançament",
+    "resultsCount": "Es mostren {shown} de {total} llançaments",
+    "trackCount": "{count, plural, one {# pista} other {# pistes}}",
+    "score": "Puntuació: {score}%",
+    "loadMore": "Carrega’n més",
+    "noTracks": "No s’han pogut carregar les pistes d’aquest llançament.",
+    "back": "Enrere",
+    "matchSummary": "{matched} de {total} cançons assignades a una pista de «{release}». Revisa les assignacions i tria una pista on calgui.",
+    "fieldsToWrite": "Camps que s’escriuran",
+    "replaceCover": "Substitueix també la portada per la portada frontal d’aquest llançament",
+    "noCover": "Aquest llançament no té portada",
+    "song": "Cançó",
+    "track": "Pista del llançament",
+    "changes": "Canvis",
+    "noTrack": "Cap pista",
+    "noChanges": "Ja està actualitzada",
+    "continue": "{count, plural, one {Continua amb # cançó} other {Continua amb # cançons}}",
+    "matchReason": {
+      "number": "Disc/pista",
+      "title": "Títol",
+      "duration": "Durada",
+      "manual": "Manual",
+      "unmatched": "Sense assignar"
+    },
+    "tooManySongs": "Selecciona com a màxim {limit} cançons: la cerca les assigna a un sol llançament.",
+    "summary": {
+      "description": "Cada cançó rep les etiquetes de la pista assignada. Només s’escriuen els camps que canvien.",
+      "release": "Llançament",
+      "fields": "Camps",
+      "cover": "Portada",
+      "yes": "Substitueix",
+      "no": "Conserva"
+    }
+  },
+  "settings": {
+    "title": "Configuració",
+    "sections": {
+      "users": "Usuaris",
+      "integrations": "Integracions de tercers",
+      "detailPanel": "Panell de la cançó",
+      "insights": "Insights",
+      "language": "Idioma"
+    }
+  },
+  "detailPanelSettings": {
+    "title": "Camps del panell de la cançó",
+    "description": "Tria quins camps mostra el panell de la cançó. Els camps amagats conserven els seus valors, simplement no es mostren.",
+    "showAll": "Mostra-ho tot",
+    "noCustomTags": "Encara no hi ha etiquetes personalitzades a la teva biblioteca",
+    "tooltip": "Tria els camps visibles"
+  },
+  "languageSettings": {
+    "title": "Idioma",
+    "description": "Tria l’idioma en què es mostra Tagr. Automàtic segueix l’idioma del navegador.",
+    "label": "Idioma de la interfície",
+    "automatic": "Automàtic"
+  },
+  "scrobbling": {
+    "listenbrainz": "ListenBrainz",
+    "description": "Envia les cançons que reprodueixes a Tagr al teu perfil de ListenBrainz.",
+    "enable": "Fes scrobbling del que reprodueixo",
+    "token": "Token d’usuari",
+    "tokenPlaceholder": "Enganxa el teu token de ListenBrainz",
+    "tokenStored": "Ja hi ha un token desat: escriu-ne un de nou per substituir-lo",
+    "tokenHelp": "Copia’l de la teva <link>configuració de ListenBrainz</link>.",
+    "apiRoot": "Arrel de l’API (opcional)",
+    "save": "Verifica i desa",
+    "saved": "Configuració de scrobbling desada",
+    "connectedAs": "Connectat com a {username}",
+    "disconnect": "Desconnecta",
+    "disconnected": "ListenBrainz desconnectat",
+    "pending": "{count} escoltes pendents d’enviar"
+  },
+  "listens": {
+    "title": "Reproduït recentment",
+    "empty": "Encara no s’ha reproduït res"
+  },
+  "insights": {
+    "title": "Insights",
+    "description": "Insights són les estadístiques d’ús anònimes de Tagr. Un cop al dia, Tagr envia un petit informe (versió, mida de la biblioteca, quines funcions es fan servir) perquè sapiguem quanta gent l’utilitza i què cal millorar. Mai no inclou noms de fitxer, rutes, etiquetes ni noms d’usuari.",
+    "enable": "Envia Insights (estadístiques d’ús anònimes)",
+    "forcedByEnv": "Desactivat per la variable d’entorn TAGR_INSIGHTS.",
+    "lastSent": "Últim informe enviat el {date}.",
+    "neverSent": "Encara no s’ha enviat cap informe.",
+    "dashboard": "Els resultats agregats són públics: <link>consulta el tauler</link>.",
+    "preview": "Mostra exactament el que s’envia",
+    "previewHelp": "Aquest JSON s’envia a {endpoint}:",
+    "enabledToast": "Insights activat",
+    "disabledToast": "Insights desactivat",
+    "noticeTitle": "Ajuda a millorar Tagr amb Insights",
+    "noticeBody": "Insights són estadístiques d’ús anònimes: un cop al dia, Tagr pot enviar un petit informe perquè sapiguem quanta gent l’utilitza i en quines funcions val la pena treballar. Encara no s’ha enviat res, i no s’enviarà si no ho mantens activat.",
+    "noticeDetails": "Mostra l’informe exacte",
+    "noticeKeep": "Mantén-ho activat",
+    "noticeDisable": "Desactiva",
+    "pendingNotice": "Encara no s’ha enviat res: començarà quan un administrador ho confirmi.",
+    "noticeSentTitle": "Què s’envia",
+    "noticeSent": "Versió de Tagr, sistema operatiu i arquitectura, nombre de cançons i usuaris, formats de fitxer i amb quina freqüència es fan servir funcions com l’edició d’etiquetes, les llistes intel·ligents o el scrobbling.",
+    "noticeNeverTitle": "Què no s’envia mai",
+    "noticeNever": "Noms de fitxer, rutes, etiquetes, noms d’usuari, tokens ni la teva adreça IP.",
+    "noticeLater": "Ho pots canviar en qualsevol moment a Configuració → Insights.",
+    "sendNow": "Envia ara",
+    "sentToast": "Informe enviat",
+    "sendFailedToast": "No s’ha pogut enviar l’informe: {error}"
+  }
+}
