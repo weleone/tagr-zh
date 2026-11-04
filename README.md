@@ -1,3 +1,4 @@
+# 加入中文支持
 <p align="center">
   <img src="docs/tagr-logo.webp" alt="Tagr Logo" width="120" />
 </p>
