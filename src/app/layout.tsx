@@ -5,11 +5,13 @@ import { SessionProvider } from 'next-auth/react'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale } from 'next-intl/server'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { auth } from '@/auth'
 import { QueryProvider } from '@/components/providers/query-provider'
 import { ServiceWorkerRegister } from '@/components/pwa/service-worker-register'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AlertDialogProvider } from '@/contexts/alert-dialog-context'
+import { getConfigValue } from '@/features/config/config.repository'
 import './globals.css'
 
 const geistSans = Geist({
@@ -55,9 +57,12 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const locale = await getLocale()
+  const session = await auth()
+  const savedTheme = session?.user?.id ? await getConfigValue(session.user.id, 'theme') : null
+  const theme = savedTheme === 'light' ? 'light' : 'dark'
 
   return (
-    <html lang={locale} className='dark'>
+    <html lang={locale} className={theme === 'dark' ? 'dark' : undefined}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} cz-shortcut-listen='true'>
         <SessionProvider>
           <NuqsAdapter>

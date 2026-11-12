@@ -30,7 +30,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     prefetchConfig(queryClient, session, 'columnVisibility', DEFAULT_VISIBLE_COLUMNS),
     prefetchConfig(queryClient, session, 'sortOrder', DEFAULT_SORT_ORDER),
     prefetchConfig(queryClient, session, 'detailPanelFields', DEFAULT_DETAIL_PANEL_FIELDS),
-    prefetchConfig(queryClient, session, 'locale', AUTOMATIC_LOCALE)
+    prefetchConfig(queryClient, session, 'locale', AUTOMATIC_LOCALE),
+    prefetchConfig(queryClient, session, 'theme', 'dark')
   ])
 
   return (

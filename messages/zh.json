@@ -573,6 +573,10 @@
     "label": "界面语言",
     "automatic": "自动"
   },
+  "themeToggle": {
+    "switchToLight": "切换到浅色主题",
+    "switchToDark": "切换到深色主题"
+  },
   "scrobbling": {
     "listenbrainz": "ListenBrainz",
     "description": "把你在 Tagr 中播放的歌曲发送到你的 ListenBrainz 个人主页。",

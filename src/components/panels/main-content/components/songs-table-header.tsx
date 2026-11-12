@@ -2,6 +2,7 @@
 
 import { FolderIcon, HistoryIcon, SparklesIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { useMobileNavStore } from '@/stores/mobile-nav-store'
@@ -46,7 +47,10 @@ export function SongsTableHeader({
               <h1 className='text-xl md:text-2xl font-bold text-foreground mt-1 truncate'>{title}</h1>
             </div>
           </div>
-          {badges && <div className='flex items-center gap-2 flex-shrink-0'>{badges}</div>}
+          <div className='flex items-center gap-2 flex-shrink-0'>
+            {badges}
+            <ThemeToggle />
+          </div>
         </div>
 
         <div className='md:hidden flex items-center gap-2 mb-3 min-w-0'>
@@ -61,6 +65,9 @@ export function SongsTableHeader({
             </button>
           )}
           <span className='text-sm font-semibold truncate'>{mobileTitle ?? title}</span>
+          <div className='ml-auto flex-shrink-0'>
+            <ThemeToggle />
+          </div>
         </div>
 
         <div className='relative md:mt-4'>

@@ -12,6 +12,7 @@ export type ConfigKey =
   | 'bulkEditFields'
   | 'detailPanelFields'
   | 'locale'
+  | 'theme'
 
 /** Which inputs the MusicBrainz lookup form shows. */
 export type MusicBrainzSearchFieldsState = Record<MusicBrainzSearchField, boolean>

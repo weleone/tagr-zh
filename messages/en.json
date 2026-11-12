@@ -573,6 +573,10 @@
     "label": "Interface language",
     "automatic": "Automatic"
   },
+  "themeToggle": {
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme"
+  },
   "scrobbling": {
     "listenbrainz": "ListenBrainz",
     "description": "Send the songs you play in Tagr to your ListenBrainz profile.",
