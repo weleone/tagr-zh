@@ -10,16 +10,16 @@ describe('negotiateLocale', () => {
   })
 
   it('matches a regional tag to its base language', () => {
-    expect(negotiateLocale('de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7')).toBe('de')
-    expect(negotiateLocale('de-AT')).toBe('de')
-    expect(negotiateLocale('es-MX')).toBe('es')
-    expect(negotiateLocale('fr-CA,fr;q=0.9')).toBe('fr')
+    expect(negotiateLocale('zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7')).toBe('zh')
+    expect(negotiateLocale('zh-TW')).toBe('zh')
+    expect(negotiateLocale('en-US')).toBe('en')
+    expect(negotiateLocale('en-GB,en;q=0.9')).toBe('en')
   })
 
   it('respects quality values', () => {
-    expect(negotiateLocale('en;q=0.5, de;q=0.9')).toBe('de')
-    expect(negotiateLocale('ja-JP,ja;q=0.9,de;q=0.8,en;q=0.7')).toBe('de')
-    expect(negotiateLocale('ca-ES,ca;q=0.9,es;q=0.8')).toBe('ca')
+    expect(negotiateLocale('en;q=0.5, zh;q=0.9')).toBe('zh')
+    expect(negotiateLocale('ja-JP,ja;q=0.9,zh;q=0.8,en;q=0.7')).toBe('zh')
+    expect(negotiateLocale('zh-CN,zh;q=0.9,en;q=0.8')).toBe('zh')
   })
 
   it('falls back when no supported language is requested', () => {
@@ -31,15 +31,15 @@ describe('negotiateLocale', () => {
 
 describe('resolveLocale', () => {
   it('prefers the language the user saved over the browser', () => {
-    expect(resolveLocale('de', 'en-US,en;q=0.9')).toBe('de')
-    expect(resolveLocale('en', 'de-DE,de;q=0.9')).toBe('en')
+    expect(resolveLocale('zh', 'en-US,en;q=0.9')).toBe('zh')
+    expect(resolveLocale('en', 'zh-CN,zh;q=0.9')).toBe('en')
   })
 
   it('follows the browser when the setting is automatic, empty or no longer supported', () => {
-    expect(resolveLocale(AUTOMATIC_LOCALE, 'de-DE')).toBe('de')
-    expect(resolveLocale(null, 'de-DE')).toBe('de')
-    expect(resolveLocale('', 'de-DE')).toBe('de')
-    expect(resolveLocale('ja', 'de-DE')).toBe('de')
+    expect(resolveLocale(AUTOMATIC_LOCALE, 'zh-CN')).toBe('zh')
+    expect(resolveLocale(null, 'zh-CN')).toBe('zh')
+    expect(resolveLocale('', 'zh-CN')).toBe('zh')
+    expect(resolveLocale('ja', 'zh-CN')).toBe('zh')
     expect(resolveLocale(AUTOMATIC_LOCALE, null)).toBe(defaultLocale)
   })
 
