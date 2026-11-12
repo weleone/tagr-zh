@@ -108,6 +108,10 @@ export function BulkFilenameModal({ open, onOpenChange, target, onSubmit }: Bulk
               ))}
             </div>
             <p className='text-xs text-muted-foreground'>{t('templateHint')}</p>
+            <p className='text-xs text-muted-foreground'>
+              {t('allFields')}{' '}
+              {FILENAME_TEMPLATE_FIELDS.map(field => `${fieldLabel(field.key)}(${field.key})`).join('、')}
+            </p>
             {templateError && <p className='text-xs text-destructive'>{templateError}</p>}
           </div>
 

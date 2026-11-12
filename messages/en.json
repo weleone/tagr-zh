@@ -567,6 +567,7 @@
     "description": "Split each selected song's file name by a template and write the parts as tags",
     "templateLabel": "File name template",
     "templateHint": "Use {field} placeholders, e.g. {title}-{album}-{publisher}. Tap a field below to insert it.",
+    "allFields": "All usable fields (type the English name):",
     "errorNoPlaceholder": "The template needs at least one {field} placeholder.",
     "errorUnknownField": "Unknown field in the template: {field}.",
     "previewTitle": "Preview: {matched} of {total} songs match",

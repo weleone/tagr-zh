@@ -567,6 +567,7 @@
     "description": "按模板拆分每首所选歌曲的文件名，并把各部分写入标签",
     "templateLabel": "文件名模板",
     "templateHint": "用 {字段} 占位，例如 {title}-{album}-{publisher}。点下面的字段可以插入。",
+    "allFields": "全部可用字段（直接打英文名）：",
     "errorNoPlaceholder": "模板里至少要有一个 {字段} 占位。",
     "errorUnknownField": "模板里有不支持的字段：{field}。",
     "previewTitle": "预览：{total} 首中有 {matched} 首能解析",
