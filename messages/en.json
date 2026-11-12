@@ -447,6 +447,7 @@
       "setCover": "Set cover",
       "fetchCovers": "Get covers from MusicBrainz",
       "musicbrainz": "Look up on MusicBrainz",
+      "filename": "Parse from file name",
       "cancel": "Cancel selection"
     },
     "edit": {
@@ -508,7 +509,8 @@
     "titleCover": "Cover fetch summary",
     "totalFiles": "{count, plural, one {# song processed} other {# songs processed}}",
     "titleSetCover": "Cover update summary",
-    "titleMusicbrainz": "MusicBrainz lookup summary"
+    "titleMusicbrainz": "MusicBrainz lookup summary",
+    "titleFilename": "File name parsing summary"
   },
   "bulkMusicbrainz": {
     "title": "MusicBrainz lookup",
@@ -558,6 +560,24 @@
       "detailPanel": "Song panel",
       "insights": "Insights",
       "language": "Language"
+    }
+  },
+  "bulkFilename": {
+    "title": "Parse from file name",
+    "description": "Split each selected song's file name by a template and write the parts as tags",
+    "templateLabel": "File name template",
+    "templateHint": "Use {field} placeholders, e.g. {title}-{album}-{publisher}. Tap a field below to insert it.",
+    "errorNoPlaceholder": "The template needs at least one {field} placeholder.",
+    "errorUnknownField": "Unknown field in the template: {field}.",
+    "previewTitle": "Preview: {matched} of {total} songs match",
+    "noMatch": "Does not match the template",
+    "nothingMatched": "No song matches this template. Check the separators and the field order.",
+    "next": "Continue with {count, plural, one {# song} other {# songs}}",
+    "summary": {
+      "description": "The parsed values below will be written to {count, plural, one {# song} other {# songs}}.",
+      "template": "Template",
+      "song": "Song {id}",
+      "andMore": "and {count, plural, one {# more song} other {# more songs}}"
     }
   },
   "detailPanelSettings": {

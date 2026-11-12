@@ -7,6 +7,10 @@ import { BulkConfirmModal } from '@/components/bulk-confirm-modal/bulk-confirm-m
 import { BulkEditModal } from '@/components/bulk-edit-modal/bulk-edit-modal'
 import { isEmptyBulkPatch, type BulkPatch } from '@/components/bulk-edit-modal/build-patch'
 import {
+  BulkFilenameModal,
+  type BulkFilenameSubmission
+} from '@/components/bulk-filename-modal/bulk-filename-modal'
+import {
   BulkMusicBrainzModal,
   type BulkMusicBrainzSubmission
 } from '@/components/bulk-musicbrainz-modal/bulk-musicbrainz-modal'
@@ -16,6 +20,7 @@ import { useBulkApplyMusicBrainz } from '@/features/musicbrainz/hooks/use-bulk-m
 import { useSmartPlaylists } from '@/features/smart-playlists/hooks/use-smart-playlists'
 import { buildBulkTargetFromSelection } from '@/features/songs/bulk-target-helpers'
 import { type Song } from '@/features/songs/domain'
+import { useBulkApplyFilename } from '@/features/songs/hooks/use-bulk-filename'
 import { useBulkUpdateSongPicture } from '@/features/songs/hooks/use-bulk-update-song-picture'
 import { useBulkUpdateSongs } from '@/features/songs/hooks/use-bulk-update-songs'
 import { useBulkSelectionStore, useSelectionCount, useSelectionState } from '@/stores/bulk-selection-store'
@@ -23,6 +28,7 @@ import { type BulkSummaryKind, useHomeStore } from '@/stores/home-store'
 import { BulkActionBarPill } from './bulk-action-bar-pill'
 import { BulkCoverPickerModal } from './bulk-cover-picker-modal'
 import { CoverSummary } from './cover-summary'
+import { FilenameSummary } from './filename-summary'
 import { buildContextLabel, filterLoadedBySelection } from './helpers'
 import { MusicBrainzSummary } from './musicbrainz-summary'
 import { PatchSummary } from './patch-summary'
@@ -37,6 +43,7 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
   const tFolders = useTranslations('folders')
   const tListens = useTranslations('listens')
   const tMusicBrainz = useTranslations('bulkMusicbrainz')
+  const tFilename = useTranslations('bulkFilename')
 
   const selection = useSelectionState()
   const count = useSelectionCount()
@@ -48,16 +55,19 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
 
   const [editOpen, setEditOpen] = useState(false)
   const [musicBrainzOpen, setMusicBrainzOpen] = useState(false)
-  const [confirmKind, setConfirmKind] = useState<'edit' | 'cover' | 'set-cover' | 'musicbrainz' | null>(null)
+  const [filenameOpen, setFilenameOpen] = useState(false)
+  const [confirmKind, setConfirmKind] = useState<'edit' | 'cover' | 'set-cover' | 'musicbrainz' | 'filename' | null>(null)
   const [pendingPatch, setPendingPatch] = useState<BulkPatch | null>(null)
   const [pendingCover, setPendingCover] = useState<File | null>(null)
   const [pendingMusicBrainz, setPendingMusicBrainz] = useState<BulkMusicBrainzSubmission | null>(null)
+  const [pendingFilename, setPendingFilename] = useState<BulkFilenameSubmission | null>(null)
   const [progress, setProgress] = useState<{ completed: number; total: number } | null>(null)
 
   const updateMutation = useBulkUpdateSongs()
   const coverMutation = useBulkFetchMusicBrainzCover()
   const setCoverMutation = useBulkUpdateSongPicture()
   const musicBrainzMutation = useBulkApplyMusicBrainz()
+  const filenameMutation = useBulkApplyFilename()
 
   const playlists = useSmartPlaylists().data
   const playlistName = useMemo(() => {
@@ -71,6 +81,12 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
   const musicBrainzTarget = useMemo(
     () => (musicBrainzOpen && selection ? buildBulkTargetFromSelection(selection) : null),
     [musicBrainzOpen, selection]
+  )
+
+  // Same for the filename template dialog: it resolves the selection on the server.
+  const filenameTarget = useMemo(
+    () => (filenameOpen && selection ? buildBulkTargetFromSelection(selection) : null),
+    [filenameOpen, selection]
   )
 
   if (!selection) return null
@@ -104,14 +120,22 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
     setConfirmKind('musicbrainz')
   }
 
+  const handleFilenameSubmit = (submission: BulkFilenameSubmission) => {
+    setPendingFilename(submission)
+    setFilenameOpen(false)
+    setConfirmKind('filename')
+  }
+
   const closeAll = () => {
     setEditOpen(false)
     setMusicBrainzOpen(false)
+    setFilenameOpen(false)
     setCoverPickerOpen(false)
     setConfirmKind(null)
     setPendingPatch(null)
     setPendingCover(null)
     setPendingMusicBrainz(null)
+    setPendingFilename(null)
     setProgress(null)
   }
 
@@ -224,6 +248,25 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
     }
   }
 
+  const runFilename = async (
+    target: ReturnType<typeof buildBulkTargetFromSelection>,
+    submission: BulkFilenameSubmission
+  ) => {
+    if (!target) return
+    try {
+      const result = await filenameMutation.mutateAsync({
+        target,
+        items: submission.items,
+        onProgress: handleProgress
+      })
+      reportResults('filename', result.results)
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : 'Filename parsing failed')
+    } finally {
+      closeAll()
+    }
+  }
+
   const handleConfirm = () => {
     const target = buildBulkTargetFromSelection(selection)
     if (!target) return
@@ -235,11 +278,17 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
       void runSetCover(target, pendingCover)
     } else if (confirmKind === 'musicbrainz' && pendingMusicBrainz) {
       void runMusicBrainz(target, pendingMusicBrainz)
+    } else if (confirmKind === 'filename' && pendingFilename) {
+      void runFilename(target, pendingFilename)
     }
   }
 
   const busy =
-    updateMutation.isPending || coverMutation.isPending || setCoverMutation.isPending || musicBrainzMutation.isPending
+    updateMutation.isPending ||
+    coverMutation.isPending ||
+    setCoverMutation.isPending ||
+    musicBrainzMutation.isPending ||
+    filenameMutation.isPending
 
   const confirmTitle =
     confirmKind === 'edit'
@@ -250,7 +299,9 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
           ? tBulk('setCover.title')
           : confirmKind === 'musicbrainz'
             ? tMusicBrainz('title')
-            : ''
+            : confirmKind === 'filename'
+              ? tFilename('title')
+              : ''
 
   const confirmChanges =
     confirmKind === 'edit' && pendingPatch ? (
@@ -261,6 +312,8 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
       <SetCoverSummary file={pendingCover} count={count} />
     ) : confirmKind === 'musicbrainz' && pendingMusicBrainz ? (
       <MusicBrainzSummary submission={pendingMusicBrainz} />
+    ) : confirmKind === 'filename' && pendingFilename ? (
+      <FilenameSummary items={pendingFilename.items} template={pendingFilename.template} />
     ) : null
 
   const confirmWarning =
@@ -276,6 +329,7 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
         onSetCover={() => setCoverPickerOpen(true)}
         onFetchCovers={() => setConfirmKind('cover')}
         onMusicBrainz={() => setMusicBrainzOpen(true)}
+        onFilename={() => setFilenameOpen(true)}
       />
 
       <BulkMusicBrainzModal
@@ -283,6 +337,13 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
         onOpenChange={setMusicBrainzOpen}
         target={musicBrainzTarget}
         onSubmit={handleMusicBrainzSubmit}
+      />
+
+      <BulkFilenameModal
+        open={filenameOpen}
+        onOpenChange={setFilenameOpen}
+        target={filenameTarget}
+        onSubmit={handleFilenameSubmit}
       />
 
       <BulkEditModal
@@ -308,12 +369,19 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
             setPendingPatch(null)
             setPendingCover(null)
             setPendingMusicBrainz(null)
+            setPendingFilename(null)
           }
         }}
         onConfirm={handleConfirm}
         title={confirmTitle}
         // The lookup writes only the songs it matched, which can be fewer than were selected.
-        affectedCount={confirmKind === 'musicbrainz' && pendingMusicBrainz ? pendingMusicBrainz.items.length : count}
+        affectedCount={
+          confirmKind === 'musicbrainz' && pendingMusicBrainz
+            ? pendingMusicBrainz.items.length
+            : confirmKind === 'filename' && pendingFilename
+              ? pendingFilename.items.length
+              : count
+        }
         contextLabel={contextLabel}
         changes={confirmChanges}
         warning={confirmWarning}

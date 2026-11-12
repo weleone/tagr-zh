@@ -71,6 +71,18 @@ export function findSongsForMusicBrainzMatch(ids: number[]) {
   })
 }
 
+/** Filename-template parsing only needs the id and the file name. */
+export function findSongsForFilename(ids: number[]) {
+  return prisma.song.findMany({
+    where: { id: { in: ids } },
+    select: {
+      id: true,
+      fileName: true,
+      folderPath: true
+    }
+  })
+}
+
 export function findSongForPeaks(
   id: number
 ): Promise<{ filePath: string; duration: number | null; peaks: string | null } | null> {

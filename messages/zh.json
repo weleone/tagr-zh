@@ -447,6 +447,7 @@
       "setCover": "设置封面",
       "fetchCovers": "从 MusicBrainz 获取封面",
       "musicbrainz": "在 MusicBrainz 上查找",
+      "filename": "从文件名解析",
       "cancel": "取消选择"
     },
     "edit": {
@@ -508,7 +509,8 @@
     "titleCover": "封面获取摘要",
     "totalFiles": "{count, plural, one {已处理 # 首歌曲} other {已处理 # 首歌曲}}",
     "titleSetCover": "封面更新摘要",
-    "titleMusicbrainz": "MusicBrainz 查找摘要"
+    "titleMusicbrainz": "MusicBrainz 查找摘要",
+    "titleFilename": "文件名解析摘要"
   },
   "bulkMusicbrainz": {
     "title": "MusicBrainz 查找",
@@ -558,6 +560,24 @@
       "detailPanel": "歌曲面板",
       "insights": "Insights",
       "language": "语言"
+    }
+  },
+  "bulkFilename": {
+    "title": "从文件名解析",
+    "description": "按模板拆分每首所选歌曲的文件名，并把各部分写入标签",
+    "templateLabel": "文件名模板",
+    "templateHint": "用 {字段} 占位，例如 {title}-{album}-{publisher}。点下面的字段可以插入。",
+    "errorNoPlaceholder": "模板里至少要有一个 {字段} 占位。",
+    "errorUnknownField": "模板里有不支持的字段：{field}。",
+    "previewTitle": "预览：{total} 首中有 {matched} 首能解析",
+    "noMatch": "与模板不匹配",
+    "nothingMatched": "没有歌曲能按这个模板解析，检查分隔符和字段顺序。",
+    "next": "继续处理 {count, plural, one {# 首} other {# 首}}",
+    "summary": {
+      "description": "下面解析出的值将写入 {count, plural, one {# 首歌曲} other {# 首歌曲}}。",
+      "template": "模板",
+      "song": "歌曲 {id}",
+      "andMore": "还有 {count, plural, one {# 首} other {# 首}}"
     }
   },
   "detailPanelSettings": {
