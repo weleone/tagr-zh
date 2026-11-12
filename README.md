@@ -1,4 +1,20 @@
 # 加入中文支持
+
+## 从文件名解析（tagr-zh 新增）
+
+选中歌曲后，点底部操作条里的“从文件名解析”，按文件名中的分隔符把信息写进标签。
+
+1. 选中歌曲（可多选，最多 500 首）
+2. 点“从文件名解析”
+3. 输入模板，比如 `{title}-{album}-{publisher}`
+4. 看逐首预览，确认后提交
+
+模板用 `{字段名}` 做占位，中间用 `-` 等分隔符隔开。可用字段：标题 title、歌手 artist、专辑 album、专辑歌手 albumArtist、发行商 publisher、年份 year、流派 genre、音轨号 trackNumber、碟号 discNumber、作曲 composer。
+
+例子：文件名 `淡韵流声-纯音空间-汽水音乐`，模板 `{title}-{album}-{publisher}`，解析出标题=淡韵流声、专辑=纯音空间、发行商=汽水音乐。
+
+只改模板里写了的字段，其他字段不动；不匹配的文件名会标红跳过。
+
 <p align="center">
   <img src="docs/tagr-logo.webp" alt="Tagr Logo" width="120" />
 </p>
