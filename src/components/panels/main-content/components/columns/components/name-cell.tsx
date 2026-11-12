@@ -68,7 +68,8 @@ const NameCell = function NameCell({ song }: { song: Song }) {
         </div>
       </div>
       <div className='min-w-0 flex-1'>
-        <p className={`text-sm font-medium line-clamp-2 ${isCurrent ? 'text-primary' : 'text-foreground'}`}>
+        <p
+          className={`text-sm font-medium whitespace-normal line-clamp-2 ${isCurrent ? 'text-primary' : 'text-foreground'}`}>
           {displayName}
         </p>
         <div className='flex items-center gap-2 mt-0.5'>
