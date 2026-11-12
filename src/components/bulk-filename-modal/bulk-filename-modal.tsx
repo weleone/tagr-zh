@@ -10,10 +10,10 @@ import { Label } from '@/components/ui/label'
 import { type BulkFilenameApplyItem } from '@/features/songs/bulk-filename'
 import { type BulkTarget } from '@/features/songs/bulk-target'
 import { useBulkFilenameSongs } from '@/features/songs/hooks/use-bulk-filename'
-import { FILENAME_TEMPLATE_FIELDS } from '@/features/songs/song-fields'
 import {
   buildFilenameItems,
   compileFilenameTemplate,
+  FILENAME_TEMPLATE_FIELDS,
   FILENAME_TEMPLATE_PRESETS
 } from './filename-template'
 

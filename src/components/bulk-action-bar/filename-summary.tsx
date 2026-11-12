@@ -1,8 +1,8 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { FILENAME_TEMPLATE_FIELDS } from '@/components/bulk-filename-modal/filename-template'
 import { type BulkFilenameApplyItem } from '@/features/songs/bulk-filename'
-import { FILENAME_TEMPLATE_FIELDS } from '@/features/songs/song-fields'
 
 interface FilenameSummaryProps {
   items: BulkFilenameApplyItem[]
