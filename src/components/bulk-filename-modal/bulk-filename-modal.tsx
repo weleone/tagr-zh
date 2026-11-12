@@ -66,7 +66,7 @@ export function BulkFilenameModal({ open, onOpenChange, target, onSubmit }: Bulk
     !compiled.ok && compiled.error === 'noPlaceholder'
       ? t('errorNoPlaceholder')
       : !compiled.ok && compiled.error === 'unknownField'
-        ? t('errorUnknownField', { field: compiled.field })
+        ? t('errorUnknownField', { field: compiled.field ?? '' })
         : null
 
   const handleSubmit = () => {
