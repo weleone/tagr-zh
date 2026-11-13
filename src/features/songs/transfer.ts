@@ -1,4 +1,4 @@
-import { rename, readdir, stat } from 'node:fs/promises'
+import { copyFile, readdir, rename, stat, unlink } from 'node:fs/promises'
 import path from 'node:path'
 import { deleteSongById, findSongById } from '@/features/songs/songs.repository'
 import { getMusicFolders, isMusicFile } from '@/features/songs/song-file-helpers'
@@ -95,6 +95,24 @@ async function exists(filePath: string): Promise<boolean> {
   }
 }
 
+/**
+ * 跨卷移动：Docker 里每个 bind 挂载算一个文件系统，rename 跨挂载会报
+ * EXDEV（cross-device link not permitted）。先试 rename（同卷最快），
+ * 报 EXDEV 时退到 copy + unlink（效果等同 mv 命令的跨设备回退）。
+ */
+async function moveFile(src: string, dest: string): Promise<void> {
+  try {
+    await rename(src, dest)
+  } catch (e) {
+    if (e instanceof Error && 'code' in e && (e as NodeJS.ErrnoException).code === 'EXDEV') {
+      await copyFile(src, dest)
+      await unlink(src)
+      return
+    }
+    throw e
+  }
+}
+
 export interface TransferMoveResult {
   name: string
   ok: boolean
@@ -131,7 +149,7 @@ export async function moveFetchIntoLibrary(
       continue
     }
     try {
-      await rename(src, dest)
+      await moveFile(src, dest)
       results.push({ name, ok: true })
     } catch (e) {
       results.push({ name, ok: false, error: e instanceof Error ? e.message : 'moveFailed' })
@@ -196,7 +214,7 @@ export async function moveSongsToQishui(songIds: number[]): Promise<TransferOutR
       continue
     }
     try {
-      await rename(src, dest)
+      await moveFile(src, dest)
       await deleteSongById(songId)
       results.push({ songId, name: song.fileName, ok: true })
     } catch (e) {
