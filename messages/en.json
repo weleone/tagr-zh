@@ -663,6 +663,8 @@
     "outAction": "Move to Qishui ({count})",
     "outDone": "Export done: {ok} moved, {fail} failed.",
     "refresh": "Refresh",
-    "source": "Source"
+    "source": "Source",
+    "inPath": "Import path",
+    "outPath": "Export path"
   }
 }

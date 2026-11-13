@@ -110,6 +110,11 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         <DialogHeader className='shrink-0 border-b px-4 pt-4 pb-3'>
           <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription>{t('description')}</DialogDescription>
+          {dirs && (
+            <p className='font-mono text-xs text-muted-foreground break-all'>
+              {t('source')}：{tab === 'in' ? dirs.fetch : dirs.library}
+            </p>
+          )}
         </DialogHeader>
 
         <Tabs value={tab} onValueChange={value => setTab(value as 'in' | 'out')} className='flex min-h-0 flex-1 flex-col'>
@@ -124,7 +129,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
             <p className='text-xs text-muted-foreground'>{t('inHint')}</p>
             {dirs && (
               <p className='font-mono text-xs text-muted-foreground break-all'>
-                {t('source')}：{dirs.fetch} → {dirs.library}
+                {t('inPath')}：{dirs.library}
               </p>
             )}
 
@@ -187,7 +192,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
             <p className='text-xs text-muted-foreground'>{t('outHint')}</p>
             {dirs && (
               <p className='font-mono text-xs text-muted-foreground break-all'>
-                {t('source')}：{dirs.library} → {dirs.qishui}
+                {t('outPath')}：{dirs.qishui}
               </p>
             )}
 

@@ -663,6 +663,8 @@
     "outAction": "移到汽水（{count} 首）",
     "outDone": "移出完成：成功 {ok} 首，失败 {fail} 首。",
     "refresh": "刷新",
-    "source": "文件来源"
+    "source": "文件来源",
+    "inPath": "入库路径",
+    "outPath": "出库路径"
   }
 }
