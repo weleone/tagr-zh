@@ -671,6 +671,8 @@
     "refresh": "Refresh",
     "source": "Source",
     "inPath": "Import path",
-    "outPath": "Export path"
+    "outPath": "Export path",
+    "clearDone": "Clear",
+    "close": "Close"
   }
 }

@@ -24,7 +24,6 @@ interface TransferModalProps {
  */
 export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const t = useTranslations('transfer')
-  const tCommon = useTranslations('common')
 
   const [tab, setTab] = useState<'in' | 'out'>('in')
   const [checked, setChecked] = useState<Set<string>>(new Set())
@@ -200,7 +199,14 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               </>
             )}
 
-            {doneMessage && <p className='text-sm text-muted-foreground'>{doneMessage}</p>}
+            {doneMessage && (
+              <div className='flex items-start justify-between gap-2'>
+                <p className='min-w-0 flex-1 text-sm text-muted-foreground'>{doneMessage}</p>
+                <Button type='button' variant='ghost' size='sm' onClick={() => setDoneMessage(null)}>
+                  {t('clearDone')}
+                </Button>
+              </div>
+            )}
 
             <div className='flex justify-end'>
               <Button onClick={handleTransferIn} disabled={checked.size === 0 || busy}>
@@ -224,7 +230,14 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               <p className='text-sm'>{t('outSelected', { count: outCount })}</p>
             )}
 
-            {doneMessage && <p className='text-sm text-muted-foreground'>{doneMessage}</p>}
+            {doneMessage && (
+              <div className='flex items-start justify-between gap-2'>
+                <p className='min-w-0 flex-1 text-sm text-muted-foreground'>{doneMessage}</p>
+                <Button type='button' variant='ghost' size='sm' onClick={() => setDoneMessage(null)}>
+                  {t('clearDone')}
+                </Button>
+              </div>
+            )}
 
             <div className='flex justify-end'>
               <Button onClick={handleTransferOut} disabled={!outTarget || outCount === 0 || busy}>
@@ -237,7 +250,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
         <div className='flex shrink-0 justify-end border-t px-4 py-3'>
           <Button variant='outline' onClick={() => onOpenChange(false)}>
-            {tCommon('cancel')}
+            {t('close')}
           </Button>
         </div>
       </DialogContent>

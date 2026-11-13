@@ -671,6 +671,8 @@
     "refresh": "刷新",
     "source": "文件来源",
     "inPath": "入库路径",
-    "outPath": "出库路径"
+    "outPath": "出库路径",
+    "clearDone": "清除",
+    "close": "关闭"
   }
 }
