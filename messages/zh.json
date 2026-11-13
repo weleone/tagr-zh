@@ -644,5 +644,23 @@
     "sendNow": "立即发送",
     "sentToast": "报告已发送",
     "sendFailedToast": "无法发送报告：{error}"
+  },
+  "transfer": {
+    "title": "转移文件",
+    "description": "汽水下载的新歌移进曲库改标签，改完再移回汽水目录",
+    "inTab": "入库",
+    "outTab": "出库",
+    "inHint": "汽水下载目录里的新歌，勾选后移进曲库，移完自动扫描入库。",
+    "outHint": "先在歌曲列表勾选要移出的歌，再移到汽水目录；移出后曲库里不再显示。",
+    "selectAll": "全选（{count} 个文件）",
+    "fetchError": "读取待入库目录失败，请稍后再试。",
+    "fetchMissing": "待入库目录不存在或未挂载，检查容器的 QISHUI_FETCH_DIR 挂载。",
+    "fetchEmpty": "待入库目录里没有新歌。",
+    "inAction": "移入库（{count} 个）",
+    "inDone": "移入库完成：成功 {ok} 个，失败 {fail} 个。",
+    "outNoSelection": "还没勾选歌曲，先在歌曲列表勾选要移出的歌。",
+    "outSelected": "已选 {count} 首歌，点下面移到汽水目录。",
+    "outAction": "移到汽水（{count} 首）",
+    "outDone": "移出完成：成功 {ok} 首，失败 {fail} 首。"
   }
 }

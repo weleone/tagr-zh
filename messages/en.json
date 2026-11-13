@@ -644,5 +644,23 @@
     "sendNow": "Send now",
     "sentToast": "Report sent",
     "sendFailedToast": "Could not send the report: {error}"
+  },
+  "transfer": {
+    "title": "Transfer files",
+    "description": "Move new Qishui downloads into the library to edit tags, then move them back to Qishui",
+    "inTab": "Import",
+    "outTab": "Export",
+    "inHint": "New songs in the Qishui download folder. Check them to move them into the library; they are scanned in automatically.",
+    "outHint": "First check the songs to move out in the song list, then move them to the Qishui folder. Moved songs leave the library.",
+    "selectAll": "Select all ({count} files)",
+    "fetchError": "Failed to read the import folder. Please try again later.",
+    "fetchMissing": "The import folder does not exist or is not mounted. Check the QISHUI_FETCH_DIR volume mount.",
+    "fetchEmpty": "No new songs in the import folder.",
+    "inAction": "Move in ({count})",
+    "inDone": "Import done: {ok} moved, {fail} failed.",
+    "outNoSelection": "No songs selected yet. Check the songs to move out in the song list first.",
+    "outSelected": "{count} songs selected. Move them to the Qishui folder below.",
+    "outAction": "Move to Qishui ({count})",
+    "outDone": "Export done: {ok} moved, {fail} failed."
   }
 }

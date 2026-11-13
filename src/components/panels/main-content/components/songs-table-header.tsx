@@ -1,8 +1,12 @@
 'use client'
 
-import { FolderIcon, HistoryIcon, SparklesIcon } from 'lucide-react'
+import { ArrowRightLeftIcon, FolderIcon, HistoryIcon, SparklesIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { TransferModal } from '@/components/transfer-modal/transfer-modal'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { useMobileNavStore } from '@/stores/mobile-nav-store'
@@ -29,6 +33,8 @@ export function SongsTableHeader({
   searchKey
 }: SongTableHeaderProps) {
   const setFolderSheetOpen = useMobileNavStore(s => s.setFolderSheetOpen)
+  const tTransfer = useTranslations('transfer')
+  const [transferOpen, setTransferOpen] = useState(false)
 
   return (
     <>
@@ -49,6 +55,10 @@ export function SongsTableHeader({
           </div>
           <div className='flex items-center gap-2 flex-shrink-0'>
             {badges}
+            <Button variant='outline' size='sm' onClick={() => setTransferOpen(true)}>
+              <ArrowRightLeftIcon className='h-4 w-4' />
+              {tTransfer('title')}
+            </Button>
             <ThemeToggle />
           </div>
         </div>
@@ -65,7 +75,11 @@ export function SongsTableHeader({
             </button>
           )}
           <span className='text-sm font-semibold truncate'>{mobileTitle ?? title}</span>
-          <div className='ml-auto flex-shrink-0'>
+          <div className='ml-auto flex items-center gap-2 flex-shrink-0'>
+            <Button variant='outline' size='sm' onClick={() => setTransferOpen(true)}>
+              <ArrowRightLeftIcon className='h-4 w-4' />
+              {tTransfer('title')}
+            </Button>
             <ThemeToggle />
           </div>
         </div>
@@ -81,6 +95,7 @@ export function SongsTableHeader({
         </div>
       </div>
       <Separator />
+      <TransferModal open={transferOpen} onOpenChange={setTransferOpen} />
     </>
   )
 }
