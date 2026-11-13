@@ -141,8 +141,13 @@ export async function moveFetchIntoLibrary(
   const moved = results.filter(result => result.ok).length
   let scanned = { added: 0, updated: 0 }
   if (moved > 0) {
-    const scan = await scanFolderAndUpdateDatabase(library, undefined, 'quick')
-    scanned = { added: scan.addedFiles.length, updated: scan.updatedFiles.length }
+    try {
+      const scan = await scanFolderAndUpdateDatabase(library, undefined, 'quick')
+      scanned = { added: scan.addedFiles.length, updated: scan.updatedFiles.length }
+    } catch (e) {
+      // 扫描失败不影响已经移好的文件，只是不写库；原因打日志方便排查
+      console.error('[transfer] quick-scan after import failed', e)
+    }
   }
 
   return { results, scanned }

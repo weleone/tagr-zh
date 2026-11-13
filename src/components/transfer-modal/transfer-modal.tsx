@@ -30,6 +30,24 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const [checked, setChecked] = useState<Set<string>>(new Set())
   const [doneMessage, setDoneMessage] = useState<string | null>(null)
 
+  /** 把后端的 error 码翻成能看懂的原因；rename 抛出的原始错误直接显示。 */
+  const errorReason = (error: string | undefined): string => {
+    if (!error) return t('errOther', { error: 'unknown' })
+    if (error === 'invalidName') return t('errInvalidName')
+    if (error === 'notFound') return t('errNotFound')
+    if (error === 'alreadyExists') return t('errAlreadyExists')
+    if (error === 'outsideLibrary') return t('errOutsideLibrary')
+    return t('errOther', { error })
+  }
+
+  /** 失败明细：每行 "文件名：原因"，拼到完成消息后面。 */
+  const failDetails = (results: { name: string; ok: boolean; error?: string }[]): string | null => {
+    const failed = results.filter(result => !result.ok)
+    if (failed.length === 0) return null
+    const lines = failed.map(result => `${result.name}：${errorReason(result.error)}`)
+    return t('failDetail', { details: lines.join('；') })
+  }
+
   const {
     data: fetchData,
     isPending: fetchPending,
@@ -80,7 +98,9 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         onSuccess: data => {
           const okCount = data.results.filter(result => result.ok).length
           const failCount = data.results.length - okCount
-          setDoneMessage(t('inDone', { ok: okCount, fail: failCount }))
+          const base = t('inDone', { ok: okCount, fail: failCount })
+          const detail = failDetails(data.results)
+          setDoneMessage(detail ? `${base} ${detail}` : base)
           setChecked(new Set())
         }
       }
@@ -96,7 +116,9 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         onSuccess: data => {
           const okCount = data.results.filter(result => result.ok).length
           const failCount = data.results.length - okCount
-          setDoneMessage(t('outDone', { ok: okCount, fail: failCount }))
+          const base = t('outDone', { ok: okCount, fail: failCount })
+          const detail = failDetails(data.results)
+          setDoneMessage(detail ? `${base} ${detail}` : base)
         }
       }
     )
