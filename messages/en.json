@@ -287,7 +287,9 @@
     "timing": "This process may take a few minutes depending on the size of your library.",
     "scanButton": "Scan library",
     "scanning": "Scanning your library...",
-    "insightsNotice": "Tagr can send anonymous usage statistics (Insights) once a day: counts only, never file names, paths or user names. Nothing is sent until you agree, and you can turn it off in Settings."
+    "insightsNotice": "Tagr can send anonymous usage statistics (Insights) once a day: counts only, never file names, paths or user names. Nothing is sent until you agree, and you can turn it off in Settings.",
+    "transferButton": "Transfer files",
+    "transferHint": "New Qishui downloads are waiting in the import folder — move them into the library, no need to add a file by hand first."
   },
   "version": {
     "updateAvailable": "Version {version} is available",
