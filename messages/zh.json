@@ -662,6 +662,7 @@
     "outSelected": "已选 {count} 首歌，点下面移到汽水目录。",
     "outAction": "移到汽水（{count} 首）",
     "outDone": "移出完成：成功 {ok} 首，失败 {fail} 首。",
-    "refresh": "刷新"
+    "refresh": "刷新",
+    "source": "文件来源"
   }
 }

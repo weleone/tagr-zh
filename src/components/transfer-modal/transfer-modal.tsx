@@ -124,7 +124,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
             <p className='text-xs text-muted-foreground'>{t('inHint')}</p>
             {dirs && (
               <p className='font-mono text-xs text-muted-foreground break-all'>
-                {dirs.fetch} → {dirs.library}
+                {t('source')}：{dirs.fetch} → {dirs.library}
               </p>
             )}
 
@@ -187,7 +187,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
             <p className='text-xs text-muted-foreground'>{t('outHint')}</p>
             {dirs && (
               <p className='font-mono text-xs text-muted-foreground break-all'>
-                {dirs.library} → {dirs.qishui}
+                {t('source')}：{dirs.library} → {dirs.qishui}
               </p>
             )}
 
