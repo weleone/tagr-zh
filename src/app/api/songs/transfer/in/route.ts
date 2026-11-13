@@ -36,11 +36,11 @@ export async function POST(request: Request): Promise<Response> {
   return ndjsonStreamResponse(async function* () {
     yield { type: 'start', total: files.length } satisfies NdjsonEvent<unknown>
 
-    const { results, scanned } = await moveFetchIntoLibrary(files)
+    const { results } = await moveFetchIntoLibrary(files)
     for (let i = 0; i < results.length; i++) {
       yield { type: 'result', index: i, result: results[i] }
     }
 
-    yield { type: 'done', resolvedCount: results.length, scanned } satisfies NdjsonEvent<unknown>
+    yield { type: 'done', resolvedCount: results.length } satisfies NdjsonEvent<unknown>
   })
 }
