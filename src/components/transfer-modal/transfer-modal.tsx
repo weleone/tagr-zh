@@ -36,7 +36,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     isFetching: fetchFetching,
     error: fetchError,
     refetch: refetchFetch
-  } = useFetchFiles(open && tab === 'in')
+  } = useFetchFiles(open)
   const transferIn = useTransferIn()
   const transferOut = useTransferOut()
 
@@ -50,6 +50,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   }, [selection])
 
   const fetchFiles = fetchData?.files ?? []
+  const dirs = fetchData?.dirs
   const allChecked = fetchFiles.length > 0 && fetchFiles.every(file => checked.has(file.name))
 
   const toggleFile = (name: string) => {
@@ -121,6 +122,11 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
           <TabsContent value='in' className='flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4'>
             <p className='text-xs text-muted-foreground'>{t('inHint')}</p>
+            {dirs && (
+              <p className='font-mono text-xs text-muted-foreground break-all'>
+                {dirs.fetch} → {dirs.library}
+              </p>
+            )}
 
             {fetchPending && (
               <div className='flex h-32 items-center justify-center'>
@@ -179,6 +185,11 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
           <TabsContent value='out' className='flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4'>
             <p className='text-xs text-muted-foreground'>{t('outHint')}</p>
+            {dirs && (
+              <p className='font-mono text-xs text-muted-foreground break-all'>
+                {dirs.library} → {dirs.qishui}
+              </p>
+            )}
 
             {outCount === 0 ? (
               <p className='text-sm text-muted-foreground'>{t('outNoSelection')}</p>

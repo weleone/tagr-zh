@@ -30,6 +30,20 @@ export function getTransferDirs(): TransferDirs {
   }
 }
 
+/**
+ * 界面显示用的路径：宿主机路径（只做显示，不参与文件操作）。
+ * compose 里可配 HOST_LIBRARY_DIR / HOST_FETCH_DIR / HOST_QISHUI_DIR，
+ * 不配就回落到容器内路径。
+ */
+export function getTransferDisplayDirs(): TransferDirs {
+  const dirs = getTransferDirs()
+  return {
+    library: process.env.HOST_LIBRARY_DIR?.trim() || dirs.library,
+    fetch: process.env.HOST_FETCH_DIR?.trim() || dirs.fetch,
+    qishui: process.env.HOST_QISHUI_DIR?.trim() || dirs.qishui
+  }
+}
+
 export interface FetchFile {
   name: string
   size: number

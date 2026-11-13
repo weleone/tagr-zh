@@ -12,6 +12,7 @@ export interface FetchListResponse {
   success: true
   exists: boolean
   dir: string
+  dirs: { library: string; fetch: string; qishui: string }
   files: FetchFile[]
 }
 
