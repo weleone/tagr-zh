@@ -1,6 +1,6 @@
 'use client'
 
-import { Loader2Icon } from 'lucide-react'
+import { Loader2Icon, RefreshCwIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
@@ -30,7 +30,13 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const [checked, setChecked] = useState<Set<string>>(new Set())
   const [doneMessage, setDoneMessage] = useState<string | null>(null)
 
-  const { data: fetchData, isPending: fetchPending, error: fetchError } = useFetchFiles(open && tab === 'in')
+  const {
+    data: fetchData,
+    isPending: fetchPending,
+    isFetching: fetchFetching,
+    error: fetchError,
+    refetch: refetchFetch
+  } = useFetchFiles(open && tab === 'in')
   const transferIn = useTransferIn()
   const transferOut = useTransferOut()
 
@@ -134,10 +140,21 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
             {fetchFiles.length > 0 && (
               <>
-                <label className='flex cursor-pointer items-center gap-2 text-sm font-medium'>
-                  <Checkbox checked={allChecked} onCheckedChange={toggleAll} />
-                  {t('selectAll', { count: fetchFiles.length })}
-                </label>
+                <div className='flex items-center justify-between gap-2'>
+                  <label className='flex cursor-pointer items-center gap-2 text-sm font-medium'>
+                    <Checkbox checked={allChecked} onCheckedChange={toggleAll} />
+                    {t('selectAll', { count: fetchFiles.length })}
+                  </label>
+                  <Button
+                    type='button'
+                    variant='outline'
+                    size='sm'
+                    onClick={() => void refetchFetch()}
+                    disabled={fetchFetching || busy}>
+                    <RefreshCwIcon className={`h-4 w-4 ${fetchFetching ? 'animate-spin' : ''}`} />
+                    {t('refresh')}
+                  </Button>
+                </div>
                 <div className='flex flex-col divide-y rounded-md border'>
                   {fetchFiles.map(file => (
                     <label key={file.name} className='flex cursor-pointer items-center gap-2 px-3 py-2 text-sm'>

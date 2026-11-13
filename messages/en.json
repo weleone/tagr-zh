@@ -661,6 +661,7 @@
     "outNoSelection": "No songs selected yet. Check the songs to move out in the song list first.",
     "outSelected": "{count} songs selected. Move them to the Qishui folder below.",
     "outAction": "Move to Qishui ({count})",
-    "outDone": "Export done: {ok} moved, {fail} failed."
+    "outDone": "Export done: {ok} moved, {fail} failed.",
+    "refresh": "Refresh"
   }
 }
