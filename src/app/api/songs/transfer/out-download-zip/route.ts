@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { NextResponse } from 'next/server'
 import { findSongsForDownload } from '@/features/songs/songs.repository'
-import { dedupeZipNames, fileCrc32, zipStream } from '@/features/songs/zip-stream'
+import { dedupeZipNames, fileCrc32, zipStream, type ZipEntry } from '@/features/songs/zip-stream'
 import { requireRole } from '@/lib/api/auth-guard'
 
 /** 一次最多打包 500 首，与出库移动的上限一致。 */
@@ -43,7 +43,7 @@ export async function GET(request: Request) {
   }
 
   const names = dedupeZipNames(existing.map(song => song.fileName))
-  const entries = []
+  const entries: ZipEntry[] = []
   for (let i = 0; i < existing.length; i++) {
     const stat = fs.statSync(existing[i].filePath)
     const crc = await fileCrc32(existing[i].filePath)
