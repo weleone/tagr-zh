@@ -64,6 +64,33 @@ export function useTransferIn() {
   })
 }
 
+export interface OutListSong {
+  id: number
+  title: string | null
+  artist: string | null
+  fileName: string
+}
+
+export interface OutListResponse {
+  success: true
+  songs: OutListSong[]
+}
+
+/** 出库待移清单：按批量选择解析，返回已选歌曲的标题/歌手/文件名；出库页签打开且有选择时才拉。 */
+export function useTransferOutList(target: BulkTarget | null, enabled: boolean) {
+  return useQuery({
+    queryKey: ['transfer', 'out-list', target ? JSON.stringify(target) : null],
+    queryFn: async () => {
+      const response = await api.post<OutListResponse>('/songs/transfer/out-list', { target })
+      return response.data
+    },
+    enabled: enabled && !!target,
+    retry: false,
+    staleTime: 0,
+    gcTime: 0
+  })
+}
+
 export type TransferOutProgress = NdjsonBulkProgress<TransferOutResult>
 
 interface TransferOutParams {

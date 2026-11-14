@@ -83,6 +83,19 @@ export function findSongsForFilename(ids: number[]) {
   })
 }
 
+/** 出库待移清单用：按 id 取标题 / 歌手 / 文件名，供转移弹窗出库页签展示。 */
+export function findSongsForTransferOut(ids: number[]) {
+  return prisma.song.findMany({
+    where: { id: { in: ids } },
+    select: {
+      id: true,
+      title: true,
+      artist: true,
+      fileName: true
+    }
+  })
+}
+
 export function findSongForPeaks(
   id: number
 ): Promise<{ filePath: string; duration: number | null; peaks: string | null } | null> {

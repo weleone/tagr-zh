@@ -669,6 +669,8 @@
     "outNoSelection": "还没勾选歌曲，先在歌曲列表勾选要移出的歌。",
     "outSelected": "已选 {count} 首歌，点下面移到汽水目录。",
     "outAction": "移到汽水（{count} 首）",
+    "outListError": "读取已选歌曲失败，请稍后再试。",
+    "outDownload": "下载到本地（{count} 首）",
     "outDone": "移出完成：成功 {ok} 首，失败 {fail} 首。",
     "refresh": "刷新",
     "source": "文件来源",

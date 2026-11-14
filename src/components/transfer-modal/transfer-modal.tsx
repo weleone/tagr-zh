@@ -8,7 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { buildBulkTargetFromSelection } from '@/features/songs/bulk-target-helpers'
-import { useFetchFiles, useTransferIn, useTransferOut } from '@/features/songs/hooks/use-transfer'
+import { useFetchFiles, useTransferIn, useTransferOut, useTransferOutList } from '@/features/songs/hooks/use-transfer'
 import { formatFileSize } from '@/lib/formatters'
 import { useBulkSelectionStore } from '@/stores/bulk-selection-store'
 
@@ -59,6 +59,12 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
   const selection = useBulkSelectionStore(s => s.selection)
   const outTarget = useMemo(() => (open ? buildBulkTargetFromSelection(selection) : null), [open, selection])
+  const {
+    data: outListData,
+    isPending: outListPending,
+    error: outListError
+  } = useTransferOutList(outTarget, open && tab === 'out')
+  const outSongs = outListData?.songs ?? []
   const outCount = useMemo(() => {
     if (!selection) return 0
     if (selection.mode === 'explicit') return selection.ids.size
@@ -121,6 +127,22 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         }
       }
     )
+  }
+
+  /** 出库下载到本地：已选歌曲逐个走 /api/songs/[id]/download 下到浏览器，
+   * 不动曲库文件也不删记录。多个时逐个触发，间隔 300ms 防浏览器拦截。 */
+  const handleDownloadOut = () => {
+    if (outSongs.length === 0) return
+    outSongs.forEach((song, index) => {
+      window.setTimeout(() => {
+        const a = document.createElement('a')
+        a.href = `/api/songs/${song.id}/download`
+        a.download = song.fileName
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+      }, index * 300)
+    })
   }
 
   const busy = transferIn.isPending || transferOut.isPending
@@ -227,7 +249,29 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
             {outCount === 0 ? (
               <p className='text-sm text-muted-foreground'>{t('outNoSelection')}</p>
             ) : (
-              <p className='text-sm'>{t('outSelected', { count: outCount })}</p>
+              <>
+                <p className='text-sm'>{t('outSelected', { count: outCount })}</p>
+                {outListPending && (
+                  <div className='flex h-16 items-center justify-center'>
+                    <Loader2Icon className='h-5 w-5 animate-spin text-muted-foreground' />
+                  </div>
+                )}
+                {!outListPending && outListError && (
+                  <p className='text-sm text-destructive'>{t('outListError')}</p>
+                )}
+                {!outListPending && !outListError && outSongs.length > 0 && (
+                  <div className='flex flex-col divide-y rounded-md border'>
+                    {outSongs.map(song => (
+                      <div key={song.id} className='flex items-center gap-2 px-3 py-2 text-sm'>
+                        <span className='min-w-0 flex-1 truncate'>
+                          {song.title ? `${song.title}${song.artist ? ` - ${song.artist}` : ''}` : song.fileName}
+                        </span>
+                        <span className='shrink-0 text-xs text-muted-foreground'>{song.fileName}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
 
             {doneMessage && (
@@ -239,10 +283,17 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               </div>
             )}
 
-            <div className='flex justify-end'>
+            <div className='flex flex-col items-end gap-2'>
               <Button onClick={handleTransferOut} disabled={!outTarget || outCount === 0 || busy}>
                 {transferOut.isPending && <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />}
                 {t('outAction', { count: outCount })}
+              </Button>
+              <Button
+                type='button'
+                variant='outline'
+                onClick={handleDownloadOut}
+                disabled={outSongs.length === 0 || busy}>
+                {t('outDownload', { count: outSongs.length })}
               </Button>
             </div>
           </TabsContent>
