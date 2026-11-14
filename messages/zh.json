@@ -288,7 +288,7 @@
     "scanButton": "扫描曲库",
     "scanning": "正在扫描你的曲库...",
     "insightsNotice": "Tagr 每天可发送一次匿名的使用统计（Insights）：仅统计数量，绝不包含文件名、路径或用户名。未经你同意不会发送，你也可以随时在设置中关闭。",
-    "transferButton": "复制文件",
+    "transferButton": "添加文件",
     "transferHint": "汽水下载的新歌在待入库目录里，可以直接移进曲库，不用先手动放文件。"
   },
   "version": {
@@ -655,7 +655,7 @@
     "sendFailedToast": "无法发送报告：{error}"
   },
   "transfer": {
-    "title": "复制文件",
+    "title": "添加文件",
     "description": "汽水下载的新歌移进曲库改标签，改完再复制到汽水目录",
     "inTab": "入库",
     "outTab": "出库",

@@ -288,7 +288,7 @@
     "scanButton": "Scan library",
     "scanning": "Scanning your library...",
     "insightsNotice": "Tagr can send anonymous usage statistics (Insights) once a day: counts only, never file names, paths or user names. Nothing is sent until you agree, and you can turn it off in Settings.",
-    "transferButton": "Copy files",
+    "transferButton": "Add files",
     "transferHint": "New Qishui downloads are waiting in the import folder — move them into the library, no need to add a file by hand first."
   },
   "version": {
@@ -655,7 +655,7 @@
     "sendFailedToast": "Could not send the report: {error}"
   },
   "transfer": {
-    "title": "Copy files",
+    "title": "Add files",
     "description": "Move new Qishui downloads into the library to edit tags, then copy them to Qishui",
     "inTab": "Import",
     "outTab": "Export",
