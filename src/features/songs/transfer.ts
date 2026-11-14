@@ -1,6 +1,6 @@
 import { copyFile, readdir, rename, stat, unlink } from 'node:fs/promises'
 import path from 'node:path'
-import { deleteSongById, findSongById } from '@/features/songs/songs.repository'
+import { findSongById } from '@/features/songs/songs.repository'
 import { getMusicFolders, isMusicFile } from '@/features/songs/song-file-helpers'
 import { scanFolderAndUpdateDatabase } from '@/features/metadata/metadata-scan.service'
 
@@ -12,7 +12,9 @@ import { scanFolderAndUpdateDatabase } from '@/features/metadata/metadata-scan.s
  * - 待入库：QISHUI_FETCH_DIR（默认 /qishui-fetch），即汽水下载的 fetch 目录
  * - 汽水：QISHUI_DIR（默认 /qishui），即改完标签后放回的汽水目录
  *
- * 流程：汽水下到 fetch → 移入库改标签 → 改完移回汽水目录（播放器挂载点能看到）。
+ * 流程：汽水下到 fetch → 移入库改标签 → 改完复制到汽水目录（播放器挂载点能看到）。
+ * 出库是复制不是移动：文件留在曲库里、记录也留在数据库里，歌继续显示在列表里，
+ * 不想留了再用删除按钮删（删文件 + 清记录）。
  */
 
 export interface TransferDirs {
@@ -224,11 +226,13 @@ export async function checkOutConflicts(songIds: number[]): Promise<TransferOutC
 }
 
 /**
- * 曲库 → 汽水：逐首移动文件，移成功的从数据库里删除该歌曲记录。
- * overwrite=false（默认）：目标已存在同名文件时跳过（不覆盖）；
- * overwrite=true：目标同名文件直接被替换（rename 原子覆盖，跨卷时 copy 覆盖）。
+ * 曲库 → 汽水：逐首复制文件到汽水目录，曲库里的原文件和数据库记录都保留，
+ * 歌继续显示在列表里（不想留了再用删除按钮删）。
+ * overwrite=false（默认）：目标已存在同名文件时跳过（不覆盖），记 alreadyExists；
+ * overwrite=true：目标同名文件直接被替换（copyFile 覆盖写）。
+ * 源文件已不在磁盘上时记 notFound，不删记录（孤儿记录由重新扫描清理）。
  */
-export async function moveSongsToQishui(
+export async function copySongsToQishui(
   songIds: number[],
   opts?: { overwrite?: boolean }
 ): Promise<TransferOutResult[]> {
@@ -254,9 +258,7 @@ export async function moveSongsToQishui(
       continue
     }
     if (!(await exists(src))) {
-      // 文件已不在磁盘上，只清数据库记录
-      await deleteSongById(songId)
-      results.push({ songId, name: song.fileName, ok: true })
+      results.push({ songId, name: song.fileName, ok: false, error: 'notFound' })
       continue
     }
     if (!overwrite && (await exists(dest))) {
@@ -264,15 +266,14 @@ export async function moveSongsToQishui(
       continue
     }
     try {
-      await moveFile(src, dest)
-      await deleteSongById(songId)
+      await copyFile(src, dest)
       results.push({ songId, name: song.fileName, ok: true })
     } catch (e) {
       results.push({
         songId,
         name: song.fileName,
         ok: false,
-        error: e instanceof Error ? e.message : 'moveFailed'
+        error: e instanceof Error ? e.message : 'copyFailed'
       })
     }
   }

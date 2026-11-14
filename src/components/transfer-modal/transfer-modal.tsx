@@ -20,7 +20,8 @@ interface TransferModalProps {
 /**
  * 汽水 ↔ Tagr 文件转移（tagr-zh 新增）。
  * 入库：把汽水 fetch 目录里的新歌移进曲库，改标签。
- * 出库：把曲库里已改好标签的歌移回汽水目录（播放器挂载点能看到）。
+ * 出库：把曲库里已改好标签的歌复制到汽水目录（播放器挂载点能看到），
+ * 复制后歌仍留在曲库里，不想留了再手动删。
  */
 export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const t = useTranslations('transfer')
@@ -32,22 +33,33 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const [outConflicts, setOutConflicts] = useState<OutConflict[] | null>(null)
   const [checkingConflicts, setCheckingConflicts] = useState(false)
 
-  /** 把后端的 error 码翻成能看懂的原因；rename 抛出的原始错误直接显示。 */
-  const errorReason = (error: string | undefined): string => {
+  /**
+   * 把后端的 error 码翻成能看懂的原因；rename 抛出的原始错误直接显示。
+   * alreadyExists 的说法分方向：入库是曲库里已有，出库是汽水目录里已有。
+   */
+  const errorReason = (error: string | undefined, direction: 'in' | 'out' = 'in'): string => {
     if (!error) return t('errOther', { error: 'unknown' })
     if (error === 'invalidName') return t('errInvalidName')
     if (error === 'notFound') return t('errNotFound')
-    if (error === 'alreadyExists') return t('errAlreadyExists')
+    if (error === 'alreadyExists') return direction === 'out' ? t('errAlreadyExistsOut') : t('errAlreadyExists')
     if (error === 'outsideLibrary') return t('errOutsideLibrary')
     return t('errOther', { error })
   }
 
-  /** 失败明细：每行 "文件名：原因"，拼到完成消息后面。 */
+  /** 失败明细：每行 "文件名：原因"，拼到完成消息后面（只列真失败，不含主动跳过的）。 */
   const failDetails = (results: { name: string; ok: boolean; error?: string }[]): string | null => {
-    const failed = results.filter(result => !result.ok)
+    const failed = results.filter(result => !result.ok && result.error !== 'alreadyExists')
     if (failed.length === 0) return null
-    const lines = failed.map(result => `${result.name}：${errorReason(result.error)}`)
+    const lines = failed.map(result => `${result.name}：${errorReason(result.error, 'out')}`)
     return t('failDetail', { details: lines.join('；') })
+  }
+
+  /** 跳过明细：主动跳过的同名文件（出库：汽水目录里已有），每行 "文件名：原因"。 */
+  const skipDetails = (results: { name: string; ok: boolean; error?: string }[]): string | null => {
+    const skipped = results.filter(result => !result.ok && result.error === 'alreadyExists')
+    if (skipped.length === 0) return null
+    const lines = skipped.map(result => `${result.name}：${errorReason(result.error, 'out')}`)
+    return t('skipDetail', { details: lines.join('；') })
   }
 
   const {
@@ -116,7 +128,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   }
 
   /** 出库：先查汽水目录有没有同名文件，有就弹窗让用户选覆盖/跳过
-   * （弹窗里列两边的文件大小），没有直接移。 */
+   * （弹窗里列两边的文件大小），没有直接复制。 */
   const handleTransferOut = async () => {
     if (!outTarget || outCount === 0) return
     setDoneMessage(null)
@@ -125,7 +137,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     try {
       conflicts = await checkTransferOutConflicts(outTarget)
     } catch {
-      // 查冲突失败时按无冲突处理（服务端移出时仍会跳过同名文件，不会丢数据）
+      // 查冲突失败时按无冲突处理（服务端复制时仍会跳过同名文件，不会丢数据）
       conflicts = []
     } finally {
       setCheckingConflicts(false)
@@ -146,10 +158,14 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
       {
         onSuccess: data => {
           const okCount = data.results.filter(result => result.ok).length
-          const failCount = data.results.length - okCount
-          const base = t('outDone', { ok: okCount, fail: failCount })
-          const detail = failDetails(data.results)
-          setDoneMessage(detail ? `${base} ${detail}` : base)
+          const skippedCount = data.results.filter(result => !result.ok && result.error === 'alreadyExists').length
+          const failCount = data.results.length - okCount - skippedCount
+          const parts = [t('outDoneOk', { ok: okCount })]
+          if (skippedCount > 0) parts.push(t('outDoneSkipped', { skipped: skippedCount }))
+          if (failCount > 0) parts.push(t('outDoneFail', { fail: failCount }))
+          const base = `${t('outDonePrefix')}：${parts.join('，')}。`
+          const details = [skipDetails(data.results), failDetails(data.results)].filter(Boolean)
+          setDoneMessage(details.length > 0 ? `${base} ${details.join(' ')}` : base)
         }
       }
     )

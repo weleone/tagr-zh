@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { BulkResolveError, resolveBulkTargetIds } from '@/features/metadata/bulk-resolver.service'
 import { type BulkTarget } from '@/features/songs/bulk-target'
-import { moveSongsToQishui } from '@/features/songs/transfer'
+import { copySongsToQishui } from '@/features/songs/transfer'
 import { requireRole } from '@/lib/api/auth-guard'
 import { ndjsonStreamResponse, type NdjsonEvent } from '@/lib/ndjson-stream'
 
@@ -15,8 +15,9 @@ interface TransferOutBody {
 const TRANSFER_OUT_LIMIT = 500
 
 /**
- * 曲库 → 汽水：按批量选择解析出歌曲，逐首移动文件到汽水目录，
- * 移成功的从数据库里删除记录。用 NDJSON 流逐个返回结果。
+ * 曲库 → 汽水：按批量选择解析出歌曲，逐首复制文件到汽水目录，
+ * 曲库里的原文件和记录都保留（歌继续留在列表里，不想留了再手动删）。
+ * 用 NDJSON 流逐个返回结果。
  */
 export async function POST(request: Request): Promise<Response> {
   const guard = await requireRole('tagger')
@@ -50,7 +51,7 @@ export async function POST(request: Request): Promise<Response> {
   return ndjsonStreamResponse(async function* () {
     yield { type: 'start', total: songIds.length } satisfies NdjsonEvent<unknown>
 
-    const results = await moveSongsToQishui(songIds, { overwrite: body.overwrite ?? false })
+    const results = await copySongsToQishui(songIds, { overwrite: body.overwrite ?? false })
     for (let i = 0; i < results.length; i++) {
       yield { type: 'result', index: i, result: results[i] }
     }
