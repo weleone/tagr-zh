@@ -677,6 +677,12 @@
     "inPath": "入库路径",
     "outPath": "出库路径",
     "clearDone": "清除",
-    "close": "关闭"
+    "close": "关闭",
+    "outConflictTitle": "汽水目录已有同名文件",
+    "outConflictDesc": "下面这些歌在汽水目录里已有同名文件，选覆盖会替换掉汽水那份，选跳过则只移其他歌。",
+    "outConflictLibrary": "曲库：{size}",
+    "outConflictQishui": "汽水：{size}",
+    "outConflictSkip": "跳过同名文件",
+    "outConflictOverwrite": "覆盖"
   }
 }

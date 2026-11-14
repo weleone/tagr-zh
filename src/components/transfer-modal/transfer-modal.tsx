@@ -8,7 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { buildBulkTargetFromSelection } from '@/features/songs/bulk-target-helpers'
-import { useFetchFiles, useTransferIn, useTransferOut, useTransferOutList } from '@/features/songs/hooks/use-transfer'
+import { useFetchFiles, useTransferIn, useTransferOut, useTransferOutList, checkTransferOutConflicts, type OutConflict } from '@/features/songs/hooks/use-transfer'
 import { formatFileSize } from '@/lib/formatters'
 import { useBulkSelectionStore } from '@/stores/bulk-selection-store'
 
@@ -28,6 +28,9 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const [tab, setTab] = useState<'in' | 'out'>('in')
   const [checked, setChecked] = useState<Set<string>>(new Set())
   const [doneMessage, setDoneMessage] = useState<string | null>(null)
+  /** 出库同名冲突弹窗：null=不显示，非 null=显示冲突清单等用户选覆盖/跳过 */
+  const [outConflicts, setOutConflicts] = useState<OutConflict[] | null>(null)
+  const [checkingConflicts, setCheckingConflicts] = useState(false)
 
   /** 把后端的 error 码翻成能看懂的原因；rename 抛出的原始错误直接显示。 */
   const errorReason = (error: string | undefined): string => {
@@ -112,11 +115,34 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     )
   }
 
-  const handleTransferOut = () => {
+  /** 出库：先查汽水目录有没有同名文件，有就弹窗让用户选覆盖/跳过
+   * （弹窗里列两边的文件大小），没有直接移。 */
+  const handleTransferOut = async () => {
     if (!outTarget || outCount === 0) return
     setDoneMessage(null)
+    setCheckingConflicts(true)
+    let conflicts: OutConflict[]
+    try {
+      conflicts = await checkTransferOutConflicts(outTarget)
+    } catch {
+      // 查冲突失败时按无冲突处理（服务端移出时仍会跳过同名文件，不会丢数据）
+      conflicts = []
+    } finally {
+      setCheckingConflicts(false)
+    }
+    if (conflicts.length > 0) {
+      setOutConflicts(conflicts)
+      return
+    }
+    doTransferOut(false)
+  }
+
+  const doTransferOut = (overwrite: boolean) => {
+    if (!outTarget) return
+    setOutConflicts(null)
+    setDoneMessage(null)
     transferOut.mutate(
-      { target: outTarget },
+      { target: outTarget, overwrite },
       {
         onSuccess: data => {
           const okCount = data.results.filter(result => result.ok).length
@@ -154,6 +180,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const busy = transferIn.isPending || transferOut.isPending
 
   return (
+    <>
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='max-w-2xl max-h-[85vh] flex flex-col gap-0 p-0 overflow-hidden'>
         <DialogHeader className='shrink-0 border-b px-4 pt-4 pb-3'>
@@ -290,8 +317,8 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
             )}
 
             <div className='flex flex-col items-end gap-2'>
-              <Button onClick={handleTransferOut} disabled={!outTarget || outCount === 0 || busy}>
-                {transferOut.isPending && <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />}
+              <Button onClick={handleTransferOut} disabled={!outTarget || outCount === 0 || busy || checkingConflicts}>
+                {(transferOut.isPending || checkingConflicts) && <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />}
                 {t('outAction', { count: outCount })}
               </Button>
               <Button
@@ -312,5 +339,36 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         </div>
       </DialogContent>
     </Dialog>
+
+    {/* 出库同名冲突：汽水目录已有同名文件，列两边大小让用户选覆盖还是跳过 */}
+    <Dialog open={outConflicts !== null} onOpenChange={openState => { if (!openState) setOutConflicts(null) }}>
+      <DialogContent className='max-w-lg'>
+        <DialogHeader>
+          <DialogTitle>{t('outConflictTitle')}</DialogTitle>
+          <DialogDescription>{t('outConflictDesc')}</DialogDescription>
+        </DialogHeader>
+        <div className='flex flex-col divide-y rounded-md border'>
+          {(outConflicts ?? []).map(conflict => (
+            <div key={conflict.songId} className='flex flex-col gap-1 px-3 py-2 text-sm'>
+              <span className='min-w-0 truncate font-medium'>{conflict.fileName}</span>
+              <span className='text-xs text-muted-foreground'>
+                {t('outConflictLibrary', { size: formatFileSize(conflict.librarySize) })}
+                {' · '}
+                {t('outConflictQishui', { size: formatFileSize(conflict.qishuiSize) })}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className='flex justify-end gap-2'>
+          <Button variant='outline' onClick={() => doTransferOut(false)}>
+            {t('outConflictSkip')}
+          </Button>
+          <Button onClick={() => doTransferOut(true)}>
+            {t('outConflictOverwrite')}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+    </>
   )
 }

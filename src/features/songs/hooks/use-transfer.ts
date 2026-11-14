@@ -93,17 +93,38 @@ export function useTransferOutList(target: BulkTarget | null, enabled: boolean) 
 
 export type TransferOutProgress = NdjsonBulkProgress<TransferOutResult>
 
+export interface OutConflict {
+  songId: number
+  fileName: string
+  title: string | null
+  artist: string | null
+  librarySize: number
+  qishuiSize: number
+}
+
+export interface OutConflictsResponse {
+  success: true
+  conflicts: OutConflict[]
+}
+
+/** 出库同名检测：查已选歌曲里哪些在汽水目录已有同名文件（只查不动）。 */
+export async function checkTransferOutConflicts(target: BulkTarget): Promise<OutConflict[]> {
+  const response = await api.post<OutConflictsResponse>('/songs/transfer/out-conflicts', { target })
+  return response.data.conflicts
+}
+
 interface TransferOutParams {
   target: BulkTarget
+  overwrite?: boolean
   onProgress?: (progress: TransferOutProgress) => void
 }
 
-async function transferOut({ target, onProgress }: TransferOutParams) {
+async function transferOut({ target, overwrite, onProgress }: TransferOutParams) {
   const response = await fetch('/api/songs/transfer/out', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
-    body: JSON.stringify({ target })
+    body: JSON.stringify({ target, overwrite: overwrite ?? false })
   })
 
   return collectNdjsonBulkResponse<TransferOutResult>(response, onProgress)

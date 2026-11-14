@@ -7,6 +7,8 @@ import { ndjsonStreamResponse, type NdjsonEvent } from '@/lib/ndjson-stream'
 
 interface TransferOutBody {
   target?: BulkTarget
+  /** 汽水目录已有同名文件时是否覆盖；不传默认 false（跳过冲突文件） */
+  overwrite?: boolean
 }
 
 /** 每次最多移动 500 首，与批量文件名解析的上限一致。 */
@@ -48,7 +50,7 @@ export async function POST(request: Request): Promise<Response> {
   return ndjsonStreamResponse(async function* () {
     yield { type: 'start', total: songIds.length } satisfies NdjsonEvent<unknown>
 
-    const results = await moveSongsToQishui(songIds)
+    const results = await moveSongsToQishui(songIds, { overwrite: body.overwrite ?? false })
     for (let i = 0; i < results.length; i++) {
       yield { type: 'result', index: i, result: results[i] }
     }

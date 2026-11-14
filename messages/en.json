@@ -677,6 +677,12 @@
     "inPath": "Import path",
     "outPath": "Export path",
     "clearDone": "Clear",
-    "close": "Close"
+    "close": "Close",
+    "outConflictTitle": "Same-name files already in Qishui",
+    "outConflictDesc": "These songs already have a same-name file in the Qishui folder. Overwrite replaces the Qishui copy; skip moves only the other songs.",
+    "outConflictLibrary": "Library: {size}",
+    "outConflictQishui": "Qishui: {size}",
+    "outConflictSkip": "Skip same-name files",
+    "outConflictOverwrite": "Overwrite"
   }
 }
