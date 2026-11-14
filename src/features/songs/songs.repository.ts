@@ -96,6 +96,18 @@ export function findSongsForTransferOut(ids: number[]) {
   })
 }
 
+/** 出库打包下载用：按 id 取文件名 / 磁盘路径。 */
+export function findSongsForDownload(ids: number[]) {
+  return prisma.song.findMany({
+    where: { id: { in: ids } },
+    select: {
+      id: true,
+      fileName: true,
+      filePath: true
+    }
+  })
+}
+
 export function findSongForPeaks(
   id: number
 ): Promise<{ filePath: string; duration: number | null; peaks: string | null } | null> {

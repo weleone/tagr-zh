@@ -129,20 +129,16 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     )
   }
 
-  /** 出库下载到本地：已选歌曲逐个走 /api/songs/[id]/download 下到浏览器，
-   * 不动曲库文件也不删记录。多个时逐个触发，间隔 300ms 防浏览器拦截。 */
+  /** 出库下载到本地：已选歌曲打成一个 zip 一次下完（GET + ids），
+   * 只弹一次保存框；不动曲库文件也不删记录。 */
   const handleDownloadOut = () => {
     if (outSongs.length === 0) return
-    outSongs.forEach((song, index) => {
-      window.setTimeout(() => {
-        const a = document.createElement('a')
-        a.href = `/api/songs/${song.id}/download`
-        a.download = song.fileName
-        document.body.appendChild(a)
-        a.click()
-        a.remove()
-      }, index * 300)
-    })
+    const ids = outSongs.map(song => song.id).join(',')
+    const a = document.createElement('a')
+    a.href = `/api/songs/transfer/out-download-zip?ids=${encodeURIComponent(ids)}`
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
   }
 
   const busy = transferIn.isPending || transferOut.isPending
