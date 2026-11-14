@@ -1,6 +1,6 @@
 'use client'
 
-import { FileTextIcon, ImageIcon, ImageUpIcon, PencilIcon, XIcon } from 'lucide-react'
+import { FileTextIcon, ImageIcon, ImageUpIcon, PencilIcon, TrashIcon, XIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { useBreakpoint } from '@/hooks/use-breakpoint'
@@ -17,6 +17,7 @@ interface BulkActionBarPillProps {
   onFetchCovers: () => void
   onMusicBrainz: () => void
   onFilename: () => void
+  onDelete: () => void
 }
 
 export function BulkActionBarPill({
@@ -27,7 +28,8 @@ export function BulkActionBarPill({
   onSetCover,
   onFetchCovers,
   onMusicBrainz,
-  onFilename
+  onFilename,
+  onDelete
 }: BulkActionBarPillProps) {
   const tBulk = useTranslations('bulkEdit')
   const breakpoint = useBreakpoint()
@@ -94,6 +96,15 @@ export function BulkActionBarPill({
           aria-label={tBulk('actionBar.filename')}>
           <FileTextIcon />
           <span className='hidden sm:inline'>{tBulk('actionBar.filename')}</span>
+        </Button>
+        <Button
+          variant='destructive'
+          size='sm'
+          onClick={onDelete}
+          disabled={count === 0 || busy}
+          aria-label={tBulk('actionBar.delete')}>
+          <TrashIcon />
+          <span className='hidden sm:inline'>{tBulk('actionBar.delete')}</span>
         </Button>
       </div>
     </div>

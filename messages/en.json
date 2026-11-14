@@ -450,7 +450,8 @@
       "fetchCovers": "Get covers from MusicBrainz",
       "musicbrainz": "Look up on MusicBrainz",
       "filename": "Parse from file name",
-      "cancel": "Cancel selection"
+      "cancel": "Cancel selection",
+      "delete": "Delete"
     },
     "edit": {
       "title": "Bulk edit",
@@ -504,6 +505,11 @@
       "partial": "{ok} updated, {failed} failed",
       "allFailed": "All {count} songs failed",
       "viewDetails": "Details"
+    },
+    "delete": {
+      "title": "Delete songs",
+      "warning": "This also deletes the files from disk. This cannot be undone.",
+      "resultSuccess": "{count, plural, one {Deleted # song} other {Deleted # songs}}"
     }
   },
   "bulkSummary": {
@@ -512,7 +518,8 @@
     "totalFiles": "{count, plural, one {# song processed} other {# songs processed}}",
     "titleSetCover": "Cover update summary",
     "titleMusicbrainz": "MusicBrainz lookup summary",
-    "titleFilename": "File name parsing summary"
+    "titleFilename": "File name parsing summary",
+    "titleDelete": "Delete summary"
   },
   "bulkMusicbrainz": {
     "title": "MusicBrainz lookup",
@@ -684,5 +691,14 @@
     "outConflictQishui": "Qishui: {size}",
     "outConflictSkip": "Skip same-name files",
     "outConflictOverwrite": "Overwrite"
+  },
+  "deleteSong": {
+    "delete": "Delete",
+    "confirmTitle": "Delete this song?",
+    "confirmDesc": "This deletes “{name}” and removes the file from disk. This cannot be undone.",
+    "confirm": "Delete",
+    "cancel": "Cancel",
+    "deleted": "Deleted “{name}”",
+    "failed": "Delete failed"
   }
 }

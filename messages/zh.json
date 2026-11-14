@@ -450,7 +450,8 @@
       "fetchCovers": "从 MusicBrainz 获取封面",
       "musicbrainz": "在 MusicBrainz 上查找",
       "filename": "从文件名解析",
-      "cancel": "取消选择"
+      "cancel": "取消选择",
+      "delete": "删除"
     },
     "edit": {
       "title": "批量编辑",
@@ -504,6 +505,11 @@
       "partial": "已更新 {ok} 首，失败 {failed} 首",
       "allFailed": "全部 {count} 首歌曲均失败",
       "viewDetails": "详情"
+    },
+    "delete": {
+      "title": "删除歌曲",
+      "warning": "会同时删除磁盘上的文件，无法恢复。",
+      "resultSuccess": "{count, plural, one {已删除 # 首歌曲} other {已删除 # 首歌曲}}"
     }
   },
   "bulkSummary": {
@@ -512,7 +518,8 @@
     "totalFiles": "{count, plural, one {已处理 # 首歌曲} other {已处理 # 首歌曲}}",
     "titleSetCover": "封面更新摘要",
     "titleMusicbrainz": "MusicBrainz 查找摘要",
-    "titleFilename": "文件名解析摘要"
+    "titleFilename": "文件名解析摘要",
+    "titleDelete": "删除摘要"
   },
   "bulkMusicbrainz": {
     "title": "MusicBrainz 查找",
@@ -684,5 +691,14 @@
     "outConflictQishui": "汽水：{size}",
     "outConflictSkip": "跳过同名文件",
     "outConflictOverwrite": "覆盖"
+  },
+  "deleteSong": {
+    "delete": "删除",
+    "confirmTitle": "删除这首歌？",
+    "confirmDesc": "将删除「{name}」，同时删除磁盘上的文件，无法恢复。",
+    "confirm": "删除",
+    "cancel": "取消",
+    "deleted": "已删除「{name}」",
+    "failed": "删除失败"
   }
 }

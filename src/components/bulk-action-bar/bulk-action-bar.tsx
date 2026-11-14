@@ -21,6 +21,7 @@ import { useSmartPlaylists } from '@/features/smart-playlists/hooks/use-smart-pl
 import { buildBulkTargetFromSelection } from '@/features/songs/bulk-target-helpers'
 import { type Song } from '@/features/songs/domain'
 import { useBulkApplyFilename } from '@/features/songs/hooks/use-bulk-filename'
+import { useBulkDeleteSongs } from '@/features/songs/hooks/use-bulk-delete-songs'
 import { useBulkUpdateSongPicture } from '@/features/songs/hooks/use-bulk-update-song-picture'
 import { useBulkUpdateSongs } from '@/features/songs/hooks/use-bulk-update-songs'
 import { useBulkSelectionStore, useSelectionCount, useSelectionState } from '@/stores/bulk-selection-store'
@@ -56,7 +57,7 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
   const [editOpen, setEditOpen] = useState(false)
   const [musicBrainzOpen, setMusicBrainzOpen] = useState(false)
   const [filenameOpen, setFilenameOpen] = useState(false)
-  const [confirmKind, setConfirmKind] = useState<'edit' | 'cover' | 'set-cover' | 'musicbrainz' | 'filename' | null>(null)
+  const [confirmKind, setConfirmKind] = useState<'edit' | 'cover' | 'set-cover' | 'musicbrainz' | 'filename' | 'delete' | null>(null)
   const [pendingPatch, setPendingPatch] = useState<BulkPatch | null>(null)
   const [pendingCover, setPendingCover] = useState<File | null>(null)
   const [pendingMusicBrainz, setPendingMusicBrainz] = useState<BulkMusicBrainzSubmission | null>(null)
@@ -68,6 +69,7 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
   const setCoverMutation = useBulkUpdateSongPicture()
   const musicBrainzMutation = useBulkApplyMusicBrainz()
   const filenameMutation = useBulkApplyFilename()
+  const deleteMutation = useBulkDeleteSongs()
 
   const playlists = useSmartPlaylists().data
   const playlistName = useMemo(() => {
@@ -267,6 +269,38 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
     }
   }
 
+  const runBulkDelete = async (target: ReturnType<typeof buildBulkTargetFromSelection>) => {
+    if (!target) return
+    try {
+      const result = await deleteMutation.mutateAsync({ target, onProgress: handleProgress })
+      const okResults = result.results.filter(r => r.ok)
+      const failResults = result.results.filter(r => !r.ok)
+      setBulkLastResult({
+        kind: 'delete',
+        updated: { count: okResults.length, files: okResults.slice(0, SCAN_FILE_LIST_LIMIT).map(r => r.path) },
+        failed: {
+          count: failResults.length,
+          errors: failResults.slice(0, SCAN_FILE_LIST_LIMIT).map(r => ({ path: r.path || String(r.songId), error: r.error ?? 'Unknown error' }))
+        }
+      })
+      const toastAction = {
+        label: tBulk('result.viewDetails'),
+        onClick: () => setBulkSummaryOpen(true)
+      }
+      if (failResults.length === 0) {
+        toast.success(tBulk('delete.resultSuccess', { count: okResults.length }), { action: toastAction, duration: 30000 })
+      } else if (okResults.length === 0) {
+        toast.error(tBulk('result.allFailed', { count: result.results.length }), { action: toastAction, duration: 30000 })
+      } else {
+        toast.warning(tBulk('result.partial', { ok: okResults.length, failed: failResults.length }), { action: toastAction, duration: 30000 })
+      }
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : 'Bulk delete failed')
+    } finally {
+      closeAll()
+    }
+  }
+
   const handleConfirm = () => {
     const target = buildBulkTargetFromSelection(selection)
     if (!target) return
@@ -280,6 +314,8 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
       void runMusicBrainz(target, pendingMusicBrainz)
     } else if (confirmKind === 'filename' && pendingFilename) {
       void runFilename(target, pendingFilename)
+    } else if (confirmKind === 'delete') {
+      void runBulkDelete(target)
     }
   }
 
@@ -288,7 +324,8 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
     coverMutation.isPending ||
     setCoverMutation.isPending ||
     musicBrainzMutation.isPending ||
-    filenameMutation.isPending
+    filenameMutation.isPending ||
+    deleteMutation.isPending
 
   const confirmTitle =
     confirmKind === 'edit'
@@ -301,7 +338,9 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
             ? tMusicBrainz('title')
             : confirmKind === 'filename'
               ? tFilename('title')
-              : ''
+              : confirmKind === 'delete'
+                ? tBulk('delete.title')
+                : ''
 
   const confirmChanges =
     confirmKind === 'edit' && pendingPatch ? (
@@ -317,7 +356,11 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
     ) : null
 
   const confirmWarning =
-    confirmKind === 'cover' || confirmKind === 'set-cover' ? tBulk('cover.warning') : undefined
+    confirmKind === 'cover' || confirmKind === 'set-cover'
+      ? tBulk('cover.warning')
+      : confirmKind === 'delete'
+        ? tBulk('delete.warning')
+        : undefined
 
   return (
     <>
@@ -330,6 +373,7 @@ export function BulkActionBar({ loadedSongs }: BulkActionBarProps) {
         onFetchCovers={() => setConfirmKind('cover')}
         onMusicBrainz={() => setMusicBrainzOpen(true)}
         onFilename={() => setFilenameOpen(true)}
+        onDelete={() => setConfirmKind('delete')}
       />
 
       <BulkMusicBrainzModal

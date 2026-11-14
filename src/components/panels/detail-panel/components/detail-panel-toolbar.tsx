@@ -8,6 +8,7 @@ import {
   RefreshCwIcon,
   Share2Icon,
   EyeDashedIcon,
+  TrashIcon,
   XIcon
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
@@ -17,6 +18,16 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { HistoryModal } from '@/components/history-modal/history-modal'
 import { SettingsModal } from '@/components/settings-modal/settings-modal'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -27,8 +38,10 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import type { Song } from '@/features/songs/domain'
 import { useRescanSong } from '@/features/songs/hooks/use-rescan-song'
+import { useDeleteSong } from '@/features/songs/hooks/use-delete-song'
 import { useSelectedSong } from '@/hooks/use-selected-song'
 import MusicBrainzIcon from '@/icons/musicbrainz.svg'
+import { toast } from 'sonner'
 
 interface DetailPanelToolbarProps {
   song: Song
@@ -41,6 +54,7 @@ interface DetailPanelToolbarProps {
 
 export function DetailPanelToolbar({ song, displayTitle, onShare, onMusicBrainzLookup, onDownloadCover, onEditCover }: DetailPanelToolbarProps) {
   const tHistory = useTranslations('history')
+  const tDelete = useTranslations('deleteSong')
   const tMusicBrainz = useTranslations('musicbrainzLookup')
   const tShare = useTranslations('share')
   const tPreviewCard = useTranslations('previewCard')
@@ -48,9 +62,24 @@ export function DetailPanelToolbar({ song, displayTitle, onShare, onMusicBrainzL
   const { data: session } = useSession()
   const { setSelectedSongId } = useSelectedSong()
   const { mutate: rescanSong, isPending: isRescanning } = useRescanSong()
+  const { mutate: deleteSong, isPending: isDeleting } = useDeleteSong()
   const [historyOpen, setHistoryOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
   const canEdit = hasMinimumRole(session?.user?.role as UserRole, 'tagger')
+
+  const handleDelete = () => {
+    setDeleteOpen(false)
+    deleteSong(song.id, {
+      onSuccess: name => {
+        toast.success(tDelete('deleted', { name }))
+        setSelectedSongId(null)
+      },
+      onError: e => {
+        toast.error(e instanceof Error ? e.message : tDelete('failed'))
+      }
+    })
+  }
 
   return (
     <>
@@ -106,6 +135,19 @@ export function DetailPanelToolbar({ song, displayTitle, onShare, onMusicBrainzL
                 </TooltipTrigger>
                 <TooltipContent>{tHistory('viewHistory')}</TooltipContent>
               </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant='ghost'
+                    size='icon'
+                    className='h-7 w-7 text-destructive hover:text-destructive'
+                    disabled={isDeleting}
+                    onClick={() => setDeleteOpen(true)}>
+                    <TrashIcon className='h-4 w-4' />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{tDelete('delete')}</TooltipContent>
+              </Tooltip>
             </>
           )}
         </div>
@@ -141,6 +183,10 @@ export function DetailPanelToolbar({ song, displayTitle, onShare, onMusicBrainzL
                     <HistoryIcon />
                     {tHistory('viewHistory')}
                   </DropdownMenuItem>
+                  <DropdownMenuItem className='text-destructive' onClick={() => setDeleteOpen(true)}>
+                    <TrashIcon className='text-destructive' />
+                    {tDelete('delete')}
+                  </DropdownMenuItem>
                 </>
               )}
             </DropdownMenuContent>
@@ -150,6 +196,25 @@ export function DetailPanelToolbar({ song, displayTitle, onShare, onMusicBrainzL
 
       <HistoryModal open={historyOpen} onOpenChange={setHistoryOpen} songId={song.id} songTitle={displayTitle} />
       <SettingsModal open={settingsOpen} onOpenChange={setSettingsOpen} section='detailPanel' />
+
+      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{tDelete('confirmTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {tDelete('confirmDesc', { name: displayTitle })}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tDelete('cancel')}</AlertDialogCancel>
+            <AlertDialogAction
+              className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
+              onClick={handleDelete}>
+              {tDelete('confirm')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }

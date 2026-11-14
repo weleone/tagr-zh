@@ -6,6 +6,7 @@ import { rescanSongFileAndSaveIntoDb } from '@/features/metadata/metadata-scan.s
 import { writeMetadataToFile } from '@/features/metadata/metadata-write.service'
 import { SongWithMetadata } from '@/features/songs/domain'
 import { findSongWithMetadata } from '@/features/songs/songs.repository'
+import { deleteSongAndFile } from '@/features/songs/delete-song'
 
 interface RouteParams {
   params: Promise<{
@@ -132,4 +133,39 @@ export async function PATCH(request: Request, { params }: RouteParams): Promise<
       { status: 500 }
     )
   }
+}
+
+interface DeleteSongSuccessResponse {
+  success: true
+  songId: number
+  name: string
+}
+
+interface DeleteSongErrorResponse {
+  success: false
+  error: string
+}
+
+type DeleteSongResponse = DeleteSongSuccessResponse | DeleteSongErrorResponse
+
+/**
+ * 删一首歌：删磁盘文件 + 清数据库记录（tagr-zh 新增）。
+ * 只删曲库里的文件，库外路径拒绝；文件已不在磁盘上时只清记录。
+ */
+export async function DELETE(request: Request, { params }: RouteParams): Promise<NextResponse<DeleteSongResponse>> {
+  const guard = await requireRole('tagger')
+  if (!guard.authorized) return guard.response
+
+  const { id } = await params
+  const songId = parseInt(id, 10)
+  if (isNaN(songId)) {
+    return NextResponse.json({ success: false, error: 'Invalid song ID' }, { status: 400 })
+  }
+
+  const result = await deleteSongAndFile(songId)
+  if (!result.ok) {
+    return NextResponse.json({ success: false, error: result.error ?? 'Delete failed' }, { status: 400 })
+  }
+
+  return NextResponse.json({ success: true, songId: result.songId, name: result.name })
 }

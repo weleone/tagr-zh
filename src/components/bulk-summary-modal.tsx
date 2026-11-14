@@ -9,7 +9,8 @@ const KIND_CONFIG = {
   cover: { titleKey: 'titleCover', updatedVariant: 'cover' },
   'set-cover': { titleKey: 'titleSetCover', updatedVariant: 'cover' },
   musicbrainz: { titleKey: 'titleMusicbrainz', updatedVariant: 'updated' },
-  filename: { titleKey: 'titleFilename', updatedVariant: 'updated' }
+  filename: { titleKey: 'titleFilename', updatedVariant: 'updated' },
+  delete: { titleKey: 'titleDelete', updatedVariant: 'updated' }
 } as const satisfies Record<BulkSummaryKind, { titleKey: string; updatedVariant: SummarySection['variant'] }>
 
 export function BulkSummaryModal() {
