@@ -129,10 +129,20 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     )
   }
 
-  /** 出库下载到本地：已选歌曲打成一个 zip 一次下完（GET + ids），
-   * 只弹一次保存框；不动曲库文件也不删记录。 */
+  /** 出库下载到本地：已选歌曲原文件一个个下到本地，不打包。
+   * APK 里走 JS 桥 DownloadBridge：一次把清单给 APK，只弹一次保存框，
+   * 由 APK 逐个下到所选位置；浏览器里没这个桥，改走 zip 打包下载。 */
   const handleDownloadOut = () => {
     if (outSongs.length === 0) return
+    const files = outSongs.map(song => ({
+      url: `${window.location.origin}/api/songs/${song.id}/download`,
+      fileName: song.fileName
+    }))
+    const bridge = (window as unknown as { DownloadBridge?: { downloadFiles: (json: string) => void } }).DownloadBridge
+    if (bridge && typeof bridge.downloadFiles === 'function') {
+      bridge.downloadFiles(JSON.stringify(files))
+      return
+    }
     const ids = outSongs.map(song => song.id).join(',')
     const a = document.createElement('a')
     a.href = `/api/songs/transfer/out-download-zip?ids=${encodeURIComponent(ids)}`
