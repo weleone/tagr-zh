@@ -110,7 +110,12 @@ export function FolderListHeaderMenu({
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem
+          onClick={async () => {
+            await signOut({ redirect: false })
+            window.location.href = '/login'
+          }}
+        >
           <LogOutIcon className='h-4 w-4' />
           {tCommon('logout')}
         </DropdownMenuItem>
