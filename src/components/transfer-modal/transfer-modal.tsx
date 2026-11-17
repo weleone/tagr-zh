@@ -218,6 +218,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
           </div>
 
           <TabsContent value='in' className='flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4'>
+            <p className='text-xs text-muted-foreground'>{t('inIntro')}</p>
             <p className='text-xs text-muted-foreground'>{t('inHint')}</p>
             {dirs && (
               <p className='font-mono text-xs text-muted-foreground break-all'>

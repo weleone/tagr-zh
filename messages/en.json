@@ -659,6 +659,7 @@
     "description": "Move new Qishui downloads into the library to edit tags, then copy them to Qishui",
     "inTab": "Import",
     "outTab": "Export",
+    "inIntro": "New Qishui downloads are already in the import folder. Move them straight into the library, no need to place the files manually.",
     "inHint": "New songs in the Qishui download folder. Check them to move them into the library; they are scanned in automatically.",
     "outHint": "First check the songs to export in the song list, then copy them to the Qishui folder. Copied songs stay in the library; delete them later if you no longer want them there.",
     "selectAll": "Select all ({count} files)",
