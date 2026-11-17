@@ -10,11 +10,16 @@ import { Card, CardContent } from '@/components/ui/card'
 import { TransferModal } from '@/components/transfer-modal/transfer-modal'
 import { useScan } from '@/features/scan/hooks/use-scan'
 
-export function WelcomeScanState() {
+/** 欢迎页（曲库为空时显示）：扫描曲库 + 添加文件入口。
+ * transferHint 里的下载工具名由服务端 layout 传进来（TRANSFER_TOOL_NAME），
+ * 不设时按语言回落为“汽水”/“Qishui”。 */
+export function WelcomeScanState({ tool: toolProp = '' }: { tool?: string }) {
   const t = useTranslations('welcome')
   const router = useRouter()
   const { mutate: scan, isPending } = useScan()
   const [transferOpen, setTransferOpen] = useState(false)
+  /** 下载工具名：服务端传来的 TRANSFER_TOOL_NAME，不设时按语言回落。 */
+  const tool = toolProp || t('defaultTool')
 
   const handleScan = () => {
     scan({}, {
@@ -46,7 +51,7 @@ export function WelcomeScanState() {
               <ArrowRightLeftIcon className='h-4 w-4' />
               {t('transferButton')}
             </Button>
-            <p className='text-xs text-muted-foreground'>{t('transferHint')}</p>
+            <p className='text-xs text-muted-foreground'>{t('transferHint', { tool })}</p>
           </div>
           <p className='text-xs text-muted-foreground mt-6'>{t('insightsNotice')}</p>
         </CardContent>

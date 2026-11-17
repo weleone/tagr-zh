@@ -10,6 +10,7 @@ import {
 import { getConfigQueryKey } from '@/features/config/hooks/use-config'
 import prefetchConfig from '@/features/config/prefetch'
 import { countSongs } from '@/features/songs/songs.repository'
+import { getTransferToolName } from '@/features/songs/transfer'
 import { AUTOMATIC_LOCALE } from '@/i18n/locale'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { AppShell } from './app-shell'
@@ -21,7 +22,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const session = (await auth())!
 
   if (songCount === 0) {
-    return <WelcomeScanState />
+    return <WelcomeScanState tool={getTransferToolName()} />
   }
 
   const queryClient = new QueryClient()

@@ -283,13 +283,14 @@
   },
   "welcome": {
     "title": "欢迎使用 Tagr",
+    "defaultTool": "汽水",
     "description": "Tagr 需要扫描你的音乐文件夹以建立本地数据库，这样浏览和搜索曲库才会快速流畅。你的音乐及其标签不会离开本机。",
     "timing": "根据曲库大小，这个过程可能需要几分钟。",
     "scanButton": "扫描曲库",
     "scanning": "正在扫描你的曲库...",
     "insightsNotice": "Tagr 每天可发送一次匿名的使用统计（Insights）：仅统计数量，绝不包含文件名、路径或用户名。未经你同意不会发送，你也可以随时在设置中关闭。",
     "transferButton": "添加文件",
-    "transferHint": "汽水下载的新歌在待入库目录里，可以直接移进曲库，不用先手动放文件。"
+    "transferHint": "{tool}下载的新歌在待入库目录里，可以直接移进曲库，不用先手动放文件。"
   },
   "version": {
     "updateAvailable": "有新版本 {version} 可用",
