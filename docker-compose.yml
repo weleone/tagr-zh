@@ -1,25 +1,64 @@
 services:
-  tagr:
-    image: ghcr.io/suitux/tagr:latest
-    container_name: tagr
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - NODE_ENV=production
-      - DATABASE_URL=file:/data/tagr.db
-      - AUTH_SECRET=change-me
-      - AUTH_USER=admin
-      - AUTH_PASSWORD=change-me
-      - AUTH_URL=https://your-domain.com
-    volumes:
-      - sqlite_data:/data
-      # Mount your music folder into the container:
-      # - /your/music/folder1:/music/folder1
-      # - /your/music/folder2:/music/folder2
-      # - /your/music/folder3:/music/folder3
 
-volumes:
-  sqlite_data:
+  tagr:
+
+    image: weleone/tagr-zh:latest
+
+    container_name: tagr
+
+    restart: unless-stopped
+
+    ports:
+
+      - "3000:3000"
+
+    environment:
+
+      PUID: 1000
+
+      PGID: 1000
+
+      NODE_ENV: production
+
+      DATABASE_URL: file:/data/tagr.db
+
+      AUTH_USER: admin
+
+      AUTH_PASSWORD: <你自己设的密码>
+
+      AUTH_SECRET: <本地跑 openssl rand -hex 32 的结果>
+
+      AUTH_URL: http://宿主机IP:3000
+
+      # 曲库在宿主机上的路径：只用来在界面上显示文件来源，不参与文件操作；不填就显示容器内的 /music
+
+      HOST_LIBRARY_DIR: ~/music/tagr
+
+      # ---- 下面五项是搭配下载工具转移用的，不用可以整段删掉 ----
+
+      # 下载工具在界面上显示的名字，默认"汽水"，换别的下载工具改这一个就行
+      TRANSFER_TOOL_NAME: 汽水
+
+      # 入库目录在容器里的路径：入库（移入曲库）实际读的就是这里；不填默认 /qishui-fetch
+      IMPORT_DIR: /qishui-fetch
+
+      # 出库目录在容器里的路径：出库（复制回下载目录）实际写的就是这里；不填默认 /qishui
+      EXPORT_DIR: /qishui
+
+      # 入库目录在宿主机上的路径：只用来在界面上显示，不参与文件操作；不填就显示容器内的路径
+      HOST_IMPORT_DIR: ~/music/mp3/qishui/fetch
+
+      # 出库目录在宿主机上的路径：只用来在界面上显示，不参与文件操作；不填就显示容器内的路径
+      HOST_EXPORT_DIR: ~/music/mp3/qishui
+
+    volumes:
+
+      - ./tagr:/data                       # tagr 数据存放
+
+      - <音乐目录>:/music:rw                # tagr 读取文件
+
+      # ---- 下面两行也是下载工具转移用的，不用可以删掉 ----
+
+      - ~/music/mp3/qishui/fetch:/qishui-fetch:rw    # 入库：挂载下载目录
+
+      - ~/music/mp3/qishui:/qishui:rw                # 出库：挂载下载目录
