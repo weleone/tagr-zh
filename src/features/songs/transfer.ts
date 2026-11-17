@@ -9,10 +9,16 @@ import { scanFolderAndUpdateDatabase } from '@/features/metadata/metadata-scan.s
  *
  * 三个目录（都由 compose 卷挂载进来）：
  * - 曲库：MUSIC_FOLDERS 的第一个（默认 /music），即 /mnt/sdc1/music/tagr
- * - 待入库：QISHUI_FETCH_DIR（默认 /qishui-fetch），即汽水下载的 fetch 目录
- * - 汽水：QISHUI_DIR（默认 /qishui），即改完标签后放回的汽水目录
+ * - 待入库：IMPORT_DIR（默认 /qishui-fetch），即下载工具的 fetch 目录
+ * - 出库：EXPORT_DIR（默认 /qishui），即改完标签后放回的下载目录
  *
- * 流程：汽水下到 fetch → 移入库改标签 → 改完复制到汽水目录（播放器挂载点能看到）。
+ * 环境变量（通用名优先，汽水旧名仍可用）：
+ * - IMPORT_DIR，旧名 QISHUI_FETCH_DIR
+ * - EXPORT_DIR，旧名 QISHUI_DIR
+ * - HOST_IMPORT_DIR，旧名 HOST_FETCH_DIR；HOST_EXPORT_DIR，旧名 HOST_QISHUI_DIR
+ * - TRANSFER_TOOL_NAME：下载工具在界面上显示的名字，默认“汽水”
+ *
+ * 流程：下载工具下到 fetch → 移入库改标签 → 改完复制到出库目录（播放器挂载点能看到）。
  * 出库是复制不是移动：文件留在曲库里、记录也留在数据库里，歌继续显示在列表里，
  * 不想留了再用删除按钮删（删文件 + 清记录）。
  */
@@ -27,22 +33,31 @@ export function getTransferDirs(): TransferDirs {
   const folders = getMusicFolders()
   return {
     library: folders[0] ?? '/music',
-    fetch: process.env.QISHUI_FETCH_DIR?.trim() || '/qishui-fetch',
-    qishui: process.env.QISHUI_DIR?.trim() || '/qishui'
+    fetch: process.env.IMPORT_DIR?.trim() || process.env.QISHUI_FETCH_DIR?.trim() || '/qishui-fetch',
+    qishui: process.env.EXPORT_DIR?.trim() || process.env.QISHUI_DIR?.trim() || '/qishui'
   }
 }
 
 /**
+ * 下载工具在界面上显示的名字：TRANSFER_TOOL_NAME。
+ * 不设时返回空串，前端按当前语言回落（中文“汽水” / 英文“Qishui”）。
+ * 前端拿不到环境变量，由 /api/songs/transfer/fetch 一并返回。
+ */
+export function getTransferToolName(): string {
+  return process.env.TRANSFER_TOOL_NAME?.trim() || ''
+}
+
+/**
  * 界面显示用的路径：宿主机路径（只做显示，不参与文件操作）。
- * compose 里可配 HOST_LIBRARY_DIR / HOST_FETCH_DIR / HOST_QISHUI_DIR，
+ * compose 里可配 HOST_LIBRARY_DIR / HOST_IMPORT_DIR / HOST_EXPORT_DIR，
  * 不配就回落到容器内路径。
  */
 export function getTransferDisplayDirs(): TransferDirs {
   const dirs = getTransferDirs()
   return {
     library: process.env.HOST_LIBRARY_DIR?.trim() || dirs.library,
-    fetch: process.env.HOST_FETCH_DIR?.trim() || dirs.fetch,
-    qishui: process.env.HOST_QISHUI_DIR?.trim() || dirs.qishui
+    fetch: process.env.HOST_IMPORT_DIR?.trim() || process.env.HOST_FETCH_DIR?.trim() || dirs.fetch,
+    qishui: process.env.HOST_EXPORT_DIR?.trim() || process.env.HOST_QISHUI_DIR?.trim() || dirs.qishui
   }
 }
 

@@ -7,7 +7,7 @@ import { ndjsonStreamResponse, type NdjsonEvent } from '@/lib/ndjson-stream'
 
 interface TransferOutBody {
   target?: BulkTarget
-  /** 汽水目录已有同名文件时是否覆盖；不传默认 false（跳过冲突文件） */
+  /** 下载目录已有同名文件时是否覆盖；不传默认 false（跳过冲突文件） */
   overwrite?: boolean
 }
 
@@ -15,7 +15,7 @@ interface TransferOutBody {
 const TRANSFER_OUT_LIMIT = 500
 
 /**
- * 曲库 → 汽水：按批量选择解析出歌曲，逐首复制文件到汽水目录，
+ * 曲库 → 下载目录：按批量选择解析出歌曲，逐首复制文件到下载目录，
  * 曲库里的原文件和记录都保留（歌继续留在列表里，不想留了再手动删）。
  * 用 NDJSON 流逐个返回结果。
  */

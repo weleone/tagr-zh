@@ -18,10 +18,12 @@ interface TransferModalProps {
 }
 
 /**
- * 汽水 ↔ Tagr 文件转移（tagr-zh 新增）。
- * 入库：把汽水 fetch 目录里的新歌移进曲库，改标签。
- * 出库：把曲库里已改好标签的歌复制到汽水目录（播放器挂载点能看到），
+ * 文件转移（tagr-zh 新增）。
+ * 入库：把下载工具 fetch 目录里的新歌移进曲库，改标签。
+ * 出库：把曲库里已改好标签的歌复制到下载目录（播放器挂载点能看到），
  * 复制后歌仍留在曲库里，不想留了再手动删。
+ * 文案里的下载工具名来自 TRANSFER_TOOL_NAME（后端经 fetch 接口返回），
+ * 不设时按语言回落为“汽水”/“Qishui”。
  */
 export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const t = useTranslations('transfer')
@@ -35,13 +37,13 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
   /**
    * 把后端的 error 码翻成能看懂的原因；rename 抛出的原始错误直接显示。
-   * alreadyExists 的说法分方向：入库是曲库里已有，出库是汽水目录里已有。
+   * alreadyExists 的说法分方向：入库是曲库里已有，出库是下载目录里已有。
    */
   const errorReason = (error: string | undefined, direction: 'in' | 'out' = 'in'): string => {
     if (!error) return t('errOther', { error: 'unknown' })
     if (error === 'invalidName') return t('errInvalidName')
     if (error === 'notFound') return t('errNotFound')
-    if (error === 'alreadyExists') return direction === 'out' ? t('errAlreadyExistsOut') : t('errAlreadyExists')
+    if (error === 'alreadyExists') return direction === 'out' ? t('errAlreadyExistsOut', { tool }) : t('errAlreadyExists')
     if (error === 'outsideLibrary') return t('errOutsideLibrary')
     return t('errOther', { error })
   }
@@ -89,6 +91,8 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
   const fetchFiles = fetchData?.files ?? []
   const dirs = fetchData?.dirs
+  /** 下载工具名：后端返回的 TRANSFER_TOOL_NAME，不设时按语言回落。 */
+  const tool = fetchData?.tool || t('defaultTool')
   const allChecked = fetchFiles.length > 0 && fetchFiles.every(file => checked.has(file.name))
 
   const toggleFile = (name: string) => {
@@ -201,7 +205,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
       <DialogContent className='max-w-2xl max-h-[85vh] flex flex-col gap-0 p-0 overflow-hidden'>
         <DialogHeader className='shrink-0 border-b px-4 pt-4 pb-3'>
           <DialogTitle>{t('title')}</DialogTitle>
-          <DialogDescription>{t('description')}</DialogDescription>
+          <DialogDescription>{t('description', { tool })}</DialogDescription>
           {dirs && (
             <p className='font-mono text-xs text-muted-foreground break-all'>
               {t('source')}：{tab === 'in' ? dirs.fetch : dirs.library}
@@ -218,8 +222,8 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
           </div>
 
           <TabsContent value='in' className='flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4'>
-            <p className='text-xs text-muted-foreground'>{t('inIntro')}</p>
-            <p className='text-xs text-muted-foreground'>{t('inHint')}</p>
+            <p className='text-xs text-muted-foreground'>{t('inIntro', { tool })}</p>
+            <p className='text-xs text-muted-foreground'>{t('inHint', { tool })}</p>
             {dirs && (
               <p className='font-mono text-xs text-muted-foreground break-all'>
                 {t('inPath')}：{dirs.library}
@@ -289,7 +293,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
           </TabsContent>
 
           <TabsContent value='out' className='flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4'>
-            <p className='text-xs text-muted-foreground'>{t('outHint')}</p>
+            <p className='text-xs text-muted-foreground'>{t('outHint', { tool })}</p>
             {dirs && (
               <p className='font-mono text-xs text-muted-foreground break-all'>
                 {t('outPath')}：{dirs.qishui}
@@ -300,7 +304,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               <p className='text-sm text-muted-foreground'>{t('outNoSelection')}</p>
             ) : (
               <>
-                <p className='text-sm'>{t('outSelected', { count: outCount })}</p>
+                <p className='text-sm'>{t('outSelected', { count: outCount, tool })}</p>
                 {outListPending && (
                   <div className='flex h-16 items-center justify-center'>
                     <Loader2Icon className='h-5 w-5 animate-spin text-muted-foreground' />
@@ -336,7 +340,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
             <div className='flex flex-col items-end gap-2'>
               <Button onClick={handleTransferOut} disabled={!outTarget || outCount === 0 || busy || checkingConflicts}>
                 {(transferOut.isPending || checkingConflicts) && <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />}
-                {t('outAction', { count: outCount })}
+                {t('outAction', { count: outCount, tool })}
               </Button>
               <Button
                 type='button'
@@ -357,12 +361,12 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
       </DialogContent>
     </Dialog>
 
-    {/* 出库同名冲突：汽水目录已有同名文件，列两边大小让用户选覆盖还是跳过 */}
+    {/* 出库同名冲突：下载目录已有同名文件，列两边大小让用户选覆盖还是跳过 */}
     <Dialog open={outConflicts !== null} onOpenChange={openState => { if (!openState) setOutConflicts(null) }}>
       <DialogContent className='max-w-lg'>
         <DialogHeader>
-          <DialogTitle>{t('outConflictTitle')}</DialogTitle>
-          <DialogDescription>{t('outConflictDesc')}</DialogDescription>
+          <DialogTitle>{t('outConflictTitle', { tool })}</DialogTitle>
+          <DialogDescription>{t('outConflictDesc', { tool })}</DialogDescription>
         </DialogHeader>
         <div className='flex flex-col divide-y rounded-md border'>
           {(outConflicts ?? []).map(conflict => (
@@ -371,7 +375,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               <span className='text-xs text-muted-foreground'>
                 {t('outConflictLibrary', { size: formatFileSize(conflict.librarySize) })}
                 {' · '}
-                {t('outConflictQishui', { size: formatFileSize(conflict.qishuiSize) })}
+                {t('outConflictQishui', { size: formatFileSize(conflict.qishuiSize), tool })}
               </span>
             </div>
           ))}

@@ -12,8 +12,8 @@ interface OutConflictsBody {
 const OUT_CONFLICTS_LIMIT = 500
 
 /**
- * 出库同名检测：按批量选择解析出歌曲，查哪些在汽水目录已有同名文件，
- * 返回冲突清单（含曲库那份与汽水那份的文件大小，供弹窗让用户选覆盖还是跳过）。
+ * 出库同名检测：按批量选择解析出歌曲，查哪些在下载目录已有同名文件，
+ * 返回冲突清单（含曲库那份与下载目录那份的文件大小，供弹窗让用户选覆盖还是跳过）。
  * 只查、不移动任何文件，也不删数据库记录。
  */
 export async function POST(request: Request): Promise<Response> {

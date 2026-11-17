@@ -13,10 +13,12 @@ export interface FetchListResponse {
   exists: boolean
   dir: string
   dirs: { library: string; fetch: string; qishui: string }
+  /** 下载工具名（TRANSFER_TOOL_NAME），不设为空串，前端按语言回落。 */
+  tool: string
   files: FetchFile[]
 }
 
-/** 汽水待入库目录里的音频文件；弹窗打开时才拉。 */
+/** 待入库目录里的音频文件；弹窗打开时才拉。 */
 export function useFetchFiles(enabled: boolean) {
   return useQuery({
     queryKey: ['transfer', 'fetch'],
@@ -107,7 +109,7 @@ export interface OutConflictsResponse {
   conflicts: OutConflict[]
 }
 
-/** 出库同名检测：查已选歌曲里哪些在汽水目录已有同名文件（只查不动）。 */
+/** 出库同名检测：查已选歌曲里哪些在下载目录已有同名文件（只查不动）。 */
 export async function checkTransferOutConflicts(target: BulkTarget): Promise<OutConflict[]> {
   const response = await api.post<OutConflictsResponse>('/songs/transfer/out-conflicts', { target })
   return response.data.conflicts

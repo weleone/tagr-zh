@@ -26,8 +26,10 @@
 三个目录由环境变量指定（compose 里挂卷）：
 
 - 曲库：`MUSIC_FOLDERS` 的第一个（默认 `/music`）
-- 待入库：`QISHUI_FETCH_DIR`（默认 `/qishui-fetch`）
-- 汽水：`QISHUI_DIR`（默认 `/qishui`）
+- 待入库：`IMPORT_DIR`（默认 `/qishui-fetch`），旧名 `QISHUI_FETCH_DIR` 仍可用
+- 出库：`EXPORT_DIR`（默认 `/qishui`），旧名 `QISHUI_DIR` 仍可用
+
+界面上显示的宿主机路径只做显示、不参与文件操作：`HOST_LIBRARY_DIR`、`HOST_IMPORT_DIR`（旧名 `HOST_FETCH_DIR`）、`HOST_EXPORT_DIR`（旧名 `HOST_QISHUI_DIR`）。下载工具在界面上显示的名字由 `TRANSFER_TOOL_NAME` 指定，默认“汽水”，换别的下载工具改这一个变量就行，弹窗文案跟着变。
 
 同名文件不覆盖，跳过并提示；移动走 `rename`，同一磁盘内是瞬间完成。每次最多 500 个文件 / 500 首歌。
 
