@@ -48,6 +48,16 @@ export function getTransferToolName(): string {
 }
 
 /**
+ * 转移功能是否配好了：待入库目录有没有在 yaml 里显式设置。
+ * 只看环境变量有没有设（IMPORT_DIR，旧名 QISHUI_FETCH_DIR），不看
+ * 默认值 /qishui-fetch —— 没显式设置就是没接下载工具，欢迎页和
+ * 主界面右上角的转移入口都要藏起来。
+ */
+export function isTransferConfigured(): boolean {
+  return Boolean(process.env.IMPORT_DIR?.trim() || process.env.QISHUI_FETCH_DIR?.trim())
+}
+
+/**
  * 界面显示用的路径：宿主机路径（只做显示，不参与文件操作）。
  * compose 里可配 HOST_LIBRARY_DIR / HOST_IMPORT_DIR / HOST_EXPORT_DIR，
  * 不配就回落到容器内路径。

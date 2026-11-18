@@ -12,8 +12,10 @@ import { useScan } from '@/features/scan/hooks/use-scan'
 
 /** 欢迎页（曲库为空时显示）：扫描曲库 + 添加文件入口。
  * transferHint 里的下载工具名由服务端 layout 传进来（TRANSFER_TOOL_NAME），
- * 不设时按语言回落为“汽水”/“Qishui”。 */
-export function WelcomeScanState({ tool: toolProp = '' }: { tool?: string }) {
+ * 不设时按语言回落为“汽水”/“Qishui”。
+ * transferEnabled：待入库目录有没有在 yaml 里显式设置（IMPORT_DIR），
+ * 没接下载工具时不显示添加文件按钮和那行提示。 */
+export function WelcomeScanState({ tool: toolProp = '', transferEnabled = true }: { tool?: string; transferEnabled?: boolean }) {
   const t = useTranslations('welcome')
   const router = useRouter()
   const { mutate: scan, isPending } = useScan()
@@ -47,11 +49,15 @@ export function WelcomeScanState({ tool: toolProp = '' }: { tool?: string }) {
               {isPending ? <Loader2Icon className='h-4 w-4 animate-spin' /> : <ScanSearchIcon className='h-4 w-4' />}
               {isPending ? t('scanning') : t('scanButton')}
             </Button>
-            <Button size='lg' variant='outline' onClick={() => setTransferOpen(true)}>
-              <ArrowRightLeftIcon className='h-4 w-4' />
-              {t('transferButton')}
-            </Button>
-            <p className='text-xs text-muted-foreground'>{t('transferHint', { tool })}</p>
+            {transferEnabled && (
+              <>
+                <Button size='lg' variant='outline' onClick={() => setTransferOpen(true)}>
+                  <ArrowRightLeftIcon className='h-4 w-4' />
+                  {t('transferButton')}
+                </Button>
+                <p className='text-xs text-muted-foreground'>{t('transferHint', { tool })}</p>
+              </>
+            )}
           </div>
           <p className='text-xs text-muted-foreground mt-6'>{t('insightsNotice')}</p>
         </CardContent>

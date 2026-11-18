@@ -9,6 +9,7 @@ import { TransferModal } from '@/components/transfer-modal/transfer-modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
+import { useTransferConfig } from '@/features/songs/hooks/use-transfer'
 import { useMobileNavStore } from '@/stores/mobile-nav-store'
 
 interface SongTableHeaderProps {
@@ -35,6 +36,9 @@ export function SongsTableHeader({
   const setFolderSheetOpen = useMobileNavStore(s => s.setFolderSheetOpen)
   const tTransfer = useTranslations('transfer')
   const [transferOpen, setTransferOpen] = useState(false)
+  /** 转移入口显不显示：yaml 里有没有接下载工具；没拿到配置前先显示，避免闪一下。 */
+  const { data: transferConfig } = useTransferConfig()
+  const transferEnabled = transferConfig?.configured !== false
 
   return (
     <>
@@ -55,10 +59,12 @@ export function SongsTableHeader({
           </div>
           <div className='flex items-center gap-2 flex-shrink-0'>
             {badges}
-            <Button variant='outline' size='sm' onClick={() => setTransferOpen(true)}>
-              <ArrowRightLeftIcon className='h-4 w-4' />
-              {tTransfer('title')}
-            </Button>
+            {transferEnabled && (
+              <Button variant='outline' size='sm' onClick={() => setTransferOpen(true)}>
+                <ArrowRightLeftIcon className='h-4 w-4' />
+                {tTransfer('title')}
+              </Button>
+            )}
             <ThemeToggle />
           </div>
         </div>
@@ -76,10 +82,12 @@ export function SongsTableHeader({
           )}
           <span className='text-sm font-semibold truncate'>{mobileTitle ?? title}</span>
           <div className='ml-auto flex items-center gap-2 flex-shrink-0'>
-            <Button variant='outline' size='sm' onClick={() => setTransferOpen(true)}>
-              <ArrowRightLeftIcon className='h-4 w-4' />
-              {tTransfer('title')}
-            </Button>
+            {transferEnabled && (
+              <Button variant='outline' size='sm' onClick={() => setTransferOpen(true)}>
+                <ArrowRightLeftIcon className='h-4 w-4' />
+                {tTransfer('title')}
+              </Button>
+            )}
             <ThemeToggle />
           </div>
         </div>

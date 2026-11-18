@@ -18,6 +18,28 @@ export interface FetchListResponse {
   files: FetchFile[]
 }
 
+export interface TransferConfigResponse {
+  success: true
+  /** 有没有接下载工具（待入库目录有没有在 yaml 里显式设置）。 */
+  configured: boolean
+  /** 下载工具名（TRANSFER_TOOL_NAME），不设为空串，前端按语言回落。 */
+  tool: string
+}
+
+/** 转移功能配置：主界面右上角按钮用它决定显不显示；环境变量运行期不变，查一次缓存。 */
+export function useTransferConfig() {
+  return useQuery({
+    queryKey: ['transfer', 'config'],
+    queryFn: async () => {
+      const response = await api.get<TransferConfigResponse>('/songs/transfer/config')
+      return response.data
+    },
+    retry: false,
+    staleTime: Infinity,
+    gcTime: Infinity
+  })
+}
+
 /** 待入库目录里的音频文件；弹窗打开时才拉。 */
 export function useFetchFiles(enabled: boolean) {
   return useQuery({
