@@ -22,7 +22,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const session = (await auth())!
 
   if (songCount === 0) {
-    return <WelcomeScanState tool={getTransferToolName()} transferEnabled={isTransferConfigured()} />
+    return <WelcomeScanState tool={getTransferToolName()} transferEnabled={await isTransferConfigured()} />
   }
 
   const queryClient = new QueryClient()

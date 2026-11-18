@@ -9,7 +9,7 @@ export async function GET() {
 
   return NextResponse.json({
     success: true,
-    configured: isTransferConfigured(),
+    configured: await isTransferConfigured(),
     tool: getTransferToolName()
   })
 }

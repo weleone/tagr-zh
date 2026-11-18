@@ -48,13 +48,22 @@ export function getTransferToolName(): string {
 }
 
 /**
- * 转移功能是否配好了：待入库目录有没有在 yaml 里显式设置。
- * 只看环境变量有没有设（IMPORT_DIR，旧名 QISHUI_FETCH_DIR），不看
- * 默认值 /qishui-fetch —— 没显式设置就是没接下载工具，欢迎页和
- * 主界面右上角的转移入口都要藏起来。
+ * 转移功能是否配好了：待入库目录有没有接上。
+ * 两条都算配好了：
+ * - yaml 里显式设置了待入库目录（IMPORT_DIR，旧名 QISHUI_FETCH_DIR）；
+ * - 没设环境变量，但目录实际存在——镜像里没建 /qishui-fetch，
+ *   目录存在就是挂了卷，走默认路径也能转移。
+ * 两条都不满足（没设变量、目录也不存在）才是没接下载工具，
+ * 欢迎页和主界面右上角的转移入口都要藏起来。
  */
-export function isTransferConfigured(): boolean {
-  return Boolean(process.env.IMPORT_DIR?.trim() || process.env.QISHUI_FETCH_DIR?.trim())
+export async function isTransferConfigured(): Promise<boolean> {
+  if (process.env.IMPORT_DIR?.trim() || process.env.QISHUI_FETCH_DIR?.trim()) return true
+  const { fetch } = getTransferDirs()
+  try {
+    return (await stat(fetch)).isDirectory()
+  } catch {
+    return false
+  }
 }
 
 /**
